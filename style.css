@@ -148,6 +148,8 @@ p {
 
 /*** Forms *************************************/
 
+/*** form-top ***/
+
 #form-top-container {
   text-align: left;
   width: var(--width);
@@ -193,7 +195,9 @@ p {
   pointer-events: none;
 }
 
-div#forms-container {
+/*** form-inset ***/
+
+div#form-inset-container {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -202,7 +206,7 @@ div#forms-container {
   height: var(--height);
 }
 
-div#forms-container form {
+div#form-inset-container form {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
@@ -211,21 +215,21 @@ div#forms-container form {
   padding: 10px 10px 5px 15px;
 }
 
-rect#form-side-bg {
+rect#form-inset-bg {
   x: 10;
   y: 10;
-  width: 140px;
-  height: 290px;
+  width: 165px;
+  height: 335px;
   fill: white;
   fill-opacity: .60;
 }
 
-#forms-container input#form-number {
+#form-inset-container input#form-number {
   font-size: 14px;
   width: 60px;
 }
 
-#forms-container #bar-dropdown-region select {
+#form-inset-container #bar-dropdown-region select {
   width: 150px;
 }
 
@@ -244,14 +248,14 @@ rect#form-side-bg {
   margin-bottom: 10px;
 }
 
-#forms-container form > label {
+#form-inset-container form > label {
   flex-shrink: 0;
   align-self: start;
   padding: 5px 0 4px 0;
   margin-right: 6.5px;
 }
 
-#forms-container form div label, .form-label {
+#form-inset-container form div label, .form-label {
   display: flex;
   align-items: center;
   color: var(--blue1);
@@ -260,7 +264,7 @@ rect#form-side-bg {
   margin-bottom: 0px;
 }
 
-#forms-container input {
+#form-inset-container input {
   margin-right: 8px;
 }
 
@@ -387,7 +391,7 @@ rect#form-side-bg {
 
 .legend-bubble-circle {
   fill: black;
-  fill-opacity: .2;
+  fill-opacity: .1;
   stroke: black;
   stroke-width: .75;
   stroke-opacity: .3;

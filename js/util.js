@@ -1,5 +1,8 @@
 
-export const dim = { width: 970, height: 650 };
+export const dim = { 
+    width: 1150, 
+    height: 650,
+};
 
 export const colors = { 
     blue1:   "#0033A0", 

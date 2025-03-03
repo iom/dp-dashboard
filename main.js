@@ -1,4 +1,5 @@
 
+import * as forms from "./js/forms.js";
 import * as util from "./js/util.js";
 import { renderMap } from "./js/plot-map.js";
 import { renderBoxplot } from "./js/plot-boxplot.js";
@@ -12,6 +13,13 @@ document.querySelectorAll(".tab").forEach(button => {
         updateChart(chartType);
     });
 });
+
+// Form top
+
+const formIcons = d3.select("#form-top-container")
+    .append("svg")
+    .attr("transform", "translate(170,0)")
+    .call(forms.addFormIcons);
 
 // Tooltip
 

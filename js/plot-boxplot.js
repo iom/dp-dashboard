@@ -4,11 +4,6 @@ import * as util from "./util.js";
  
 export function renderBoxplot () {
 
-    // const container = d3.select("#chart-container");
-    // container.html("");
-    // container.append("div").attr("id", "forms-container");
-    // container.append("div").attr("id", "viz-container");
-
     Promise.all([
 
         d3.csv("./data/means.csv"),
@@ -22,26 +17,33 @@ export function renderBoxplot () {
 
 function drawBoxplot(means) {
 
-    const margin = ({ top: 20, bottom: 120, right: 40, left: 175 });
+    const margin = ({ top: 20, bottom: 120, right: 40, left: 375 });
     const gutter = ({ yout: 12.5, yin: 30, xin: 7.5, xout: 12.5 });
     const params = ({ binHeight: 10 })
 
     // Forms //////////////////////////////////////////////////////////////////
 
-    const formsContainer = d3.select("#forms-container")
-    formsContainer.selectAll("form").remove()
-    const formRegion = formsContainer.call(forms.addFormDropdown);
-    const formVar = formsContainer.call(forms.addFormRadioBar);
+    const formIcons = d3.select("#form-top-container")
+    const formsInset = d3.select("#form-inset-container")
+    formsInset.selectAll("form").remove()
+    const formRegion = formsInset.call(forms.addFormDropdown);
+    // const formVar = formsInset.call(forms.addFormRadioBar);
 
     // Default inputs
 
-    formVar.select("#bar-radio-var input[value='1']").attr("checked", true);
+    // formVar.select("#bar-radio-var input[value='1']").attr("checked", true);
     formRegion.select("#bar-dropdown-region option[value='0']").attr("selected", true);
 
     // Re-render visual when any input is changed
 
-    formVar.selectAll("#bar-radio-var input").on("input", update);
+    // formVar.selectAll("#bar-radio-var input").on("input", update);
     formRegion.select("#bar-dropdown-region select").on("input", update);
+    formIcons.selectAll(".icon-group")
+    .on("click", function() {
+        d3.selectAll(".icon-group").classed("icon-clicked", false);
+        d3.select(this).classed("icon-clicked", true);
+        update();
+    });
 
     // Chart //////////////////////////////////////////////////////////////////
 
@@ -98,19 +100,19 @@ function drawBoxplot(means) {
     function update() {
 
         let region = formRegion.select("#bar-dropdown-region select").property("value");
-        let indicator = formVar
-            .select("#bar-radio-var input[name='radioVar']:checked")
-            .property("value");
-        let data = means.filter(d => d.region == region && d.var == indicator);
+        // let indicator = formVar
+        //     .select("#bar-radio-var input[name='radioVar']:checked")
+        //     .property("value");
+        let indicatorChecked = formIcons.select(".icon-clicked").attr("value");
+        let data = means.filter(d => d.region == region && d.var == indicatorChecked);
         const Y = d3.map(data, d => d.type);
 
-        axes.selectAll("text").remove();
-        axes.selectAll("line").remove();
-        boxplots.selectAll("path").remove();
+        axes.selectAll("g").remove();
+        boxplots.selectAll("g").remove();
 
         // x-axis
         let xScaler = d3.scaleLinear()
-            .domain([d3.min(data, d => d.p50), d3.max(data, d => d.p950)])
+            .domain([d3.min(data, d => +d.p50), d3.max(data, d => +d.p950)])
             .range([gutter.yin, util.dim.width - margin.left - margin.right - gutter.yin]);
         let xAxis = d3.axisBottom(xScaler)
             .ticks(5)
@@ -122,10 +124,10 @@ function drawBoxplot(means) {
             .selectAll("line")
             .data(xScaler.ticks(5))
             .join("line")
-            .attr("x1", d => xScaler(d))
-            .attr("x2", d => xScaler(d))
-            .attr("y1", margin.top + gutter.xin)
-            .attr("y2", util.dim.height - margin.bottom - gutter.xin);
+                .attr("x1", d => xScaler(d))
+                .attr("x2", d => xScaler(d))
+                .attr("y1", margin.top + gutter.xin)
+                .attr("y2", util.dim.height - margin.bottom - gutter.xin);
         axes.append("g")
             .attr("transform", `translate(${ margin.left }, ${ util.dim.height - margin.bottom })`)
             .attr("class", "x-axis")
@@ -134,6 +136,11 @@ function drawBoxplot(means) {
         axes.append("g")
             .attr("transform", `translate(${ margin.left }, 0)`)
             .call(xGrid);
+        
+        console.log("Min value: " + d3.min(data, d => d.p50))
+        console.log("Min value scaled: " + xScaler(d3.min(data, d => d.p50)))
+        console.log("Max value: " + d3.max(data, d => d.p950))
+        console.log("Max value scaled: " + xScaler(d3.max(data, d => d.p950)))
 
         // y-axis
         let yScaler = d3.scaleBand()
@@ -200,7 +207,7 @@ function drawBoxplot(means) {
             const [xm, ym] = d3.pointer(event);
             marker
                 .attr("display", null)
-                .attr("transform", `translate(${ xm + 175 }, 0)`);
+                .attr("transform", `translate(${ xm + margin.left }, 0)`);
             d3.select("#tooltip")
                 .style("display", "block")
                 .style("left", event.pageX + 18 + "px")

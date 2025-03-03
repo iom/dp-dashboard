@@ -42,18 +42,13 @@ export function renderMap () {
 
 function drawMap(map, disputedblack, disputedwhite, nodes) {
 
-    // Form ///////////////////////////////////////////////////////////////////
+    // Forms //////////////////////////////////////////////////////////////////
 
     const formIcons = d3.select("#form-top-container")
-        .append("svg")
-        .attr("transform", "translate(170,0)")
-        .call(forms.addFormIcons);
-    
-    const formsContainer = d3.select("#forms-container")
-    formsContainer.selectAll("form").remove()
-    const formYear = formsContainer.call(forms.addFormNumber);
-    const formType = formsContainer.call(forms.addFormCheckbox);
-    // const formVar = formsContainer.call(forms.addFormRadio);
+    const formsInset = d3.select("#form-inset-container")
+    formsInset.selectAll("form").remove()
+    const formYear = formsInset.call(forms.addFormNumber);
+    const formType = formsInset.call(forms.addFormCheckbox);
     
     // "Check all" behavior
 
@@ -76,14 +71,11 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
     // Default inputs
 
     formType.selectAll("#checkbox-type input").attr("checked", true);
-    // formVar.select("#radio-var input[value='1']").attr("checked", true);
 
     // Re-render visual when any input is changed
 
     formType.selectAll("#checkbox-type input").on("input", update);
-    // formVar.selectAll("#radio-var input").on("input", update);
     formYear.selectAll("input#form-number").on("input", update);
-
     formIcons.selectAll(".icon-group")
         .on("click", function() {
             d3.selectAll(".icon-group").classed("icon-clicked", false);
@@ -103,8 +95,8 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
     // Map
 
     const projection = d3.geoEquirectangular()
-        .scale(150)
-        .center([-5, -10])
+        .scale(185)
+        .center([0, 10])
         .translate([util.dim.width / 2, util.dim.height / 2]);
 
     const path = d3.geoPath().projection(projection);
@@ -123,10 +115,10 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         .domain([nRange.min, nRange.max])
         .range([radius.min, radius.max]);
 
-    svg.call(addBubbleLegend, 175, util.dim.height - 180, rScaler);
+    svg.call(addBubbleLegend, 175, util.dim.height - 80, rScaler);
     
-    // Background of left form
-    svg.append("rect").attr("id", "form-side-bg")
+    // Background of inset form
+    svg.append("rect").attr("id", "form-inset-bg")
 
     // Pan and zoom ///////////////////////////////////////////////////////////
 
@@ -242,7 +234,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
             .on("mouseleave", mouseLeft);
 
         svg.select("#color-legend").remove();
-        svg.call(addColorLegend, 30, util.dim.height - 230, dataIndicator, colorScaler);
+        svg.call(addColorLegend, 30, util.dim.height - 130, dataIndicator, colorScaler);
 
     };
 
@@ -297,7 +289,7 @@ function addBubbleLegend (container, xpos, ypos, rScaler) {
             .attr("class", "legend-text")
             .attr("text-anchor", anchor)
             .attr("x", segment + dir * 3).attr("y", 5)
-            .text(util.formatNum(n));
+            .text(d3.format(",.0f")(n));
 
         return keyContainer.node();
     }
