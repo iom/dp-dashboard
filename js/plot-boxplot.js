@@ -17,7 +17,7 @@ export function renderBoxplot () {
 
 function drawBoxplot(means) {
 
-    const margin = ({ top: 20, bottom: 120, right: 40, left: 375 });
+    const margin = ({ top: 20, bottom: 120, right: 40, left: 350 });
     const gutter = ({ yout: 12.5, yin: 30, xin: 7.5, xout: 12.5 });
     const params = ({ binHeight: 10 })
 
@@ -27,16 +27,13 @@ function drawBoxplot(means) {
     const formsInset = d3.select("#form-inset-container")
     formsInset.selectAll("form").remove()
     const formRegion = formsInset.call(forms.addFormDropdown);
-    // const formVar = formsInset.call(forms.addFormRadioBar);
-
+    
     // Default inputs
 
-    // formVar.select("#bar-radio-var input[value='1']").attr("checked", true);
     formRegion.select("#bar-dropdown-region option[value='0']").attr("selected", true);
 
     // Re-render visual when any input is changed
 
-    // formVar.selectAll("#bar-radio-var input").on("input", update);
     formRegion.select("#bar-dropdown-region select").on("input", update);
     formIcons.selectAll(".icon-group")
     .on("click", function() {
@@ -73,7 +70,7 @@ function drawBoxplot(means) {
 
     // Legend
 
-    svg.call(addBoxplotLegend, 20, util.dim.height - 60);
+    svg.call(addBoxplotLegend, 30, util.dim.height - 210);
 
     // Dashed line ////////////////////////////////////////////////////////////
 
@@ -100,9 +97,6 @@ function drawBoxplot(means) {
     function update() {
 
         let region = formRegion.select("#bar-dropdown-region select").property("value");
-        // let indicator = formVar
-        //     .select("#bar-radio-var input[name='radioVar']:checked")
-        //     .property("value");
         let indicatorChecked = formIcons.select(".icon-clicked").attr("value");
         let data = means.filter(d => d.region == region && d.var == indicatorChecked);
         const Y = d3.map(data, d => d.type);
@@ -250,98 +244,111 @@ function drawBoxplot(means) {
 
 function addBoxplotLegend(container, xpos, ypos) {
 
-    const params = ({ length90: 60, length50: 30, width: 10 });
+    const params = ({ length90: 150, length50: 75, width: 10 });
 
     const legend = container.append("g")
         .attr("id", "boxplot-legend")
         .attr("transform", `translate(${xpos}, ${ypos})`);
 
-    const text = legend.append("g");
+    // Title and description //////////////////////////////////////////////////
 
+    const text = legend.append("g");
     text.append("text")
-        .attr("class", "legend-desc")
+        .attr("class", "legend-desc-bold")
         .attr("x", 0).attr("y", 0)
-        .style("font-weight", "bold")
         .text("How to read");
     text.append("text")
         .attr("class", "legend-desc")
         .attr("x", 0).attr("y", 15)
-        .text("A boxplot shows");
+        .text("A boxplot shows the");
     text.append("text")
         .attr("class", "legend-desc")
         .attr("x", 0).attr("y", 27)
-        .text("the distribution");
-    text.append("text")
-        .attr("class", "legend-desc")
-        .attr("x", 0).attr("y", 39)
-        .text("of data.");
+        .text("distribution of data.");
 
-    const diagram = legend.append("g")
-        .attr("transform", "translate(180, -18)");
+    // Diagram ////////////////////////////////////////////////////////////////
 
+    const diagram = legend.append("g").attr("transform", "translate(0,100)");
+
+    // Draw 90% bin
     diagram.append("g")
         .attr("class", "bin-range-90")
         .append("path")
-        .attr("d", `M0,0 V${params.length90}`);
+        .attr("d", `M0,0 H${ params.length90 }`);
 
+    // Draw 50% bin
     diagram.append("g")
         .attr("class", "bin-range-50")
         .append("path")
         .attr("d", `
-            M${ params.width },${ (params.length90 - params.length50) / 2 }
-            V${ (params.length90 - params.length50) / 2 + params.length50 }
-            H${ -params.width }
-            V${ (params.length90 - params.length50) / 2 }
+            M${ (params.length90 - params.length50) / 2 },${ params.width }
+            H${ (params.length90 - params.length50) / 2 + params.length50 }
+            V${ -params.width }
+            H${ (params.length90 - params.length50) / 2 }
             Z
         `);
 
+    // Draw median
     diagram.append("g")
         .attr("class", "bin-range-med")
         .append("path")
-        .attr("d", `M${ params.width },${ params.length90 / 2 } H${ -params.width }`);
+        .attr("d", `
+            M${ params.length90 / 2 },${ params.width } 
+            V${ -params.width }
+        `);
+
+    // Dotted lines ///////////////////////////////////////////////////////////
 
     const annotationLine = diagram.append("g")
         .attr("class", "legend-bubble-line");
+
+    // Draw 90% bin dotted lines
     annotationLine.append("path")
-        .attr("d", `M7,0 H${ params.width + 60 } V${ params.length90 } H7`);
-    annotationLine.append("path")
-        .attr("d", `M${ params.width + 60 },${ params.length90 / 2 } H${ params.width + 70 }`);
+        .attr("d", `M0,7 V${ params.width + 40 } H${ params.length90 } V7`);
+
+    // Draw 50% bin dotted lines
     annotationLine.append("path")
         .attr("d", `
-            M${ -(params.width + 5) },${ (params.length90 - params.length50) / 2 }
-            H${ -(params.width + 15) }
-            V${ (params.length90 - params.length50) / 2 + params.length50 } 
-            H${ -(params.width + 5) }
+            M${ params.length90 / 2 },${ params.width + 60 } 
+            H${ params.width + 70 }
         `);
     annotationLine.append("path")
         .attr("d", `
-            M${ -(params.width + 15) },${ params.length90 / 2 } 
-            H${ -(params.width + 25) }
+            M${ (params.length90 - params.length50) / 2 },${ -(params.width + 5) }
+            V${ -(params.width + 15) }
+            H${ (params.length90 - params.length50) / 2 + params.length50 } 
+            V${ -(params.width + 5) }
         `);
+    
+    // Draw median dotted lines
+    annotationLine.append("path")
+        .attr("d", `M${ params.length90 / 2 },${ params.width + 3 } V20`);
+
+    // Annotations ////////////////////////////////////////////////////////////
 
     const annotationText = diagram.append("g").attr("class", "legend-text");
-
+    
+    // 50% bin annotation
     const middle50 = annotationText.append("g")
-        .attr("transform", `translate(${ -(params.width + 30) }, ${ params.length90 / 2 })`)
-        .attr("text-anchor", "end");
+        .attr("transform", `translate(${ params.length90 / 2 },${ -(params.width + 35) })`)
+        .attr("text-anchor", "middle");
 
-    middle50.append("text").attr("y", 0).text("Middle");
-    middle50.append("text").attr("y", 12).text("50% of");
-    middle50.append("text").attr("y", 24).text("data");
+    middle50.append("text").attr("y", 0).text("Middle 50%");
+    middle50.append("text").attr("y", 12).text("of data");
 
+    // Median annotation
     annotationText.append("text")
-        .attr("x", `${ params.width + 5 }`)
-        .attr("y", `${ params.length90 / 2 + 4 }`)
-        .attr("text-anchor", "start")
+        .attr("x", `${ params.length90 / 2 }`)
+        .attr("y", `${ params.width + 23 }`)
+        .attr("text-anchor", "middle")
         .text("Median");
-
+    
+    // 90% bin annotation
     const middle90 = annotationText.append("g")
-        .attr("transform", `translate(${ params.width + 75 }, ${ params.length90 / 2 })`)
-        .attr("text-anchor", "start");
-
-    middle90.append("text").attr("y", 0).text("Middle");
-    middle90.append("text").attr("y", 12).text("90% of");
-    middle90.append("text").attr("y", 24).text("data");
+        .attr("transform", `translate(${ params.length90 / 2 },${ params.width + 40 + 15 })`)
+        .attr("text-anchor", "middle");
+    middle90.append("text").attr("y", 0).text("Middle 90%");
+    middle90.append("text").attr("y", 12).text("of data");
 
     return container.node();  
 };

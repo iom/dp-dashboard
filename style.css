@@ -379,7 +379,13 @@ rect#form-inset-bg {
 
 .legend-desc {
   fill: var(--blue2);
-  font-size: .65em;
+  font-size: 10px;
+}
+
+.legend-desc-bold {
+  fill: var(--blue1);
+  font-weight: bold;
+  font-size: 12px;
 }
 
 .legend-bubble-line {
