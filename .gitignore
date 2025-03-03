@@ -1,0 +1,11 @@
+ignore
+
+# Ignore RStudio project files
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
