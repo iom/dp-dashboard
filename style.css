@@ -112,6 +112,7 @@ p {
 }
 
 .tab { 
+  border-radius: 5px;
   padding: 5px 10px; 
   border: 1px solid var(--blue5);
   margin-right: 5px; 
@@ -121,15 +122,18 @@ p {
 
 .tab:hover {
   background: var(--unBlue4);
+  transition: background .1s ease-in-out;
 }
 
 .tab.active { 
   background: var(--unBlue1); 
   color: white; 
+  transition: background .1s ease-in-out;
 }
 
 .tab.active:hover { 
   background: var(--blue2); 
+  transition: background .1s ease-in-out;
 }
 
 /*** Dashboard container ***********************/
@@ -163,14 +167,14 @@ p {
 
 #form-top-container .form-icon-bg {
   fill: var(--blue5);
-  stroke: var(--blue3);
+  stroke: var(--blue4);
   stroke-width: 1.5px;
   cursor: pointer;
 }
 
 #form-top-container .form-icon-bg:hover {
   fill: var(--unBlue3) ;
-  stroke: var(--blue1);
+  stroke: var(--blue3);
   stroke-width: 1.5px;
   transition: fill .1s ease-in-out;
 }
@@ -179,6 +183,16 @@ p {
   fill: var(--unBlue3);
   stroke: var(--blue1);
   stroke-width: 1.5px;
+}
+
+#form-top-container .form-icon {
+  opacity: .5;
+  cursor: pointer;
+}
+
+#form-top-container .icon-clicked .form-icon {
+  opacity: 1;
+  transition: opacity .1s ease-in-out;
 }
 
 #form-top-container .form-label {
@@ -329,6 +343,7 @@ rect#form-inset-bg {
 .grid-lines line {
   stroke: var(--unBlue2);
   stroke-opacity: .4;
+  pointer-events: none;
 }
 
 .bin-range-50 {
@@ -370,6 +385,14 @@ rect#form-inset-bg {
   stroke-dasharray: 3,3;
 }
 
+#marker-num {
+  font-size: 12px;
+  position: absolute;
+  z-index: 999;
+  width: auto;
+  height: auto;
+}
+
 /*** Legend ************************************/
 
 .legend-text {
@@ -403,12 +426,12 @@ rect#form-inset-bg {
   stroke-opacity: .3;
 }
 
+/*** Tooltip ***********************************/
+
 .tooltip {
   background-color: rgba(255, 255, 255, 0.9);
   padding: .2em .5em .3em .5em;
 }
-
-/*** Tooltip ***********************************/
 
 .tooltip p {
   opacity: 1;

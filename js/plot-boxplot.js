@@ -17,7 +17,7 @@ export function renderBoxplot () {
 
 function drawBoxplot(means) {
 
-    const margin = ({ top: 20, bottom: 120, right: 40, left: 350 });
+    const margin = ({ top: 20, bottom: 80, right: 40, left: 350 });
     const gutter = ({ yout: 12.5, yin: 30, xin: 7.5, xout: 12.5 });
     const params = ({ binHeight: 10 })
 
@@ -79,21 +79,11 @@ function drawBoxplot(means) {
         .attr("class", "marker-line")
         .attr("d", d3.line()([[0, margin.top], [0, util.dim.height - margin.bottom]]));
 
-    panel
-        .on("mousemove", markerMouseMoved)
-        .on("mouseleave", markerMouseLeft);
-
-    function markerMouseMoved(event) {
-        const [xm, ym] = d3.pointer(event);
-        marker
-            .attr("display", null)
-            .attr("transform", `translate(${ xm }, 0)`);
-    };
-
-    function markerMouseLeft() {
-        marker.attr("display", "none");
-    };
-
+    const markerNum = d3.select("body")
+        .append("div")
+        .attr("id", "marker-num")
+        .style("display", "none")
+        
     function update() {
 
         let region = formRegion.select("#bar-dropdown-region select").property("value");
@@ -131,10 +121,12 @@ function drawBoxplot(means) {
             .attr("transform", `translate(${ margin.left }, 0)`)
             .call(xGrid);
         
-        console.log("Min value: " + d3.min(data, d => d.p50))
-        console.log("Min value scaled: " + xScaler(d3.min(data, d => d.p50)))
-        console.log("Max value: " + d3.max(data, d => d.p950))
-        console.log("Max value scaled: " + xScaler(d3.max(data, d => d.p950)))
+        let xScalerInv = d3.scaleLinear()
+            .domain([
+                margin.left + gutter.yin, 
+                util.dim.width - margin.right - gutter.yin
+            ])
+            .range([d3.min(data, d => +d.p50), d3.max(data, d => +d.p950)])
 
         // y-axis
         let yScaler = d3.scaleBand()
@@ -150,6 +142,34 @@ function drawBoxplot(means) {
             .attr("class", "y-axis")
             .call(yAxis)
             .call(g => g.select(".domain").remove());
+
+        panel
+            .on("mousemove", markerMouseMoved)
+            .on("mouseleave", markerMouseLeft);
+
+        function markerMouseMoved(event) {
+            const [xm, ym] = d3.pointer(event);
+            marker
+                .attr("display", null)
+                .attr("transform", `translate(${ xm }, 0)`);
+            markerNum.style("display", "block")
+                .style("left", event.pageX + 5 + "px")
+                .style("top", event.pageY - 15 + "px")
+                .html(function() {
+                    if (xScalerInv(xm) < 0) {
+                        return "";
+                    } else if (indicatorChecked == 4) {
+                        return "$" + d3.format(",.0f")(xScalerInv(xm));
+                    } else {
+                        return util.formatNum(xScalerInv(xm));
+                    }
+                });
+        };
+
+        function markerMouseLeft() {
+            marker.attr("display", "none");
+            markerNum.style("display", "none");
+        };
 
         // 90% range
         boxplots.append("g")

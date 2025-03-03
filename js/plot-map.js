@@ -253,7 +253,7 @@ function addBubbleLegend (container, xpos, ypos, rScaler) {
     
     const legend = container.append("g")
         .attr("id", "bubble-legend")
-        .attr("transform", `translate(${xpos}, ${ypos})`);
+        .attr("transform", `translate(${ xpos }, ${ ypos })`);
     
     legend.append("g")
         .attr("class", "legend-desc")
@@ -262,7 +262,7 @@ function addBubbleLegend (container, xpos, ypos, rScaler) {
         .text("Displacements");
     
     const legendKeys = legend.append("g")
-        .attr("transform", `translate(45, ${params.rMax + 20})`);
+        .attr("transform", `translate(45, ${ params.rMax + 20 })`);
   
     const addKey = (keyContainer, r, n, segment, xpos, ypos) => {
   
@@ -276,7 +276,7 @@ function addBubbleLegend (container, xpos, ypos, rScaler) {
         };
   
         const key = keyContainer.append("g")
-            .attr("transform", `translate(${xpos}, ${ypos})`);
+            .attr("transform", `translate(${ xpos }, ${ ypos })`);
         key.append("circle")
             .attr("class", "legend-bubble-circle")
             .attr("cx", 0).attr("cy", 0)
@@ -306,8 +306,6 @@ function addColorLegend (container, xpos, ypos, data, colorRanger) {
     const params = ({ width: 12, height: 15, keyTextNudge: 6 });
     const indicator = data[0].var;
     
-    console.log(indicator);
-
     const points = ({
         min: d3.min(data, d => d.v), 
         med: d3.mean(data, d => d.v), 
@@ -349,8 +347,7 @@ function addColorLegend (container, xpos, ypos, data, colorRanger) {
             .attr("x", 0).attr("y", 0).attr("dy", 11)
             .text(label.line2);
 
-    const legendKeys = legend.append("g")
-        .attr("transform", "translate(3, 25)");
+    const legendKeys = legend.append("g").attr("transform", "translate(3,25)");
 
     for (let i = 0; i < breaks.length; i++) {
         legendKeys.append("g")
@@ -362,8 +359,7 @@ function addColorLegend (container, xpos, ypos, data, colorRanger) {
             .style("fill", d => colorRanger(breaks[i]));
     };
 
-    const ticks = legendKeys.append("g")
-        .attr("class", "legend-text");
+    const ticks = legendKeys.append("g").attr("class", "legend-text");
     ticks.append("text")
         .attr("x", params.width + params.keyTextNudge)
         .attr("y", 12)
@@ -375,7 +371,11 @@ function addColorLegend (container, xpos, ypos, data, colorRanger) {
     ticks.append("text")
         .attr("x", params.width + params.keyTextNudge)
         .attr("y", breaks.length * params.height - 2)
-        .text(util.formatNum(breaks[breaks.length - 1]));
+        .text(() => indicator == 5 
+            ? d3.format(".1f")(breaks[breaks.length - 1]) 
+            : util.formatNum(breaks[breaks.length - 1])
+        );
+
 
     return container.node();
 };

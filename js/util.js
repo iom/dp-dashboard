@@ -110,7 +110,7 @@ export const indicatorsBar = {
 export const indicatorsBarTooltip = {
     1: "the median female share",
     2: "the median age",
-    3: "the median share ofunder age 18",
+    3: "the median share of under age 18",
     4: "median per capita income",
     5: "the median average years of schooling",
     6: "median life expectancy",

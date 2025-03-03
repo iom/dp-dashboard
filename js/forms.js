@@ -70,15 +70,15 @@ export function addFormIcons(container) {
     const params = { pad: 75, radius: 15 };
 
     const iconsData = [
-        { i: 1, src: "female",   lab1: "Female", lab2: "share" },
-        { i: 2, src: "children", lab1: "Median", lab2: "age" },
-        { i: 3, src: "children", lab1: "Children", lab2: "share" },
-        { i: 4, src: "income",   lab1: "Per capita", lab2: "income" },
-        { i: 5, src: "educ",     lab1: "Years of", lab2: "schooling" },
-        { i: 6, src: "life",     lab1: "Life", lab2: "expectancy" },
-        { i: 7, src: "urban",    lab1: "Urban", lab2: "area" },
-        { i: 8, src: "crop",     lab1: "Cropland", lab2: "area" },
-        { i: 9, src: "graze",    lab1: "Grazing", lab2: "area" },
+        { i: 1, src: "female",   lab1: "Female",     lab2: "share"      },
+        { i: 2, src: "children", lab1: "Median",     lab2: "age"        },
+        { i: 3, src: "children", lab1: "Children",   lab2: "share"      },
+        { i: 4, src: "income",   lab1: "Per capita", lab2: "income"     },
+        { i: 5, src: "educ",     lab1: "Years of",   lab2: "schooling"  },
+        { i: 6, src: "life",     lab1: "Life",       lab2: "expectancy" },
+        { i: 7, src: "urban",    lab1: "Urban",      lab2: "area"       },
+        { i: 8, src: "crop",     lab1: "Cropland",   lab2: "area"       },
+        { i: 9, src: "graze",    lab1: "Grazing",    lab2: "area"       },
     ];
     
     const form = container.append("g")
