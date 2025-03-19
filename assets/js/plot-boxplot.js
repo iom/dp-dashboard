@@ -52,10 +52,11 @@ function drawBoxplot(means) {
     // Background shading
 
     svg.append("rect")
-        .attr("x", 0).attr("y", 0)
-        .attr("width", util.dim.width)
-        .attr("height", util.dim.height)
-        .style("fill", `${ util.colors.unBlue6 }`);
+        .attr("class", "graphic-bg")
+        // .attr("x", 0).attr("y", 0)
+        // .attr("width", util.dim.width)
+        // .attr("height", util.dim.height)
+        // .style("fill", `${ util.colors.unBlue6 }`);
 
     const panel = svg.append("rect")
         .attr("x", margin.left).attr("y", margin.top)

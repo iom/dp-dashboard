@@ -1,4 +1,12 @@
 
+.graphic-bg {
+    x: 0;
+    y: 0;
+    width: var(--width-chart);
+    height: var(--height-chart);
+    fill: var(--unBlue6);
+}
+
 /*** Legend ************************************/
   
 .legend-text {

@@ -93,14 +93,20 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     // Map
 
-    const projection = d3.geoEquirectangular()
+    let projection = d3.geoEquirectangular()
         .scale(185)
         .center([0, 10])
         .translate([util.dim.width / 2, util.dim.height / 2]);
 
-    const path = d3.geoPath().projection(projection);
+    // let projection = d3.geoOrthographic()
+    //     .scale(185)
+    //     .center([0, 10])
+    //     .rotate([0, -10])
+    //     .translate([util.dim.width / 2, util.dim.height / 2]);
 
-    svg.append("rect").attr("class", "ocean");
+    let path = d3.geoPath().projection(projection);
+
+    svg.append("rect").attr("class", "graphic-bg");
     const countries = svg.append("g").attr("class", "borders");
     countries.call(util.drawBorders, path, map, disputedblack, disputedwhite);
     
@@ -125,13 +131,12 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
     
     function zoomed(event) {
         
+        const k = event.transform.k;
+        
         currentTransform = event.transform;
         svg.selectAll(".borders path").attr("transform", event.transform);
         svg.selectAll(".nodes-container").attr("transform", event.transform);
 
-        // Adjust sizes relative to zoom level
-
-        const k = event.transform.k;
         svg.selectAll("path.border").style("stroke-width", .5 / k);
         svg.selectAll("path.border-disputed-black").style("stroke-width", .5 / k);
         svg.selectAll("path.border-disputed-white").style("stroke-width", 1.25 / k);
@@ -140,7 +145,10 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
             .style("stroke-width", .75 / k);
     }
 
-    const zoom = d3.zoom().scaleExtent([1, 16]).on("zoom", zoomed);
+    const zoom = d3.zoom()
+        .scaleExtent([1, 16])
+        .on("zoom", zoomed);
+
     svg.call(zoom);
 
     // Control panel //////////////////////////////////////////////////////////

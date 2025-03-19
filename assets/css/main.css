@@ -37,15 +37,9 @@
     --gray5: #F2F2F2; 
 }
 
-/*** Body **************************************/
-
-body {
-    font-family: var(--font), sans-serif;
-    margin: 0px;
-    padding: 0px;
+*, *::before, *::after {
+    box-sizing: border-box;
 }
-
-/*** Text **************************************/
 
 h1, h2, h3 {
     font-family: Open Sans, var(--sans-serif);
@@ -75,6 +69,12 @@ h4 {
     line-height: 1em;
 }
 
+body {
+    font-family: var(--font), sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
 /*** Header and footer *************************/
 
 header {
@@ -100,6 +100,39 @@ footer {
     color: var(--gray2);
 }
 
+/*** Layout ************************************/
+
+.content-grid, .full-width {
+    --padding-inline: 1rem;
+    --content-max-width: 800px;
+    --breakout-max-width: 1150px;
+    --breakout-size: calc((var(--breakout-max-width) - var(--content-max-width)) / 2);
+
+    display: grid;
+    gap: 0;
+    grid-template-columns: 
+        [full-width-start] minmax(var(--padding-inline), 1fr)
+        [breakout-start] minmax(0, var(--breakout-size))
+        [content-start] min(100% - (var(--padding-inline) * 2), var(--content-max-width)) [content-end] 
+        minmax(0, var(--breakout-size)) [breakout-end] 
+        minmax(var(--padding-inline), 1fr) [full-width-end];
+}
+
+.content-grid > :not(.breakout, .full-width),
+.full-width > :not(.breakout, .full-width) {
+    grid-column: content;
+}
+
+.content-grid > .breakout {
+    grid-column: breakout;
+}
+
+.content-grid > .full-width {
+    grid-column: full-width;
+    display: grid;
+    grid-template-columns: inherit;
+}
+
 /*** Title *************************************/
 
 .title-block {
@@ -119,11 +152,6 @@ footer {
 
 /*** Page **************************************/
 
-.page-block {
-    display: flex;
-    flex-direction: column;
-}
-
 .par {
     max-width: 50rem;
     padding: 2em 1em;
@@ -132,24 +160,29 @@ footer {
 /*** Tabs **************************************/
 
 .tabs { 
-    font-size: 1rem;
-    display: flex; 
+    display: flex;
+    justify-content: center;
+    gap: 1rem; 
     cursor: pointer;
-    margin: 20px auto; 
+    font-size: 1rem;
+    margin: 2rem 0; 
 }
 
 .tab { 
     border-radius: 5px;
-    padding: 5px 10px; 
+    padding: .25rem .5rem; 
     border: 1px solid var(--blue5);
-    margin-right: 5px; 
     background: var(--unBlue5); 
     color: var(--blue2);
 }
 
 .tab:hover {
-    background: var(--unBlue4);
-    transition: background .1s ease-in-out;
+    background-color: var(--unBlue4);
+    transform: scale(1.05);
+    transition: 
+        background-color .1s ease-in-out,
+        scale .1s ease-in-out,
+    ;
 }
 
 .tab.active { 
@@ -165,25 +198,39 @@ footer {
 
 /*** Dashboard *********************************/
 
+.screen-warning {
+    display: none;
+    padding: 1em;
+    font-size: .8em;
+    text-align: center;
+    color: var(--blue3);
+    font-style: italic;
+}
+
+.download {
+    padding: 1em;
+    font-size: .8em;
+    text-align: right;
+    color: var(--blue3);
+}
+
+@media (max-width: 600px) {
+    .screen-warning {
+        display: block;
+    }
+}
+
 .dashboard-container {
-    height: auto;
+    height: 770px;
     overflow-x: scroll;
-    padding: 0 1em;
 }
 
 .graphic {
     position: relative;
+    height: var(--height-chart);
 }
 
 .graphic svg {
     width: var(--width-chart);
     height: var(--height-chart);
-}
-
-/*** Break points ******************************/
-
-@media (min-width: 1150px) {
-    .page-block {
-        align-items: center;
-    }
 }

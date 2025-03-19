@@ -5,7 +5,7 @@
 
 .form-top-container {
   width: var(--width-chart);
-  height: auto;
+  height: 90px;
   background-color: var(--unBlue5);
 }
   
@@ -78,12 +78,12 @@ div#form-inset-container {
 }
 
 #form-year-slider .slider {
-  width: 96%;
+  width: 90%;
   height: 10px;
   position: absolute;
   margin: auto;
   top: 60%;
-  left: 2%;
+  left: 4%;
   bottom: 0;
   border-radius: 2px;
 }
@@ -92,7 +92,7 @@ div#form-inset-container {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  width: 98%;
+  width: 95%;
   outline: none;
   position: absolute;
   margin: auto;
@@ -103,7 +103,7 @@ div#form-inset-container {
 }
 
 #form-year-slider input#slider-2 {
-  left: 2%;
+  left: 5%;
 }
 
 #form-year-slider input::-webkit-slider-runnable-track {
