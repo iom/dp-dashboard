@@ -3,41 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D3.js Sample Page</title>
+    <title>Who Are the World's Displaced? | Displacement Tracking Matrix</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://unpkg.com/topojson@3"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/forms.css">
+    <link rel="stylesheet" href="./assets/css/charts.css">
 </head>
+
 <body>
 
-    <div id="main">
+    <!-- Site header -->
+    
+    <header>
+        <div class="brand">
+         <a href="index.html" class="logo-container">
+            <img src="./assets/images/dtm-logo.svg">
+         </a>
+        </div>
+     </header>
+
+    <main>
         
-        <h1>Who are the world's displaced?</h1>
-        <p>The IOM's Global Data Institute has combined geolocated internal displacements data from IDMC with grid-level estimates of various socioeconomic indicators to produce the following interactive visuals.</p>
-    
-        <!-- Tabs -->
-        <div class="tabs">
-            <div class="tab active" data-chart="map">Map</div>
-            <div class="tab" data-chart="boxplot">Boxplots</div>
-            <div class="tab" data-chart="line">Time series</div>
-        </div>
-    
-        <!-- Chart container -->
-        <div id="chart-container">
-            <div id="form-top-container"></div>
-            <div id="viz-container">
-                <div id="form-inset-container"></div>
+        <div class="title-block">
+
+            <div class="title-block-contents">
+
+                <h1>Who are the world's displaced?</h1>
+
+                <p>The IOM's Global Data Institute has combined geolocated internal displacements data from IDMC with grid-level estimates of various socioeconomic indicators to produce the following interactive visuals. </p>
+
             </div>
+
         </div>
     
-        <script type="module" src="main.js"></script>
+        <div class="page-block">
+            
+            <div class="par intro">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras et pharetra diam. Phasellus sed rutrum odio. Vestibulum iaculis, quam blandit ullamcorper mattis, est diam venenatis risus, id ullamcorper diam metus ut mi. Quisque vel neque varius tortor consequat viverra. Quisque auctor tortor nisi, eget eleifend lectus ultrices ut. Cras dui est, vestibulum nec auctor et, iaculis ac libero. Ut ut odio laoreet arcu maximus condimentum. Quisque facilisis accumsan varius. </p>
+            </div>
 
-        <div id="about">
-            <p><b>About</b>. Curabitur in est purus. Donec et mollis arcu. Phasellus viverra velit quis felis vulputate egestas. Mauris lobortis mattis nisl in mattis. Etiam semper maximus tortor, in dignissim nisi vehicula a. Suspendisse id libero in erat iaculis dictum a id ante. Nulla urna odio, vulputate at lacinia sed, hendrerit a nibh. Nam quis porttitor ex. Aliquam vitae magna at nisi sagittis efficitur. Proin euismod viverra nibh eget sodales. Maecenas in lorem vitae odio finibus accumsan venenatis in urna.</p>
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab active" data-chart="map">Map</div>
+                <div class="tab" data-chart="boxplot">Boxplots</div>
+            </div>
+        
+            <!-- Chart container -->
+            <div class="dashboard-container">
+                <div class="form-top-container"></div>
+                <div class="graphic">
+                    <div id="form-inset-container"></div>
+                </div>
+            </div>
+        
+            <script type="module" src="./assets/js/main.js"></script>
+    
+            <div class="par about">
+                <p><b>About</b>. Curabitur in est purus. Donec et mollis arcu. Phasellus viverra velit quis felis vulputate egestas. Mauris lobortis mattis nisl in mattis. Etiam semper maximus tortor, in dignissim nisi vehicula a. Suspendisse id libero in erat iaculis dictum a id ante. Nulla urna odio, vulputate at lacinia sed, hendrerit a nibh. Nam quis porttitor ex. Aliquam vitae magna at nisi sagittis efficitur. Proin euismod viverra nibh eget sodales. Maecenas in lorem vitae odio finibus accumsan venenatis in urna. </p>
+            </div>
+
         </div>
 
+    </main>
 
-    </div>
-
+    <footer>
+        <div class="copyright">
+            Copyright © 2025 International Organization for Migration
+        </div>
+    </footer>
 </body>
 </html>

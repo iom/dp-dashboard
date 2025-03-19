@@ -44,10 +44,11 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     // Forms //////////////////////////////////////////////////////////////////
 
-    const formIcons = d3.select("#form-top-container")
+    const formIcons = d3.select(".form-top-container")
     const formsInset = d3.select("#form-inset-container")
-    formsInset.selectAll("form").remove()
-    const formYear = formsInset.call(forms.addFormNumber);
+    // console.log(formsInset);
+    formsInset.selectAll("form").remove();
+    const formYear = formsInset.call(forms.addFormSlider);
     const formType = formsInset.call(forms.addFormCheckbox);
     
     // "Check all" behavior
@@ -75,7 +76,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
     // Re-render visual when any input is changed
 
     formType.selectAll("#checkbox-type input").on("input", update);
-    formYear.selectAll("input#form-number").on("input", update);
+    formYear.selectAll("input").on("change", update);
     formIcons.selectAll(".icon-group")
         .on("click", function() {
             d3.selectAll(".icon-group").classed("icon-clicked", false);
@@ -85,12 +86,10 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     // Chart //////////////////////////////////////////////////////////////////
 
-    const viz = d3.select("#viz-container");
+    const viz = d3.select(".graphic");
     viz.select("svg").remove();
     
     const svg = viz.append("svg")
-        .attr("id", "viz-svg")
-        .attr("viewBox", [0, 0, util.dim.width, util.dim.height]);
 
     // Map
 
@@ -101,7 +100,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     const path = d3.geoPath().projection(projection);
 
-    svg.append("rect").attr("id", "ocean");
+    svg.append("rect").attr("class", "ocean");
     const countries = svg.append("g").attr("class", "borders");
     countries.call(util.drawBorders, path, map, disputedblack, disputedwhite);
     
@@ -191,16 +190,19 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
             .map(node => +node.value);
         typesChecked = typesChecked.filter(i => i !== 0);
         let indicatorChecked = formIcons.select(".icon-clicked").attr("value");
-        let year = formYear.select("input#form-number").property("value");
+        let yearMin = formYear.select("input#slider-1").property("value");
+        let yearMax = formYear.select("input#slider-2").property("value");
 
         let dataIndicator = nodes.filter(d => 
-            d.t == year && 
+            d.t >= yearMin && 
+            d.t <= yearMax && 
             d.n >= nRange.min && 
             d.var == indicatorChecked
         );
 
         let data = nodes.filter(d => 
-            d.t == year && 
+            d.t >= yearMin && 
+            d.t <= yearMax && 
             d.n >= nRange.min && 
             typesChecked.includes(+d.type) && 
             d.var == indicatorChecked
@@ -235,7 +237,6 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
         svg.select("#color-legend").remove();
         svg.call(addColorLegend, 30, util.dim.height - 130, dataIndicator, colorScaler);
-
     };
 
     update();

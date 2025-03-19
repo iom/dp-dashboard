@@ -23,7 +23,7 @@ function drawBoxplot(means) {
 
     // Forms //////////////////////////////////////////////////////////////////
 
-    const formIcons = d3.select("#form-top-container")
+    const formIcons = d3.select(".form-top-container")
     const formsInset = d3.select("#form-inset-container")
     formsInset.selectAll("form").remove()
     const formRegion = formsInset.call(forms.addFormDropdown);
@@ -36,20 +36,18 @@ function drawBoxplot(means) {
 
     formRegion.select("#bar-dropdown-region select").on("input", update);
     formIcons.selectAll(".icon-group")
-    .on("click", function() {
-        d3.selectAll(".icon-group").classed("icon-clicked", false);
-        d3.select(this).classed("icon-clicked", true);
-        update();
-    });
+        .on("click", function() {
+            d3.selectAll(".icon-group").classed("icon-clicked", false);
+            d3.select(this).classed("icon-clicked", true);
+            update();
+        });
 
     // Chart //////////////////////////////////////////////////////////////////
 
-    const viz = d3.select("#viz-container");
+    const viz = d3.select(".graphic");
     viz.select("svg").remove();
 
     const svg = viz.append("svg")
-        .attr("id", "viz-svg")
-        .attr("viewBox", [0, 0, util.dim.width, util.dim.height]);
 
     // Background shading
 
@@ -70,7 +68,7 @@ function drawBoxplot(means) {
 
     // Legend
 
-    svg.call(addBoxplotLegend, 30, util.dim.height - 210);
+    svg.call(addBoxplotLegend, 30, 120);
 
     // Dashed line ////////////////////////////////////////////////////////////
 

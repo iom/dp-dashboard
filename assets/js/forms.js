@@ -3,6 +3,82 @@ import * as util from "./util.js";
 
 // Map chart forms //////////////////////////////
 
+export function addFormSlider(container) {
+
+    const years = ({ min: 2018, max: 2024 });
+
+    const form = container.append("form")
+        .attr("id", "form-year-slider");
+
+    // Title and description
+    form.append("text")
+        .attr("class", "form-title")
+        .text("Year")
+
+    const sliderContainer = form.append("div")
+        .attr("class", "slider-container")
+
+    const slider = sliderContainer.append("div")
+        .attr("class", "slider")
+    
+    const slideOne = sliderContainer.append("input")
+        .attr("id", "slider-1")
+        .attr("type", "range")
+        .attr("min", years.min)
+        .attr("max", years.max)
+        .attr("step", 1)
+        .attr("value", 2023)
+        .on("input", () => {
+            let val1 = +slideOne.property("value");
+            let val2 = +slideTwo.property("value");
+            if (val1 >= val2) {
+                slideOne.property("value", val2);
+                val1 = val2;
+            }
+            fillColor();
+        });
+
+    const slideTwo = sliderContainer.append("input")
+        .attr("id", "slider-2")
+        .attr("type", "range")
+        .attr("min", years.min)
+        .attr("max", years.max)
+        .attr("step", 1)
+        .attr("value", years.max)
+        .on("input", () => {
+            let val1 = +slideOne.property("value");
+            let val2 = +slideTwo.property("value");
+            if (val2 <= val1) {
+                slideTwo.property("value", val1);
+                val2 = val1;
+            }
+            fillColor();
+        });
+
+    const label = sliderContainer.append("div")
+        .attr("class", "slider-label")
+    
+    fillColor();
+
+    function fillColor() {
+        let steps = years.max - years.min;
+        let percent1 = ((slideOne.property("value") - years.min) / steps) * 100;
+        let percent2 = ((slideTwo.property("value") - years.min) / steps) * 100;
+        slider.style("background", `linear-gradient(to right,
+                ${ util.colors.blue5 } ${ percent1 }%,
+                ${ util.colors.blue3 } ${ percent1 }%,
+                ${ util.colors.blue3 } ${ percent2 }%,
+                ${ util.colors.blue5 } ${ percent2 }%
+            )`);
+        
+        label.text(slideOne.property("value") + "\u2013" + slideTwo.property("value"))
+        
+        // console.log((5 + percent1 / 90) + "%")
+    };
+
+    return container.node();
+}
+
 export function addFormNumber(container) {
     
     const years = ({ min: 2018, max: 2024 });
@@ -29,21 +105,6 @@ export function addFormNumber(container) {
 
 export function addFormCheckbox(container) {
     
-    const addOption = (form, key, value, id, setClass) => {
-    
-        const option = form.append("label")
-        option.append("input")
-            .attr("type", "checkbox")
-            .attr("name", "checkboxType")
-            .attr("id", id)
-            .attr("class", setClass)
-            .attr("value", key)
-        option.append("label")
-            .text(value)
-        
-        return form.node()
-    }
-
     const form = container.append("form")
         .attr("id", "checkbox-type")
 
@@ -62,6 +123,21 @@ export function addFormCheckbox(container) {
         formCheckbox.call(addOption, code, label, "type-" + code, "item-checkbox");
     }
     
+    function addOption(form, key, value, id, setClass) {
+    
+        const option = form.append("label")
+        option.append("input")
+            .attr("type", "checkbox")
+            .attr("name", "checkboxType")
+            .attr("id", id)
+            .attr("class", setClass)
+            .attr("value", key)
+        option.append("label")
+            .text(value)
+        
+        return form.node();
+    }
+
     return container.node()
 }
 
@@ -82,7 +158,6 @@ export function addFormIcons(container) {
     ];
     
     const form = container.append("g")
-        .attr("id", "form-top")
 
     // Title and description
     const title = form.append("g")
@@ -121,7 +196,7 @@ export function addFormIcons(container) {
         group.append("image")
             .attr("class", "form-icon")
             .attr("transform", "translate(-10,-10)")
-            .attr("href", "assets/" + d.src + ".svg")
+            .attr("href", "assets/images/" + d.src + ".svg")
             .attr("width", params.radius + 5)
             .attr("height", params.radius + 5)
         

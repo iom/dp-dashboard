@@ -1,0 +1,189 @@
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800');
+
+:root {
+    --font: "Open Sans";
+    --width-form: 160px;
+    --width-chart: 1150px;
+    --height-chart: 665px;
+
+    /* Colors */
+    --blue1: #0033A0; 
+    --blue2: #4068B8; 
+    --blue3: #8099D0; 
+    --blue4: #B3C2E3; 
+    --blue5: #D9E0F1; 
+    --green1: #5CB8B2;  
+    --green2: #85CAC5; 
+    --green3: #AEDCD9; 
+    --green4: #CEEAE8;
+    --green5: #E7F4F3; 
+    --yellow: #FFB81C; 
+    --red1: #D22630; 
+    --red2: #DD5C64; 
+    --red3: #E99398; 
+    --red4: #F2BEC1; 
+    --red5: #F8DEE0; 
+    --unBlue1: #418FDE; 
+    --unBlue2: #84ADEC; 
+    --unBlue3: #ADC9F2; 
+    --unBlue4: #CEDEF7; 
+    --unBlue5: #E6EFFB; 
+    --unBlue6: #F3F7FD; 
+    --gray1: #404040; 
+    --gray2: #666666; 
+    --gray3: #999999; 
+    --gray4: #CCCCCC; 
+    --gray5: #F2F2F2; 
+}
+
+/*** Body **************************************/
+
+body {
+    font-family: var(--font), sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
+
+/*** Text **************************************/
+
+h1, h2, h3 {
+    font-family: Open Sans, var(--sans-serif);
+    font-weight: bold;
+}
+
+h1 {
+    font-size: clamp(2rem, 1rem + 5vw, 3rem);
+    line-height: 1.2em;
+}
+
+h2 {
+    font-size: 1.6em;
+    line-height: 1em;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+h3 {
+    font-size: 1.2em;
+    line-height: 1em;
+}
+
+h4 {
+    font-family: Open Sans, var(--sans-serif);
+    font-size: .9em;
+    line-height: 1em;
+}
+
+/*** Header and footer *************************/
+
+header {
+    display: flex;
+    padding: min(3vw, 1rem) min(10vw, 5rem);
+}
+
+.logo-container img {
+    width: min(60vw, 295px);
+    height: auto;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    padding: 3rem 3rem 2rem 3rem;
+}
+
+.copyright {
+    flex: 0 1 0px;
+    font-size: .825rem;
+    color: var(--gray2);
+}
+
+/*** Title *************************************/
+
+.title-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: var(--blue1);
+    color: white; 
+}
+
+.title-block-contents {
+    text-align: center;
+    max-width: 50rem;
+    padding: 2em 1em;
+}
+
+/*** Page **************************************/
+
+.page-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.par {
+    max-width: 50rem;
+    padding: 2em 1em;
+}
+
+/*** Tabs **************************************/
+
+.tabs { 
+    font-size: 1rem;
+    display: flex; 
+    cursor: pointer;
+    margin: 20px auto; 
+}
+
+.tab { 
+    border-radius: 5px;
+    padding: 5px 10px; 
+    border: 1px solid var(--blue5);
+    margin-right: 5px; 
+    background: var(--unBlue5); 
+    color: var(--blue2);
+}
+
+.tab:hover {
+    background: var(--unBlue4);
+    transition: background .1s ease-in-out;
+}
+
+.tab.active { 
+    background: var(--unBlue1); 
+    color: white; 
+    transition: background .1s ease-in-out;
+}
+
+.tab.active:hover { 
+    background: var(--blue2); 
+    transition: background .1s ease-in-out;
+}
+
+/*** Dashboard *********************************/
+
+.dashboard-container {
+    height: auto;
+    overflow-x: scroll;
+    padding: 0 1em;
+}
+
+.graphic {
+    position: relative;
+}
+
+.graphic svg {
+    width: var(--width-chart);
+    height: var(--height-chart);
+}
+
+/*** Break points ******************************/
+
+@media (min-width: 1150px) {
+    .page-block {
+        align-items: center;
+    }
+}

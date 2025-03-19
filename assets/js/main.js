@@ -1,8 +1,8 @@
 
-import * as forms from "./js/forms.js";
-import * as util from "./js/util.js";
-import { renderMap } from "./js/plot-map.js";
-import { renderBoxplot } from "./js/plot-boxplot.js";
+import * as forms from "./forms.js";
+import * as util from "./util.js";
+import { renderMap } from "./plot-map.js";
+import { renderBoxplot } from "./plot-boxplot.js";
 
 document.querySelectorAll(".tab").forEach(button => {
     button.addEventListener("click", function () {
@@ -16,10 +16,10 @@ document.querySelectorAll(".tab").forEach(button => {
 
 // Form top
 
-const formIcons = d3.select("#form-top-container")
+const formIcons = d3.select("div.form-top-container")
     .append("svg")
-    .attr("transform", "translate(170,0)")
-    .call(forms.addFormIcons);
+        .attr("transform", "translate(170,0)")
+        .call(forms.addFormIcons);
 
 // Tooltip
 
