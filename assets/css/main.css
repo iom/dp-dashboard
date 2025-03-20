@@ -41,38 +41,18 @@
     box-sizing: border-box;
 }
 
-h1, h2, h3 {
-    font-family: Open Sans, var(--sans-serif);
-    font-weight: bold;
+body {
+    font-family: var(--font), sans-serif;
+    font-size: 0.8rem;
+    font-size: clamp(0.8rem, 0.76rem + 0.2vw, 1rem);
+    margin: 0px;
+    padding: 0px;
 }
 
 h1 {
-    font-size: clamp(2rem, 1rem + 5vw, 3rem);
+    font-size: 1.5rem;
+    font-size: clamp(1.5rem, 1.2rem + 1.5vw, 3rem);
     line-height: 1.2em;
-}
-
-h2 {
-    font-size: 1.6em;
-    line-height: 1em;
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-
-h3 {
-    font-size: 1.2em;
-    line-height: 1em;
-}
-
-h4 {
-    font-family: Open Sans, var(--sans-serif);
-    font-size: .9em;
-    line-height: 1em;
-}
-
-body {
-    font-family: var(--font), sans-serif;
-    margin: 0px;
-    padding: 0px;
 }
 
 /*** Header and footer *************************/
@@ -88,15 +68,18 @@ header {
 }
 
 footer {
+    background: #f8f9fa;
     display: flex;
     flex-direction: column;
     align-items: left;
     padding: 3rem 3rem 2rem 3rem;
+    margin-top: 3rem;
 }
 
 .copyright {
     flex: 0 1 0px;
-    font-size: .825rem;
+    font-size: 0.5rem;
+    font-size: clamp(0.5rem, 0.435rem + 0.325vw, 0.825rem);
     color: var(--gray2);
 }
 
@@ -142,6 +125,7 @@ footer {
     width: 100%;
     background-color: var(--blue1);
     color: white; 
+    margin-bottom: 2rem;
 }
 
 .title-block-contents {
@@ -152,9 +136,17 @@ footer {
 
 /*** Page **************************************/
 
-.par {
-    max-width: 50rem;
-    padding: 2em 1em;
+.date {
+    display: flex;
+    align-items: center;
+    gap: .4em;
+    color: #343a40;
+    margin-bottom: 2rem;
+}
+
+.svg-inline--fa {
+    height: 1em;
+    overflow: visible;
 }
 
 /*** Tabs **************************************/
@@ -164,8 +156,10 @@ footer {
     justify-content: center;
     gap: 1rem; 
     cursor: pointer;
-    font-size: 1rem;
-    margin: 2rem 0; 
+    font-size: 0.6rem;
+    font-size: clamp(0.6rem, 0.56rem + 0.20vw, 0.8rem);
+    text-transform: uppercase;
+    margin: clamp(0.5rem, 0.4rem + 0.5vw, 1rem) 0; 
 }
 
 .tab { 
@@ -188,6 +182,7 @@ footer {
 .tab.active { 
     background: var(--unBlue1); 
     color: white; 
+    font-weight: bold;
     transition: background .1s ease-in-out;
 }
 

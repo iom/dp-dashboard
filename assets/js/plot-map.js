@@ -46,7 +46,6 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     const formIcons = d3.select(".form-top-container")
     const formsInset = d3.select("#form-inset-container")
-    // console.log(formsInset);
     formsInset.selectAll("form").remove();
     const formYear = formsInset.call(forms.addFormSlider);
     const formType = formsInset.call(forms.addFormCheckbox);
@@ -77,11 +76,19 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     formType.selectAll("#checkbox-type input").on("input", update);
     formYear.selectAll("input").on("change", update);
+
+    function iconClicked() {
+        d3.selectAll(".icon-group").classed("icon-clicked", false);
+        d3.select(this).classed("icon-clicked", true);
+        update();
+    };
+
     formIcons.selectAll(".icon-group")
-        .on("click", function() {
-            d3.selectAll(".icon-group").classed("icon-clicked", false);
-            d3.select(this).classed("icon-clicked", true);
-            update();
+        .on("click", iconClicked)
+        .on("keydown", function(event) {
+            if (event.key == "Enter") {
+                iconClicked.call(this)
+            }
         });
 
     // Chart //////////////////////////////////////////////////////////////////
@@ -97,12 +104,6 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         .scale(185)
         .center([0, 10])
         .translate([util.dim.width / 2, util.dim.height / 2]);
-
-    // let projection = d3.geoOrthographic()
-    //     .scale(185)
-    //     .center([0, 10])
-    //     .rotate([0, -10])
-    //     .translate([util.dim.width / 2, util.dim.height / 2]);
 
     let path = d3.geoPath().projection(projection);
 

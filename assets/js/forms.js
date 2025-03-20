@@ -13,7 +13,7 @@ export function addFormSlider(container) {
     // Title and description
     form.append("text")
         .attr("class", "form-title")
-        .text("Year")
+        .text("Years")
 
     const sliderContainer = form.append("div")
         .attr("class", "slider-container")
@@ -141,82 +141,46 @@ export function addFormCheckbox(container) {
     return container.node()
 }
 
-export function addFormIcons(container) {
+export function addFormIcons(form) {
 
     const params = { pad: 75, radius: 15 };
 
     const iconsData = [
-        { i: 1, src: "female",   lab1: "Female",     lab2: "share"      },
-        { i: 2, src: "children", lab1: "Median",     lab2: "age"        },
-        { i: 3, src: "children", lab1: "Children",   lab2: "share"      },
-        { i: 4, src: "income",   lab1: "Per capita", lab2: "income"     },
-        { i: 5, src: "educ",     lab1: "Years of",   lab2: "schooling"  },
-        { i: 6, src: "life",     lab1: "Life",       lab2: "expectancy" },
-        { i: 7, src: "urban",    lab1: "Urban",      lab2: "area"       },
-        { i: 8, src: "crop",     lab1: "Cropland",   lab2: "area"       },
-        { i: 9, src: "graze",    lab1: "Grazing",    lab2: "area"       },
+        { i: 1, src: "female",   lab1: "Female", lab2: "share"       },
+        { i: 2, src: "children", lab1: "Median", lab2: "age"         },
+        { i: 3, src: "children", lab1: "Children", lab2: "share"     },
+        { i: 4, src: "income",   lab1: "Per capita", lab2: "income"  },
+        { i: 5, src: "educ",     lab1: "Years of", lab2: "schooling" },
+        { i: 6, src: "life",     lab1: "Life", lab2: "expectancy"    },
+        { i: 7, src: "urban",    lab1: "Urban", lab2: "area"         },
+        { i: 8, src: "crop",     lab1: "Cropland", lab2: "area"      },
+        { i: 9, src: "graze",    lab1: "Grazing", lab2: "area"       },
     ];
     
-    const form = container.append("g")
-
-    // Title and description
-    const title = form.append("g")
-        .attr("transform", "translate(0,30)");
-
-    title.append("text")
-        .attr("class", "form-title")
-        .text("Indicator")
-
-    title.append("g")
-        .attr("transform", "translate(0,15)")
-        .append("text")
-        .attr("class", "form-desc")
-        .append("tspan")
-            .text("The value of the selected")
-            .attr("x", 0).attr("y", 0)
-        .append("tspan")
-            .text("indicator determines the")
-            .attr("x", 0).attr("y", 0).attr("dy", 12)
-        .append("tspan")
-            .text("bubbles' color.")
-            .attr("x", 0).attr("y", 0).attr("dy", 12 * 2)
-
     iconsData.forEach(d => {
         
-        const group = form.append("g")
+        const group = form.append("div")
+            .attr("tabindex", 0)
             .attr("class", "icon-group")
             .attr("id", "icon-group-" + d.i)
-            .attr("transform", `translate(${170 + (d.i - 1) * params.pad},25)`)
             .attr("value", d.i);
+                
+        group.append("div")
+            .attr("class", "icon")
+            .append("img")
+                .attr("src", "assets/images/" + d.src + ".svg")
+                .attr("width", params.radius + 5 + "px")
+                .attr("height", params.radius + 5 + "px")
         
-        group.append("circle")
-            .attr("class", "form-icon-bg")
-            .attr("r", params.radius);
-        
-        group.append("image")
-            .attr("class", "form-icon")
-            .attr("transform", "translate(-10,-10)")
-            .attr("href", "assets/images/" + d.src + ".svg")
-            .attr("width", params.radius + 5)
-            .attr("height", params.radius + 5)
-        
-        group.append("g")
-            .attr("transform", "translate(0,35)")
-            .append("text")
-                .attr("class", "form-label")
-                .attr("text-anchor", "middle")
-            .append("tspan")
-                .text(d.lab1)
-                .attr("x", 0).attr("y", 0)
-            .append("tspan")
-                .text(d.lab2)
-                .attr("x", 0).attr("y", 0)
-                .attr("dy", 14)
+        const label = group.append("div")
+            .attr("class", "icon-label")
+        label.append("div").text(d.lab1)
+        label.append("div").text(d.lab2)
     });
     
     form.select("#icon-group-1").classed("icon-clicked", true);
 
-    return container.node();
+    return form.node();
 };
 
 export function addFormRadio(container) {

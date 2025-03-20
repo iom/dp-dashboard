@@ -4,59 +4,79 @@
 /*** form-top ***/
 
 .form-top-container {
+  display: flex;
   width: var(--width-chart);
   height: 90px;
   background-color: var(--unBlue5);
+  justify-content: center;
 }
   
-.form-top-container svg {
-  width: 900px;
-  height: 90px;
+.form-top-title {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: .2rem;
+  padding-right: .5rem;
 }
-  
-.form-top-container .form-icon-bg {
-  fill: var(--blue5);
-  stroke: var(--blue4);
-  stroke-width: 1.5px;
+
+.form-top-container .icon-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: .5rem;
+  width: 70px;
+  height: 100%;
+  padding-top: .7rem;
+}
+
+.form-top-container .icon {
+  display: flex;
+  width: 50%;
+  aspect-ratio: 1;
+  background-color: var(--blue5);
+  border: 2px solid var(--blue4);
+  border-radius: 50%;
   cursor: pointer;
-}
-
-.form-top-container .form-icon-bg:hover {
-  fill: var(--unBlue3) ;
-  stroke: var(--blue3);
-  stroke-width: 1.5px;
-  transition: fill .1s ease-in-out;
-}
-
-.form-top-container .icon-clicked .form-icon-bg {
-  fill: var(--unBlue3);
-  stroke: var(--blue1);
-  stroke-width: 1.5px;
-}
-
-.form-top-container .form-icon {
   opacity: .5;
-  cursor: pointer;
 }
 
-.form-top-container .icon-clicked .form-icon {
+.form-top-container .icon img {
+  margin: auto;
+}
+
+.form-top-container .icon-label {
+  font-size: .7rem;
+  color: var(--blue3);
+  text-align: center;
+  line-height: 1.1em;
+}
+
+.form-top-container .icon-group:not(.icon-clicked):hover .icon {
+  background-color: var(--unBlue3) ;
+  border: 2px solid var(--blue2);
+  opacity: .75;
+  transition: background-color .1s ease-in-out;
+}
+
+.form-top-container .icon-group:not(.icon-clicked):hover .icon-label {
+  color: var(--blue2);
+}
+
+.form-top-container .icon-clicked .icon {
+  background-color: var(--unBlue3);
+  border: 2px solid var(--blue1);
   opacity: 1;
   transition: opacity .1s ease-in-out;
 }
 
-.form-top-container .form-label {
-  fill: var(--blue3);
-}
-
-.form-top-container .icon-clicked .form-label {
-  fill: var(--blue1);
+.form-top-container .icon-clicked .icon-label {
+  color: var(--blue1);
   font-weight: bold;
-  transition: fill .1s ease-in-out;
+  transition: color .1s ease-in-out;
 }
 
-.form-top-container .form-icon {
-  pointer-events: none;
-}
 
 /*** form-inset ***/
 
@@ -122,38 +142,44 @@ div#form-inset-container {
 }
 
 #form-year-slider input::-webkit-slider-thumb {
-  height: 1.7em;
-  width: 1.7em;
-  background-color: var(--red1);
+  appearance: none;
+  transform: translateY(-50%);
+  height: 1em;
+  width: 1em;
+  background-color: var(--blue2);
+  border: 2px solid var(--blue1);
   cursor: pointer;
-  margin-top: -9px;
   pointer-events: auto;
   border-radius: 50%;
 }
 
 #form-year-slider input::-moz-range-thumb {
-  height: 1.7em;
-  width: 1.7em;
+  appearance: none;
+  transform: translateY(-50%);
+  height: 1em;
+  width: 1em;
+  background-color: var(--blue2);
+  border: 2px solid var(--blue1);
   cursor: pointer;
-  border-radius: 50%;
-  background-color: var(--blue1);
   pointer-events: auto;
-  border: none;
+  border-radius: 50%;
 }
 
 #form-year-slider input::-ms-thumb {
   appearance: none;
-  height: 1.7em;
-  width: 1.7em;
+  transform: translateY(-50%);
+  height: 1em;
+  width: 1em;
+  background-color: var(--blue2);
+  border: 2px solid var(--blue1);
   cursor: pointer;
-  border-radius: 50%;
-  background-color: var(--blue1);
   pointer-events: auto;
+  border-radius: 50%;
 }
 
 #form-year-slider input:active::-webkit-slider-thumb {
-  background-color: white;
-  border: 1px solid var(--blue1);
+  background-color: var(--blue3);
+  border: 2px solid var(--blue2);
 }
 
 #form-year-slider .slider-label {

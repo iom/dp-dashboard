@@ -35,11 +35,19 @@ function drawBoxplot(means) {
     // Re-render visual when any input is changed
 
     formRegion.select("#bar-dropdown-region select").on("input", update);
+
+    function iconClicked() {
+        d3.selectAll(".icon-group").classed("icon-clicked", false);
+        d3.select(this).classed("icon-clicked", true);
+        update();
+    };
+
     formIcons.selectAll(".icon-group")
-        .on("click", function() {
-            d3.selectAll(".icon-group").classed("icon-clicked", false);
-            d3.select(this).classed("icon-clicked", true);
-            update();
+        .on("click", iconClicked)
+        .on("keydown", function(event) {
+            if (event.key == "Enter") {
+                iconClicked.call(this)
+            }
         });
 
     // Chart //////////////////////////////////////////////////////////////////

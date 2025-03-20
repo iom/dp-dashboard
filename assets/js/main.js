@@ -5,20 +5,27 @@ import { renderMap } from "./plot-map.js";
 import { renderBoxplot } from "./plot-boxplot.js";
 
 document.querySelectorAll(".tab").forEach(button => {
-    button.addEventListener("click", function () {
-        document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
-        this.classList.add("active");
 
-        const chartType = this.getAttribute("data-chart");
-        updateChart(chartType);
+    button.addEventListener("click", switchTab);
+
+    button.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            switchTab.call(this);
+        };
     });
 });
+
+function switchTab() {
+    document.querySelectorAll(".tab").forEach(btn => btn.classList.remove("active"));
+    this.classList.add("active");
+
+    const chartType = this.getAttribute("data-chart");
+    updateChart(chartType);
+}
 
 // Form top
 
 const formIcons = d3.select("div.form-top-container")
-    .append("svg")
-        .attr("transform", "translate(170,0)")
         .call(forms.addFormIcons);
 
 // Tooltip
