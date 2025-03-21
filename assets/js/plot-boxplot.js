@@ -255,11 +255,13 @@ function drawBoxplot(means) {
         };
 
         // Build title
-
+        let indicatorText = "<span class='title-emph'>" + util.indicatorsTitle[indicatorChecked] + "</span>";
         let regionText = "<span class='title-emph'>" + util.regions[region] + "</span>";
         if (region == 0) regionText = "the <span class='title-emph'>World</span>"
 
-        let titleText = "<h3>Distribution of socioeconomic indicators weighed by magnitude of internally displaced persons<br>across " + regionText + ", by cause of displacement, 2018\u20132024</h3>"
+        let titleText = "<h3>Distribution of " + indicatorText + 
+            " weighed by magnitude of internally displaced persons<br>across " + regionText + 
+            ", by cause of displacement, 2018\u20132024</h3>"
 
         title.html(titleText);
     };
