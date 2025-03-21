@@ -1,3 +1,42 @@
+/*** Dashboard *********************************/
+
+.screen-warning {
+    display: none;
+    padding: 1em;
+    font-size: .8em;
+    text-align: center;
+    color: var(--blue3);
+    font-style: italic;
+}
+
+.download {
+    padding: 1em;
+    font-size: .8em;
+    text-align: right;
+    color: var(--blue3);
+}
+
+@media (max-width: 600px) {
+    .screen-warning {
+        display: block;
+    }
+}
+
+.dashboard-container {
+    height: auto;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.graphic {
+    position: relative;
+    height: var(--height-chart);
+}
+
+.graphic svg {
+    width: var(--width-chart);
+    height: var(--height-chart);
+}
 
 .graphic-bg {
     x: 0;
@@ -5,6 +44,20 @@
     width: var(--width-chart);
     height: var(--height-chart);
     fill: var(--unBlue6);
+}
+
+.dashboard-title {
+    text-align: center;
+    color: var(--gray1);
+    font-size: .9rem;
+    font-weight: bold;
+    text-wrap: balance;
+}
+
+.title-emph {
+    text-transform: uppercase;
+    color: var(--blue1);
+    font-size: .85rem;
 }
 
 /*** Legend ************************************/

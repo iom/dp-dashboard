@@ -232,7 +232,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
             .data(data, d => d.t + "-" + d.type + "-" + d.coords[0] + "-" + d.coords[1])
             .order()
             .join("g")
-            .attr("transform", d => `translate(${ projection(d.coords)[0] } , ${ projection(d.coords)[1] })`);
+            .attr("transform", d => `translate(${ projection(d.coords)[0] }, ${ projection(d.coords)[1] })`);
         
         groupData.selectAll("circle").remove();
         groupData.append("circle")
@@ -249,18 +249,40 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         svg.select("#color-legend").remove();
         svg.call(addColorLegend, 30, util.dim.height - 130, dataIndicator, colorScaler);
 
-        console.log(typesChecked);
+        // Build title
+        
         let yearText = yearMin + "\u2013" + yearMax;
         if (yearMin == yearMax) yearText = yearMax;
 
-        let causeText = "";
-        if (typesChecked.length == 1 && typesChecked[0] != 9) causeText = util.types[typesChecked[0]];
-        if (typesChecked.length == 2) {
-            causeText = util.types[typesChecked[0]] + " and " + util.types[typesChecked[1]]
+        let causeText;
+        const typesCheckedNoOthers = typesChecked.filter(i => i !== 8);
+
+        if (typesChecked.includes(8) && typesChecked.length < 8) {
+            causeText = "<span class='title-emph'>various causes</span>";
+        } else if (typesCheckedNoOthers.length == 0 && typesChecked[0] == 8) {
+            causeText = "<span class='title-emph'>various causes</span>";
+        } else if (typesCheckedNoOthers.length > 2) {
+            causeText = "<span class='title-emph'>various causes</span>";
+        } else if (typesCheckedNoOthers.length == 1) {
+            causeText = "<span class='title-emph'>" + util.types[typesCheckedNoOthers[0]] + "</span>";
+        } else if (typesCheckedNoOthers.length == 2) {
+            causeText = "<span class='title-emph'>" + util.types[typesCheckedNoOthers[0]] + "</span>" + 
+                " and " + "<span class='title-emph'>" + util.types[typesCheckedNoOthers[1]] + "</span>"
         };
         if (typesChecked.length == 8) causeText = "all causes";
-        title.text(`Internally displaced persons in ${ yearText } due to ${ causeText }`);
 
+        let indicatorText = util.indicatorsTitle[indicatorChecked];
+       
+        let titleText = "<h3>Choose a cause of displacement to generate the graphic.</h3>";
+        if (typesChecked.length > 0) {
+            titleText = "<h3>Internally displaced persons in " + 
+                "<span class='title-emph'>" + yearText + "</span>" +
+                " due to " + causeText + " and<br>the " + 
+                "<span class='title-emph'>" + indicatorText + "</span>" + 
+                " where they were displaced</h3>"
+        }
+
+        title.html(titleText);
     };
 
     update();

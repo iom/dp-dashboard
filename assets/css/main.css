@@ -41,6 +41,10 @@
     box-sizing: border-box;
 }
 
+* {
+    font: inherit;
+}
+
 body {
     font-family: var(--font), sans-serif;
     font-size: 0.8rem;
@@ -191,41 +195,4 @@ footer {
     transition: background .1s ease-in-out;
 }
 
-/*** Dashboard *********************************/
 
-.screen-warning {
-    display: none;
-    padding: 1em;
-    font-size: .8em;
-    text-align: center;
-    color: var(--blue3);
-    font-style: italic;
-}
-
-.download {
-    padding: 1em;
-    font-size: .8em;
-    text-align: right;
-    color: var(--blue3);
-}
-
-@media (max-width: 600px) {
-    .screen-warning {
-        display: block;
-    }
-}
-
-.dashboard-container {
-    height: 770px;
-    overflow-x: scroll;
-}
-
-.graphic {
-    position: relative;
-    height: var(--height-chart);
-}
-
-.graphic svg {
-    width: var(--width-chart);
-    height: var(--height-chart);
-}
