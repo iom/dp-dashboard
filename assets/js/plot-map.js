@@ -269,7 +269,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
             causeText = "<span class='title-emph'>" + util.types[typesCheckedNoOthers[0]] + "</span>" + 
                 " and " + "<span class='title-emph'>" + util.types[typesCheckedNoOthers[1]] + "</span>"
         };
-        if (typesChecked.length == 8) causeText = "all causes";
+        if (typesChecked.length == 8) causeText = "<span class='title-emph'>all causes</span>";
 
         let indicatorText = util.indicatorsTitle[indicatorChecked];
        
