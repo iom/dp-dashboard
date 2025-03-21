@@ -128,7 +128,6 @@ export function addFormCheckbox(container) {
         const option = form.append("label")
         option.append("input")
             .attr("type", "checkbox")
-            .attr("name", "checkboxType")
             .attr("id", id)
             .attr("class", setClass)
             .attr("value", key)
@@ -138,7 +137,7 @@ export function addFormCheckbox(container) {
         return form.node();
     }
 
-    return container.node()
+    return container.node();
 }
 
 export function addFormIcons(form) {

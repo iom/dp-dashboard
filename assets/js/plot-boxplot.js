@@ -54,17 +54,8 @@ function drawBoxplot(means) {
 
     const viz = d3.select(".graphic");
     viz.select("svg").remove();
-
     const svg = viz.append("svg")
-
-    // Background shading
-
-    svg.append("rect")
-        .attr("class", "graphic-bg")
-        // .attr("x", 0).attr("y", 0)
-        // .attr("width", util.dim.width)
-        // .attr("height", util.dim.height)
-        // .style("fill", `${ util.colors.unBlue6 }`);
+    svg.append("rect").attr("class", "graphic-bg")
 
     const panel = svg.append("rect")
         .attr("x", margin.left).attr("y", margin.top)
@@ -74,8 +65,6 @@ function drawBoxplot(means) {
 
     const axes = svg.append("g");
     const boxplots = svg.append("g");
-
-    // Legend
 
     svg.call(addBoxplotLegend, 30, 120);
 
@@ -133,7 +122,7 @@ function drawBoxplot(means) {
                 margin.left + gutter.yin, 
                 util.dim.width - margin.right - gutter.yin
             ])
-            .range([d3.min(data, d => +d.p50), d3.max(data, d => +d.p950)])
+            .range([d3.min(data, d => +d.p50), d3.max(data, d => +d.p950)]);
 
         // y-axis
         let yScaler = d3.scaleBand()
@@ -185,7 +174,7 @@ function drawBoxplot(means) {
             .selectAll("path")
             .data(data)
             .join("path")
-            .attr("id", (d, i) => "bin-range-90-" + i)
+            .attr("id", (d, i) => "bin-range-90-" + Y[i])
             .attr("d", (d, i) => `
                 M${ xScaler(d.p50) },${ yScaler(Y[i]) }
                 H${ xScaler(d.p950) }
@@ -198,7 +187,7 @@ function drawBoxplot(means) {
             .selectAll("path")
             .data(data)
             .join("path")
-            .attr("id", (d, i) => "bin-range-50-" + i)
+            .attr("id", (d, i) => "bin-range-50-" + Y[i])
             .attr("d", (d, i) => `
                 M${ xScaler(d.p250) },${ yScaler(Y[i]) + params.binHeight }
                 H${ xScaler(d.p750) }
@@ -214,7 +203,7 @@ function drawBoxplot(means) {
             .selectAll("path")
             .data(data)
             .join("path")
-            .attr("id", (d, i) => "bin-range-med-" + i)
+            .attr("id", (d, i) => "bin-range-med-" + Y[i])
             .attr("d", (d, i) => `
                 M${ xScaler(+d.p500) },${ yScaler(Y[i]) + params.binHeight }
                 V${ yScaler(Y[i]) - params.binHeight }

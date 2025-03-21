@@ -42,6 +42,8 @@ export function renderMap () {
 
 function drawMap(map, disputedblack, disputedwhite, nodes) {
 
+    const title = d3.select(".dashboard-title")
+
     // Forms //////////////////////////////////////////////////////////////////
 
     const formIcons = d3.select(".form-top-container")
@@ -50,14 +52,20 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
     const formYear = formsInset.call(forms.addFormSlider);
     const formType = formsInset.call(forms.addFormCheckbox);
     
+    // Default inputs
+
+    formType.selectAll("#checkbox-type input").attr("checked", true);
+
     // "Check all" behavior
 
     formType.select("#type-0")
-        .on("change", () => {
-            let checked = d3.select("#type-0").property("checked");
+        .on("change", function() {
+            let checked = d3.select(this).property("checked");
             d3.selectAll("#checkbox-type .item-checkbox").property("checked", checked);
             update();
+            console.log(checked);
         });
+
 
     formType
         .on("change", () => {
@@ -68,14 +76,10 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
             update();
         });
 
-    // Default inputs
-
-    formType.selectAll("#checkbox-type input").attr("checked", true);
-
     // Re-render visual when any input is changed
 
-    formType.selectAll("#checkbox-type input").on("input", update);
-    formYear.selectAll("input").on("change", update);
+    d3.selectAll("#checkbox-type input").on("input", update);
+    d3.selectAll("#form-year-slider input").on("change", update);
 
     function iconClicked() {
         d3.selectAll(".icon-group").classed("icon-clicked", false);
@@ -86,9 +90,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
     formIcons.selectAll(".icon-group")
         .on("click", iconClicked)
         .on("keydown", function(event) {
-            if (event.key == "Enter") {
-                iconClicked.call(this)
-            }
+            if (event.key == "Enter") iconClicked.call(this)
         });
 
     // Chart //////////////////////////////////////////////////////////////////
@@ -194,7 +196,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
         d3.selectAll(".node-container").remove();
 
-        let typesChecked = formType.selectAll("#checkbox-type input[name='checkboxType']:checked")
+        let typesChecked = formType.selectAll("#checkbox-type input:checked")
             .nodes()
             .map(node => +node.value);
         typesChecked = typesChecked.filter(i => i !== 0);
@@ -246,6 +248,19 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
         svg.select("#color-legend").remove();
         svg.call(addColorLegend, 30, util.dim.height - 130, dataIndicator, colorScaler);
+
+        console.log(typesChecked);
+        let yearText = yearMin + "\u2013" + yearMax;
+        if (yearMin == yearMax) yearText = yearMax;
+
+        let causeText = "";
+        if (typesChecked.length == 1 && typesChecked[0] != 9) causeText = util.types[typesChecked[0]];
+        if (typesChecked.length == 2) {
+            causeText = util.types[typesChecked[0]] + " and " + util.types[typesChecked[1]]
+        };
+        if (typesChecked.length == 8) causeText = "all causes";
+        title.text(`Internally displaced persons in ${ yearText } due to ${ causeText }`);
+
     };
 
     update();
