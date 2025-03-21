@@ -17,6 +17,8 @@ export function renderBoxplot () {
 
 function drawBoxplot(means) {
 
+    const title = d3.select(".dashboard-title");
+
     const margin = ({ top: 20, bottom: 80, right: 40, left: 350 });
     const gutter = ({ yout: 12.5, yin: 30, xin: 7.5, xout: 12.5 });
     const params = ({ binHeight: 10 })
@@ -251,6 +253,15 @@ function drawBoxplot(means) {
             d3.select("#tooltip").style("display", "none");
             d3.select(event.target).style("cursor", "default");
         };
+
+        // Build title
+
+        let regionText = "<span class='title-emph'>" + util.regions[region] + "</span>";
+        if (region == 0) regionText = "the <span class='title-emph'>World</span>"
+
+        let titleText = "<h3>Distribution of socioeconomic indicators weighed by magnitude of<br>internally displaced persons across " + regionText + ", by cause of displacement, 2018\u20132024</h3>"
+
+        title.html(titleText);
     };
 
     update();

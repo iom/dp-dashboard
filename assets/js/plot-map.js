@@ -42,7 +42,7 @@ export function renderMap () {
 
 function drawMap(map, disputedblack, disputedwhite, nodes) {
 
-    const title = d3.select(".dashboard-title")
+    const title = d3.select(".dashboard-title");
 
     // Forms //////////////////////////////////////////////////////////////////
 
