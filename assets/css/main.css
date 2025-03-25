@@ -3,8 +3,8 @@
 :root {
     --font: "Open Sans";
     --width-form: 160px;
-    --width-chart: 1150px;
-    --height-chart: 665px;
+    --width-chart: 950px;
+    --height-chart: 500px;
 
     /* Colors */
     --blue1: #0033A0; 
@@ -57,10 +57,22 @@ h1 {
     font-size: clamp(1.5rem, 1.2rem + 1.5vw, 3rem);
     font-weight: 600;
     line-height: 1.2em;
+    margin: 1rem 0;
+}
+
+h2, .methodology {
+    font-size: 1.2rem;
+    font-size: clamp(1.2rem, 0.9rem + 1.2vw, 1.5rem);
+    font-weight: 600;
 }
 
 h3 {
     font-weight: 600;
+}
+
+strong {
+    color: var(--blue1);
+    font-weight: 700;
 }
 
 .disclaimer {
@@ -104,7 +116,7 @@ footer {
 .content-grid, .full-width {
     --padding-inline: 1rem;
     --content-max-width: 800px;
-    --breakout-max-width: 1150px;
+    --breakout-max-width: 950px;
     --breakout-size: calc((var(--breakout-max-width) - var(--content-max-width)) / 2);
 
     display: grid;
@@ -148,6 +160,18 @@ footer {
     text-align: center;
     max-width: 50rem;
     padding: 2em 1em;
+
+    .product-name {
+        background: var(--blue2);
+        font-size: .7rem;
+        text-transform: uppercase;
+        opacity: .8;
+        padding: .1rem .5rem;
+    }
+
+    .subtitle {
+        font-size: 1.1rem;
+    }
 }
 
 /*** Page **************************************/
@@ -164,6 +188,61 @@ footer {
     height: 1em;
     overflow: visible;
 }
+
+.contents-table {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .25rem;
+    gap: clamp(0.25rem, 1vw, 0.5rem);
+    font-size: 0.5rem;
+    font-size: clamp(0.5rem, 0.1rem + 1.6vw, 0.9rem);
+
+    & ul {
+        padding-left: 1rem;
+        padding-left: clamp(1rem, 4vw, 2rem);
+    }
+
+    & .table-col {
+        background: var(--unBlue6);
+        
+        & .table-col-name {
+            text-align: center;
+            font-weight: 600;
+            padding: .25rem 0;
+            background: var(--unBlue4);
+        }
+
+        & .table-col-body {
+            padding: 0 0.25rem;
+            padding: 0 clamp(0.25rem, -0.25rem + 2vw, 0.75rem);
+        }
+    }
+}
+
+details {
+
+    & .details-contents {
+        background: var(--unBlue6);
+        padding: .1rem 1rem;
+    }
+
+    & summary {
+        margin-bottom: .5rem;
+        cursor: pointer;
+        transition: opacity .2s;
+
+        &:hover {
+            opacity: .6;
+        }
+    }
+
+    & p {
+        font-size: .9rem;
+        color: var(--gray1);
+    }
+}
+
+
 
 /*** Tabs **************************************/
 
