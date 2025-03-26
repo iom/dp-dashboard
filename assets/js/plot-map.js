@@ -48,6 +48,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     const formIcons = d3.select(".form-top-container")
     const formsInset = d3.select("#form-inset-container")
+    formsInset.append("div").attr("class", "form-inset-bg");
     formsInset.selectAll("form").remove();
     const formYear = formsInset.call(forms.addFormSlider);
     const formType = formsInset.call(forms.addFormCheckbox);
@@ -96,9 +97,11 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
     // Chart ////////////////////////////////////
 
     const viz = d3.select(".graphic-area");
-    viz.select("svg").remove();
+    viz.selectAll("div, svg").remove();
     const svg = viz.append("svg")
         .attr("width", "100%")
+        .attr("height", "100%")
+        .attr("preserveAspectRatio", "xMinYMax slice")
         .attr("viewBox", [0, 0, 950, 500]);
 
     // Map
@@ -123,10 +126,12 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         .domain([nRange.min, nRange.max])
         .range([radius.min, radius.max]);
 
+    // Legend
+    
     svg.call(addBubbleLegend, 175, util.dim.height - 80, rScaler);
     
     // Background of inset form
-    svg.append("rect").attr("id", "form-inset-bg")
+    // svg.append("rect").attr("id", "form-inset-bg")
 
     // Pan and zoom /////////////////////////////
 
@@ -156,14 +161,17 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     // Control panel ////////////////////////////
 
-    const panel = svg.append("g")
-        .attr("transform", `translate(${ util.dim.width - 50 },15)`)
+    const panel = viz.append("div")
+        .attr("class", "control-panel-container");
+    const panelSVG = panel.append("svg")
+        .attr("width", 25)
+        .attr("height", 70)
         .call(zoompanel);
-    panel.select("#buttonplus")
+    panelSVG.select("#buttonplus")
         .on("click", () => svg.transition().duration(300).call(zoom.scaleBy, 1.5));
-    panel.select("#buttonminus")
+    panelSVG.select("#buttonminus")
         .on("click", () => svg.transition().duration(300).call(zoom.scaleBy, 1 / 1.5));
-    panel.select("#buttonreset")
+    panelSVG.select("#buttonreset")
         .on("click", () => svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity));
     
     // Tooltip //////////////////////////////////

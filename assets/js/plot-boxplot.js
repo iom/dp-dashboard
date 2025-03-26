@@ -55,9 +55,11 @@ function drawBoxplot(means) {
     // Chart ////////////////////////////////////
 
     const viz = d3.select(".graphic-area");
-    viz.select("svg").remove();
+    viz.selectAll("div, svg").remove();
     const svg = viz.append("svg")
         .attr("width", "100%")
+        .attr("height", "100%")
+        .attr("preserveAspectRatio", "xMaxYMax meet")
         .attr("viewBox", [0, 0, 950, 500]);
     
     // svg.append("rect").attr("class", "graphic-bg")

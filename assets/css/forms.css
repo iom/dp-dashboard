@@ -28,26 +28,37 @@
   & .form-title-desc {
 
     @media (width < 778px) {
-      width: 7rem;
+      width: 8rem;
     }
   }
 
-  & form .options {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+  & form {
+    z-index: 1;
 
-    @media (width < 778px) {
-      height: 90px;
-
-      & label {
-        font-size: 11px;
+    & .options {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+  
+      @media (width < 778px) {
+        height: 90px;
+  
+        & label {
+          font-size: 11px;
+        }
       }
     }
 
 
   }
 
+  & .form-inset-bg {
+    position: absolute;
+    inset: 0;
+    background: white;
+    opacity: .6;
+    z-index: 0;
+  }
   
 }
 
@@ -168,17 +179,18 @@
 
   @media (width < 778px) {
     flex-direction: row;
+    gap: .5rem;
   }
 }
 
-rect#form-inset-bg {
+/* rect#form-inset-bg {
   x: 10;
   y: 10;
   width: 165px;
   height: 335px;
   fill: white;
   fill-opacity: .60;
-}
+} */
 
 #form-inset-container input#form-number {
   font-size: 14px;

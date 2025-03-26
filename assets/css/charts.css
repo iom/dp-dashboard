@@ -1,6 +1,6 @@
 /*** Dashboard *********************************/
 
-.screen-warning {
+/* .screen-warning {
     display: none;
     padding: 1em;
     font-size: .8em;
@@ -14,13 +14,13 @@
     font-size: .8em;
     text-align: right;
     color: var(--blue3);
-}
+} */
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
     .screen-warning {
         display: block;
     }
-}
+} */
 
 .dashboard-container {
     height: auto;
@@ -31,10 +31,24 @@
 .graphic {
     position: relative;
 
-    /* @media (width < 778px) {
-        display: flex;
-        flex-direction: column;
-    } */
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    & .graphic-area {
+        position: relative;
+        background: var(--unBlue6);
+        height: clamp(18.75rem, 6.25rem + 50vw, 31.25rem);
+
+        & .control-panel-container {
+            position: absolute;
+            top: clamp(0.5rem, 2vw, 1rem);
+            right: clamp(0.5rem, 2vw, 1rem);
+        }
+
+
+
+    }
 }
 
 #form-inset-container {
@@ -47,9 +61,6 @@
     }
 }
 
-.graphic-area {
-    background: var(--unBlue6);
-}
 
 /* .graphic-bg {
     x: 0;
