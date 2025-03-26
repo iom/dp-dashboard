@@ -1,5 +1,4 @@
 
-
 .dashboard-container {
     height: auto;
     overflow-x: scroll;
@@ -21,7 +20,7 @@
             color: var(--blue2);
             fill: var(--blue2);
             font-size: .625rem;
-            font-size: clamp(.5rem, .375rem + .5vw, .625rem);
+            /* font-size: clamp(.5rem, .375rem + .5vw, .625rem); */
             line-height: 1.2em;
             text-wrap: balance;
         }
@@ -45,9 +44,13 @@
 
     & .topbar {
         display: flex;
-        flex-wrap: wrap;
         justify-content: space-between;
         background: var(--unBlue5);
+
+        @media (width < 928px) { 
+            /* tabs move up */
+            flex-wrap: wrap;
+        }
 
         /* Tabs */
 
@@ -188,7 +191,7 @@
         
                     & .icon-label {
                         font-size: .7rem;
-                        font-size: clamp(.5rem, .3rem + .8vw, .7rem);
+                        /* font-size: clamp(.5rem, .3rem + .8vw, .7rem); */
                         color: var(--blue3);
                         text-align: center;
                         line-height: 1.1em;
