@@ -4,7 +4,7 @@
 /*** form-inset ***/
 
 #form-inset-container {
-  position: absolute;
+  /* position: absolute;
   top: 10px;
   left: 10px;
   text-align: left;
@@ -14,7 +14,7 @@
 
   display: flex;
   flex-direction: column;
-  gap: .8rem;
+  gap: .8rem; */
 
   @media (width < 778px) {
     /* position: relative; */
@@ -33,154 +33,49 @@
   }
 
   & form {
-    z-index: 1;
+    /* z-index: 1; */
 
     & .options {
-      display: flex;
+      /* display: flex;
       flex-direction: column;
-      flex-wrap: wrap;
+      flex-wrap: wrap; */
   
-      @media (width < 778px) {
+      /* @media (width < 778px) {
         height: 90px;
   
         & label {
           font-size: 11px;
         }
       }
-    }
+    } */
 
 
   }
 
-  & .form-inset-bg {
+  /* & .form-inset-bg {
     position: absolute;
     inset: 0;
     background: white;
     opacity: .6;
     z-index: 0;
-  }
+  } */
   
 }
-
-/* Year slider */
-
-#form-year-slider {
-
-  & .slider-container {
-    position: relative;
-    width: 135px;
-    height: 10px;
-  }
-  
-  & .slider {
-    width: 90%;
-    height: 10px;
-    position: absolute;
-    margin: auto;
-    top: 60%;
-    left: 4%;
-    bottom: 0;
-    border-radius: 2px;
-  }
-  
-  & input {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 95%;
-    outline: none;
-    position: absolute;
-    margin: auto;
-    top: 60%;
-    bottom: 0;
-    background-color: transparent;
-    pointer-events: none;
-  }
-  
-  & input#slider-2 {
-    left: 5%;
-  }
-  
-  & input::-webkit-slider-runnable-track {
-    -webkit-appearance: none;
-    height: 0px;
-  }
-  
-  & input::-moz-range-track {
-    -moz-appearance: none;
-    height: 5px;
-  }
-  
-  & input::-ms-track {
-    appearance: none;
-    height: 5px;
-  }
-  
-  & input::-webkit-slider-thumb {
-    appearance: none;
-    transform: translateY(-50%);
-    height: 1em;
-    width: 1em;
-    background-color: var(--blue2);
-    border: 2px solid var(--blue1);
-    cursor: pointer;
-    pointer-events: auto;
-    border-radius: 50%;
-  }
-  
-  & input::-moz-range-thumb {
-    appearance: none;
-    transform: translateY(-50%);
-    height: 1em;
-    width: 1em;
-    background-color: var(--blue2);
-    border: 2px solid var(--blue1);
-    cursor: pointer;
-    pointer-events: auto;
-    border-radius: 50%;
-  }
-  
-  & input::-ms-thumb {
-    appearance: none;
-    transform: translateY(-50%);
-    height: 1em;
-    width: 1em;
-    background-color: var(--blue2);
-    border: 2px solid var(--blue1);
-    cursor: pointer;
-    pointer-events: auto;
-    border-radius: 50%;
-  }
-  
-  & input:active::-webkit-slider-thumb {
-    background-color: var(--blue3);
-    border: 2px solid var(--blue2);
-  }
-  
-  & .slider-label {
-    /* position: absolute; */
-    font-size: .7em;
-    color: var(--blue1);
-    /* top: 0;
-    left: 0; */
-  }
-}
-
 
 
 
 #form-inset-container form {
-  display: flex;
+  /* display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
   align-self: start;
-  max-width: 100%;
+  max-width: 100%; */
   /* padding: 10px 10px 5px 15px; */
 
-  @media (width < 778px) {
+  /* @media (width < 778px) {
     flex-direction: row;
     gap: .5rem;
-  }
+  } */
 }
 
 /* rect#form-inset-bg {
@@ -192,48 +87,33 @@
   fill-opacity: .60;
 } */
 
-#form-inset-container input#form-number {
+/* #form-inset-container input#form-number {
   font-size: 14px;
   width: 60px;
-}
+} */
 
-#form-inset-container #bar-dropdown-region select {
+/* #form-inset-container #bar-dropdown-region select {
   width: 150px;
-}
+} */
 
-.form-title {
-  display: block;
-  font-size: 14px;
-  font-weight: bold;
-  color: var(--blue1);
-  fill: var(--blue1);
-}
 
-.form-desc {
-  display: block;
-  color: var(--blue2);
-  fill: var(--blue2);
-  font-size: 10px;
-  line-height: 1.2em;
-  margin-bottom: 10px;
-}
 
-#form-inset-container form > label {
+/* #form-inset-container form > label {
   flex-shrink: 0;
   align-self: start;
   padding: 5px 0 4px 0;
   margin-right: 6.5px;
-}
+} */
 
-#form-inset-container form div label, .form-label {
+/* #form-inset-container form div label, .form-label {
   display: flex;
   align-items: center;
   color: var(--blue1);
   fill: var(--blue1);
   font-size: 13px;
   margin-bottom: 0px;
-}
+} */
 
-#form-inset-container input {
+/* #form-inset-container input {
   margin-right: 8px;
-}
+} */

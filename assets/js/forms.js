@@ -12,7 +12,7 @@ export function addFormSlider(container) {
 
     // Title and description
     const titleContainer = form.append("div")
-        .attr("class", "form-title-desc");
+        .attr("class", "form-head");
     titleContainer.append("span")
         .attr("class", "form-title")
         .text("Years");
@@ -25,6 +25,8 @@ export function addFormSlider(container) {
     const slider = sliderContainer.append("div")
         .attr("class", "slider")
     
+
+
     const slideOne = sliderContainer.append("input")
         .attr("id", "slider-1")
         .attr("type", "range")
@@ -61,7 +63,8 @@ export function addFormSlider(container) {
 
     // const label = sliderContainer.append("div")
     //     .attr("class", "slider-label")
-    
+
+
     fillColor();
 
     function fillColor() {
@@ -113,23 +116,26 @@ export function addFormCheckbox(container) {
         .attr("id", "checkbox-type")
 
     // Title and description
-    const formTitle = form.append("div")
-        .attr("class", "form-title-desc")
-    formTitle.append("span")
+    const formHead = form.append("div")
+        .attr("class", "form-head")
+    formHead.append("span")
         .attr("class", "form-title")
         .text("Cause")
-    formTitle.append("span")
+    formHead.append("span")
         .attr("class", "form-desc")
         .text("Displacements due to the selected cause/s appear as bubbles on the map.")
 
     // Add options
-    const formCheckbox = form.append("div")
-        .attr("class", "options");
-    formCheckbox.call(addOption, 0, "All causes", "type-0", "item-checkbox-all")
+    const formBody = form.append("div")
+        .attr("class", "form-body");
+    formBody.call(addOption, 0, "All causes", "type-0", "item-checkbox-all")
     for (let [code, label] of Object.entries(util.types)) {
-        formCheckbox.call(addOption, code, label, "type-" + code, "item-checkbox");
+        formBody.call(addOption, code, label, "type-" + code, "item-checkbox");
     }
     
+    // Default checked
+    formBody.selectAll("#checkbox-type input").attr("checked", true);
+
     function addOption(form, key, value, id, setClass) {
     
         const option = form.append("label")
@@ -234,24 +240,31 @@ export function addFormDropdown(container) {
   
     const dropdown = container.append("form")
         .attr("id", "bar-dropdown-region")
-        .attr("class", "select")
-        .attr("margin-top", "10px");
+        // .attr("class", "select")
+        // .attr("margin-top", "10px");
 
-    dropdown.append("text")
+    dropdown.append("div")
+        .attr("class", "form-head")
+        .append("div")
         .attr("class", "form-title")
         .text("Region");
 
     const addOption = (form, key, value) => {
         form.append("option")
-        .text(value)
-        .attr("value", key);
+            .text(value)
+            .attr("value", key);
     }
 
-    const dropdownOptions = dropdown.append("div").append("select");
+    const formBody = dropdown.append("div")
+        .attr("class", "form-body")
+        .append("select");
 
     for (let [code, label] of Object.entries(util.regions)) {
-        dropdownOptions.call(addOption, code, label);
+        formBody.call(addOption, code, label);
     };
+
+    // Default value
+    formBody.select("option[value='0']").attr("selected", true);
 
     return container.node();
 }

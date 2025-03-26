@@ -43,31 +43,30 @@ export function renderMap () {
 function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     const title = d3.select(".dashboard-title");
+    const formIcons = d3.select(".topbar .form-icons");
+    const mainview = d3.select(".mainview")
+        .classed("map", true)
+        .classed("boxplot", false);
+    mainview.selectAll("div, svg").remove();
+
+    const sidebar = mainview.append("div")
+        .attr("class", "sidebar");
+    const panel = mainview.append("div")
+        .attr("class", "panel");
 
     // Forms ////////////////////////////////////
 
-    const formIcons = d3.select(".form-top-container")
-    const formsInset = d3.select("#form-inset-container")
-    formsInset.append("div").attr("class", "form-inset-bg");
-    formsInset.selectAll("form").remove();
-    const formYear = formsInset.call(forms.addFormSlider);
-    const formType = formsInset.call(forms.addFormCheckbox);
+    sidebar.append("div").attr("class", "form-inset-bg");
+    const formYear = sidebar.call(forms.addFormSlider);
+    const formType = sidebar.call(forms.addFormCheckbox);
     
-    // Default inputs
-
-    formType.selectAll("#checkbox-type input").attr("checked", true);
-
     // "Check all" behavior
-
     formType.select("#type-0")
         .on("change", function() {
             let checked = d3.select(this).property("checked");
             d3.selectAll("#checkbox-type .item-checkbox").property("checked", checked);
             update();
-            console.log(checked);
         });
-
-
     formType
         .on("change", () => {
             let allChecked = d3.selectAll("#checkbox-type .item-checkbox")
@@ -76,7 +75,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
             d3.select("#type-0").property("checked", allChecked);
             update();
         });
-
+    
     // Re-render visual when any input is changed
 
     d3.selectAll("#checkbox-type input").on("input", update);
@@ -96,9 +95,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     // Chart ////////////////////////////////////
 
-    const viz = d3.select(".graphic-area");
-    viz.selectAll("div, svg").remove();
-    const svg = viz.append("svg")
+    const panelSVG = panel.append("svg")
         .attr("width", "100%")
         .attr("height", "100%")
         .attr("preserveAspectRatio", "xMinYMax slice")
@@ -112,13 +109,12 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     let path = d3.geoPath().projection(projection);
 
-    // svg.append("rect").attr("class", "graphic-bg");
-    const countries = svg.append("g").attr("class", "borders");
+    const countries = panelSVG.append("g").attr("class", "borders");
     countries.call(util.drawBorders, path, map, disputedblack, disputedwhite);
     
     // Nodes
 
-    const group = svg.append("g").attr("class", "nodes-container");
+    const group = panelSVG.append("g").attr("class", "nodes-container");
     const radius = { min: .1, max: 12 };
     const nRange = { min: 500, max: d3.max(nodes, d => d.n) };
     const rScaler = d3.scaleLog()
@@ -128,11 +124,8 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     // Legend
     
-    svg.call(addBubbleLegend, 175, util.dim.height - 80, rScaler);
+    panelSVG.call(addBubbleLegend, 175, util.dim.height - 80, rScaler);
     
-    // Background of inset form
-    // svg.append("rect").attr("id", "form-inset-bg")
-
     // Pan and zoom /////////////////////////////
 
     let currentTransform = d3.zoomIdentity;
@@ -142,13 +135,13 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         const k = event.transform.k;
         
         currentTransform = event.transform;
-        svg.selectAll(".borders path").attr("transform", event.transform);
-        svg.selectAll(".nodes-container").attr("transform", event.transform);
+        panelSVG.selectAll(".borders path").attr("transform", event.transform);
+        panelSVG.selectAll(".nodes-container").attr("transform", event.transform);
 
-        svg.selectAll("path.border").style("stroke-width", .5 / k);
-        svg.selectAll("path.border-disputed-black").style("stroke-width", .5 / k);
-        svg.selectAll("path.border-disputed-white").style("stroke-width", 1.25 / k);
-        svg.selectAll("circle.node")
+        panelSVG.selectAll("path.border").style("stroke-width", .5 / k);
+        panelSVG.selectAll("path.border-disputed-black").style("stroke-width", .5 / k);
+        panelSVG.selectAll("path.border-disputed-white").style("stroke-width", 1.25 / k);
+        panelSVG.selectAll("circle.node")
             .attr("r", d => rScaler(d.n) / Math.sqrt(k))
             .style("stroke-width", .75 / k);
     }
@@ -157,22 +150,22 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         .scaleExtent([1, 16])
         .on("zoom", zoomed);
 
-    svg.call(zoom);
+    panelSVG.call(zoom);
 
     // Control panel ////////////////////////////
 
-    const panel = viz.append("div")
-        .attr("class", "control-panel-container");
-    const panelSVG = panel.append("svg")
+    const controlPanelSVG = panel.append("div")
+        .attr("class", "control-panel")
+        .append("svg")
         .attr("width", 25)
         .attr("height", 70)
         .call(zoompanel);
-    panelSVG.select("#buttonplus")
-        .on("click", () => svg.transition().duration(300).call(zoom.scaleBy, 1.5));
-    panelSVG.select("#buttonminus")
-        .on("click", () => svg.transition().duration(300).call(zoom.scaleBy, 1 / 1.5));
-    panelSVG.select("#buttonreset")
-        .on("click", () => svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity));
+    controlPanelSVG.select("#buttonplus")
+        .on("click", () => panelSVG.transition().duration(300).call(zoom.scaleBy, 1.5));
+    controlPanelSVG.select("#buttonminus")
+        .on("click", () => panelSVG.transition().duration(300).call(zoom.scaleBy, 1 / 1.5));
+    controlPanelSVG.select("#buttonreset")
+        .on("click", () => panelSVG.transition().duration(300).call(zoom.transform, d3.zoomIdentity));
     
     // Tooltip //////////////////////////////////
 
@@ -254,8 +247,8 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
             .on("mousemove", mouseMoved)
             .on("mouseleave", mouseLeft);
 
-        svg.select("#color-legend").remove();
-        svg.call(addColorLegend, 30, util.dim.height - 130, dataIndicator, colorScaler);
+        panelSVG.select("#color-legend").remove();
+        panelSVG.call(addColorLegend, 30, util.dim.height - 130, dataIndicator, colorScaler);
 
         // Build title
         
@@ -283,11 +276,11 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
        
         let titleText = "<h3>Choose a cause of displacement to generate the graphic.</h3>";
         if (typesChecked.length > 0) {
-            titleText = "<h3>Internally displaced persons in " + 
+            titleText = "<h2>Internally displaced persons in " + 
                 "<span class='title-emph'>" + yearText + "</span>" +
-                " due to " + causeText + " and<br>the " + 
+                " due to " + causeText + " and the " + 
                 "<span class='title-emph'>" + indicatorText + "</span>" + 
-                " where they were displaced</h3>"
+                " where they were displaced</h2>"
         }
 
         title.html(titleText);

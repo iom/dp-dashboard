@@ -12,9 +12,10 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://unpkg.com/topojson@3"></script>
     <link rel="stylesheet" href="./assets/css/main.css">
-    <link rel="stylesheet" href="./assets/css/forms-top.css">
-    <link rel="stylesheet" href="./assets/css/forms.css">
+    <!-- <link rel="stylesheet" href="./assets/css/forms-top.css"> -->
+    <!-- <link rel="stylesheet" href="./assets/css/forms.css"> -->
     <link rel="stylesheet" href="./assets/css/charts.css">
+    <link rel="stylesheet" href="./assets/css/dashboard.css">
 </head>
 
 <body>
@@ -58,32 +59,29 @@
 
         <div class="dashboard-container breakout">
             <div class="dashboard-title"></div>
-            <!-- <div class="screen-warning">Best viewed on a desktop screen.</div> -->
 
-            <div class="top-container">
+            <div class="topbar">
 
                 <div class="tabs">
                     <div class="tab active" tabindex="0" data-chart="map">Global map</div>
                     <div class="tab" tabindex="0" data-chart="boxplot">Results by region</div>
                 </div>
 
-                <div class="form-top-container">
-                    <div class="form-top-title">
+                <div class="form-icons">
+                    <div class="form-head">
                         <span class="form-title">Indicator</span>
-                        <span class="form-desc">The value of the selected ndicator determines the bubbles' color.</span>
+                        <span class="form-desc">The value of the selected indicator determines the bubbles' color.</span>
                     </div>
-                    <div class="form-top-icons"></div>
+                    <div class="form-body"></div>
                 </div>
             </div>
 
-            <div class="graphic">
-                <div class="graphic-area"></div>
-                <div id="form-inset-container"></div>
+            <div class="mainview">
+                <div class="sidebar"></div>
+                <div class="panel"></div>
             </div>
 
         </div>
-
-        <!-- <div class="download"><a href="">Download data</a></div> -->
 
         <div class="par">
             <p>The variables provided in the dataset include:</p>

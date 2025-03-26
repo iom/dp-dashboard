@@ -25,7 +25,7 @@ function switchTab() {
 
 // Form top
 
-const formIcons = d3.select(".form-top-icons")
+const formIcons = d3.select(".form-icons .form-body")
         .call(forms.addFormIcons);
 
 // Tooltip
@@ -43,6 +43,7 @@ d3.select("body")
     .style("border", `1px solid ${ util.colors.gray4 }`);
 
 updateChart("map");
+// updateChart("boxplot");
 
 function updateChart(selected) {
 

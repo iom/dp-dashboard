@@ -1,5 +1,5 @@
 
-.top-container {
+/* .top-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -11,11 +11,11 @@
         justify-content: center;
         gap: .25rem;
     }
-}
+} */
 
 /*** Tabs **************************************/
 
-.tabs { 
+/* .tabs { 
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -59,11 +59,11 @@
             transition: background .1s ease-in-out;
         }
     }
-}
+} */
 
 /*** Indicators ********************************/
 
-.form-top-container {
+/* .form-icons {
     display: flex;
     justify-content: flex-end;
     overflow: hidden;
@@ -76,7 +76,7 @@
         flex-direction: column;
     }
 
-    & .form-top-title {
+    & .form-head {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -101,7 +101,7 @@
         }
     }
 
-    & .form-top-icons {
+    & .form-body {
         display: flex;
         flex-wrap: wrap;
 
@@ -183,4 +183,4 @@
             }
         }
     }
-}
+} */

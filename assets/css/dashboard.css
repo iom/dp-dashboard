@@ -1,0 +1,460 @@
+
+
+.dashboard-container {
+    height: auto;
+    overflow-x: scroll;
+
+    & .form-head {
+        margin-bottom: .5rem;
+
+        & .form-title {
+            display: block;
+            color: var(--blue1);
+            fill: var(--blue1);
+            font-size: .875rem;
+            font-size: clamp(.75rem, .625rem + .5vw, .875rem);
+            font-weight: bold;
+        }
+        
+        & .form-desc {
+            display: block;
+            color: var(--blue2);
+            fill: var(--blue2);
+            font-size: .625rem;
+            font-size: clamp(.5rem, .375rem + .5vw, .625rem);
+            line-height: 1.2em;
+            text-wrap: balance;
+        }
+    }
+
+    /* Title */
+
+    & .dashboard-title {
+        text-align: center;
+        color: var(--gray1);
+        text-wrap: balance;
+        margin: clamp(1rem, .5rem + 2vw, 1.5rem) 0;
+        
+        & .title-emph {
+            color: var(--blue1);
+            font-weight: 700;
+        }
+    }
+
+    /* Topbar */
+
+    & .topbar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        background: var(--unBlue5);
+
+        /* Tabs */
+
+        & .tabs { 
+            width: auto;
+            height: auto;
+            font-size: 0.8rem;
+            font-size: clamp(0.6rem, 0.4rem + 0.8vw, 0.8rem);
+            cursor: pointer;
+            text-transform: uppercase;
+
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            margin: auto 0;
+        
+            @media (width < 928px) { 
+                /* Breakpoint when tabs + form-icons don't fit */
+                flex-direction: row;
+                margin: 0 auto .25rem auto;
+            }
+        
+            & .tab { 
+                width: auto;
+                padding: .25rem .5rem; 
+                background: var(--unBlue4);
+                color: var(--blue2);
+                opacity: .5;
+        
+                &:hover {
+                    background-color: var(--unBlue3);
+                    opacity: .5;
+                    transform: scale(1.025);
+                    transition: 
+                        background-color .1s ease-in-out,
+                        scale .1s ease-in-out;
+                }
+        
+                &.active { 
+                    background: var(--blue1); 
+                    opacity: 1;
+                    color: white; 
+                    font-weight: bold;
+                    transition: background .1s ease-in-out;
+                }
+            }
+        }
+
+        /* Icons */
+
+        .form-icons {
+            width: auto;
+            height: auto;
+            padding-right: 1rem;
+            display: flex;
+            
+            @media (width < 928px) { 
+                /* tabs move to the top */
+                width: 100%;
+                padding: 0;
+            }
+        
+            @media (width < 449px) {
+                /* form-head moves to the top */
+                flex-direction: column;
+            }
+        
+            & .form-head {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: .2rem;
+                margin: 0;
+        
+                max-width: 7rem;
+                padding-left: 1rem;
+
+                @media (width < 928px) { 
+                    /* tabs move to the top */
+                    max-width: 10rem;
+                }
+        
+                @media (width < 449px) {
+                    /* form-head moves to the top */
+                    max-width: 100%;
+                    text-align: center;
+                    gap: 0;
+                }
+            }
+        
+            & .form-body {
+                display: flex;
+                overflow-x: scroll;
+        
+                & .icon-group {
+                    flex: 0 0 auto;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: flex-start;
+                    gap: .5rem;
+                    width: clamp(3.125rem, 1.875rem + 5vw, 4.375rem);
+                    padding: .7rem 0;
+        
+                    @media (width < 778px) {
+                        /* icons shrink to minimum width */
+                        gap: .2rem;
+                        padding: .4rem 0;
+                    }
+        
+                    @media (width < 449px) {
+                        /* form-head moves to the top */
+                        gap: .5rem;
+                        padding: .7rem 0;
+                    }
+        
+                    & .icon {
+                        display: flex;
+                        width: 35px;
+                        aspect-ratio: 1;
+                        background-color: var(--blue5);
+                        border: 2px solid var(--blue4);
+                        border-radius: 50%;
+                        cursor: pointer;
+                        opacity: .5;
+        
+                        & img {
+                            margin: auto;
+                        }
+                    }
+        
+                    &:not(.icon-clicked):hover .icon {
+                        background-color: var(--unBlue3) ;
+                        border: 2px solid var(--blue2);
+                        opacity: .75;
+                        transition: background-color .1s ease-in-out;
+                    }
+        
+                    & .icon-label {
+                        font-size: .7rem;
+                        font-size: clamp(.5rem, .3rem + .8vw, .7rem);
+                        color: var(--blue3);
+                        text-align: center;
+                        line-height: 1.1em;
+                    }
+        
+                    &:not(.icon-clicked):hover .icon-label {
+                        color: var(--blue2);
+                    }
+        
+                    &.icon-clicked {
+        
+                        & .icon {
+                            background-color: var(--unBlue3);
+                            border: 2px solid var(--blue1);
+                            opacity: 1;
+                            transition: opacity .1s ease-in-out;
+                        }
+        
+                        & .icon-label {
+                            color: var(--blue1);
+                            font-weight: bold;
+                            transition: color .1s ease-in-out;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.mainview {
+    width: 100%;
+    position: relative;
+    gap: .5rem; 
+    background: var(--unBlue6);
+    display: flex;
+
+    & .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: .8rem;
+        padding: .8rem;
+    }
+
+    & .form-head {
+        width: var(--width-form);
+    }
+}
+
+.mainview.map {
+    flex-direction: column;
+
+    & .sidebar {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        text-align: left;
+        width: var(--width-form);
+        height: auto;
+        padding: .8rem;
+
+        @media (width < 500px) {
+            /* sidebar moves to bottom */
+            position: relative;
+            order: 2;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: .5rem;
+            gap: 0;
+        }
+
+        & .form-inset-bg {
+            order: 1;
+            position: absolute;
+            inset: 0;
+            background: white;
+            opacity: .6;
+            z-index: 0;
+        }
+
+        & form {
+            z-index: 1;
+
+            @media (width < 500px) {
+                /* sidebar moves to bottom */
+                display: flex;
+                flex-wrap: nowrap;
+                flex-direction: row;
+                align-self: start;
+                max-width: 100%;
+            }
+        }
+
+        & #form-year-slider {
+
+            & .slider-container {
+                position: relative;
+                width: 135px;
+                height: 10px;
+            }
+            
+            & .slider {
+                width: 90%;
+                height: 10px;
+                position: absolute;
+                margin: auto;
+                top: 60%;
+                left: 4%;
+                bottom: 0;
+                border-radius: 2px;
+            }
+            
+            & input {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                width: 95%;
+                outline: none;
+                position: absolute;
+                margin: auto;
+                top: 60%;
+                bottom: 0;
+                background-color: transparent;
+                pointer-events: none;
+            }
+            
+            & input#slider-2 {
+                left: 5%;
+            }
+            
+            & input::-webkit-slider-runnable-track {
+                -webkit-appearance: none;
+                height: 0px;
+            }
+            
+            & input::-moz-range-track {
+                -moz-appearance: none;
+                height: 5px;
+            }
+            
+            & input::-ms-track {
+                appearance: none;
+                height: 5px;
+            }
+            
+            & input::-webkit-slider-thumb {
+                appearance: none;
+                transform: translateY(-50%);
+                height: 1em;
+                width: 1em;
+                background-color: var(--blue2);
+                border: 2px solid var(--blue1);
+                cursor: pointer;
+                pointer-events: auto;
+                border-radius: 50%;
+            }
+            
+            & input::-moz-range-thumb {
+                appearance: none;
+                transform: translateY(-50%);
+                height: 1em;
+                width: 1em;
+                background-color: var(--blue2);
+                border: 2px solid var(--blue1);
+                cursor: pointer;
+                pointer-events: auto;
+                border-radius: 50%;
+            }
+            
+            & input::-ms-thumb {
+                appearance: none;
+                transform: translateY(-50%);
+                height: 1em;
+                width: 1em;
+                background-color: var(--blue2);
+                border: 2px solid var(--blue1);
+                cursor: pointer;
+                pointer-events: auto;
+                border-radius: 50%;
+            }
+            
+            & input:active::-webkit-slider-thumb {
+                background-color: var(--blue3);
+                border: 2px solid var(--blue2);
+            }
+            
+            & .slider-label {
+                font-size: .7em;
+                color: var(--blue1);
+            }
+        }
+
+        & #checkbox-type {
+
+            & .form-body {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+
+                @media (width < 500px) {
+                    /* sidebar moves to bottom */
+                    height: 6rem;
+                }
+
+                & label {
+                    display: flex;
+                    gap: .4rem;
+                    color: var(--blue1);
+                    font-size: .7rem;
+                }
+            }
+        }
+    }
+
+    & .panel {
+        height: clamp(400px, 18.75rem + 25vw, 500px);
+
+        & .control-panel {
+            position: absolute;
+            top: clamp(0.5rem, 2vw, 1rem);
+            right: clamp(0.5rem, 2vw, 1rem);
+        }
+    }
+}
+
+
+.mainview.boxplot {
+
+    @media (width < 700px) {
+        /* sidebar moves to the bottom */
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    & .panel {
+        width: 100%;
+    }
+
+    & .sidebar {
+        width: 190px;
+        gap: 1rem;
+
+        @media (width < 700px) {
+            /* sidebar moves to the bottom */
+            width: 100%;
+            order: 2;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: .5rem;
+        }
+
+        & select {
+            width: 100%;
+        }
+
+        & .form-head {
+            @media (width < 700px) {
+                /* sidebar moves to the bottom */
+                width: 100%;
+            }
+        }
+
+        & .legend-container svg {
+            width: clamp(6.25rem, 2.355769230769231rem + 16.615384615384617vw, 9.625rem);
+        }
+    }
+}

@@ -18,22 +18,41 @@ export function renderBoxplot () {
 function drawBoxplot(means) {
 
     const title = d3.select(".dashboard-title");
+    const formIcons = d3.select(".topbar .form-icons");
+    const mainview = d3.select(".mainview")
+        .classed("boxplot", true)
+        .classed("map", false);
+    mainview.selectAll("div, svg").remove();
 
-    const margin = ({ top: 20, bottom: 80, right: 40, left: 350 });
+    const sidebar = mainview.append("div")
+        .attr("class", "sidebar");
+    const panel = mainview.append("div")
+        .attr("class", "panel");
+
+
+
+
+    const dim = {
+        width: 750,
+        height: 500
+    };
+    const margin = ({ top: 20, bottom: 80, right: 20, left: 190 });
     const gutter = ({ yout: 12.5, yin: 30, xin: 7.5, xout: 12.5 });
     const params = ({ binHeight: 10 })
 
+    // const graphic = d3.select(".graphic")
+    //     .classed("boxplot", true)
+    // graphic.selectAll("div").remove();
+
+    // const sidebar = graphic.append("div")
+    //     .attr("class", "sidebar")
+
     // Forms ////////////////////////////////////
 
-    const formIcons = d3.select(".form-top-container")
-    const formsInset = d3.select("#form-inset-container")
-    formsInset.selectAll("form").remove()
-    const formRegion = formsInset.call(forms.addFormDropdown);
+    // const formsInset = d3.select("#form-inset-container")
+    // formsInset.selectAll("div, form").remove()
+    const formRegion = sidebar.call(forms.addFormDropdown);
     
-    // Default inputs
-
-    formRegion.select("#bar-dropdown-region option[value='0']").attr("selected", true);
-
     // Re-render visual when any input is changed
 
     formRegion.select("#bar-dropdown-region select").on("input", update);
@@ -54,33 +73,33 @@ function drawBoxplot(means) {
 
     // Chart ////////////////////////////////////
 
-    const viz = d3.select(".graphic-area");
-    viz.selectAll("div, svg").remove();
-    const svg = viz.append("svg")
-        .attr("width", "100%")
-        .attr("height", "100%")
-        .attr("preserveAspectRatio", "xMaxYMax meet")
-        .attr("viewBox", [0, 0, 950, 500]);
-    
-    // svg.append("rect").attr("class", "graphic-bg")
+    const legend = sidebar.append("div")
+        .attr("class", "legend-container")
+        .call(addBoxplotLegend, 30, 120);
 
-    const panel = svg.append("rect")
+    // const viz = d3.select(".graphic").append("div").attr("class", "graphic-area");
+    // viz.selectAll("div, svg").remove();
+    const svg = panel.append("svg")
+        .attr("width", "100%")
+        // .attr("height", "100%")
+        .attr("preserveAspectRatio", "xMidYMin slice")
+        .attr("viewBox", [0, 0, dim.width, dim.height]);
+    
+    svg.append("rect")
         .attr("x", margin.left).attr("y", margin.top)
-        .attr("width", util.dim.width - margin.left - margin.right)
-        .attr("height", util.dim.height - margin.top - margin.bottom)
+        .attr("width", dim.width - margin.left - margin.right)
+        .attr("height", dim.height - margin.top - margin.bottom)
         .style("fill", "white");
 
     const axes = svg.append("g");
     const boxplots = svg.append("g");
-
-    svg.call(addBoxplotLegend, 30, 120);
 
     // Dashed line //////////////////////////////
 
     // const marker = svg.append("g").attr("display", "none");
     // marker.append("path")
     //     .attr("class", "marker-line")
-    //     .attr("d", d3.line()([[0, margin.top], [0, util.dim.height - margin.bottom]]));
+    //     .attr("d", d3.line()([[0, margin.top], [0, dim.height - margin.bottom]]));
 
     // const markerNum = d3.select("body")
     //     .append("div")
@@ -100,7 +119,7 @@ function drawBoxplot(means) {
         // x-axis
         let xScaler = d3.scaleLinear()
             .domain([d3.min(data, d => +d.p50), d3.max(data, d => +d.p950)])
-            .range([gutter.yin, util.dim.width - margin.left - margin.right - gutter.yin]);
+            .range([gutter.yin, dim.width - margin.left - margin.right - gutter.yin]);
         let xAxis = d3.axisBottom(xScaler)
             .ticks(5)
             .tickSize(0)
@@ -114,9 +133,9 @@ function drawBoxplot(means) {
                 .attr("x1", d => xScaler(d))
                 .attr("x2", d => xScaler(d))
                 .attr("y1", margin.top + gutter.xin)
-                .attr("y2", util.dim.height - margin.bottom - gutter.xin);
+                .attr("y2", dim.height - margin.bottom - gutter.xin);
         axes.append("g")
-            .attr("transform", `translate(${ margin.left }, ${ util.dim.height - margin.bottom })`)
+            .attr("transform", `translate(${ margin.left }, ${ dim.height - margin.bottom })`)
             .attr("class", "x-axis")
             .call(xAxis)
             .call(g => g.select(".domain").remove());
@@ -127,14 +146,14 @@ function drawBoxplot(means) {
         let xScalerInv = d3.scaleLinear()
             .domain([
                 margin.left + gutter.yin, 
-                util.dim.width - margin.right - gutter.yin
+                dim.width - margin.right - gutter.yin
             ])
             .range([d3.min(data, d => +d.p50), d3.max(data, d => +d.p950)]);
 
         // y-axis
         let yScaler = d3.scaleBand()
             .domain(Object.keys(util.typesBar).reverse())
-            .range([util.dim.height - margin.bottom - gutter.xin, margin.top + gutter.xin])
+            .range([dim.height - margin.bottom - gutter.xin, margin.top + gutter.xin])
             .padding(.15);
         let yAxis = d3.axisLeft(yScaler)
             .tickSize(0)
@@ -280,29 +299,49 @@ function addBoxplotLegend(container, xpos, ypos) {
 
     const params = ({ length90: 150, length50: 75, width: 10 });
 
-    const legend = container.append("g")
-        .attr("id", "boxplot-legend")
-        .attr("transform", `translate(${xpos}, ${ypos})`);
+    // const legend = container.append("g")
+    //     .attr("id", "boxplot-legend")
+    //     .attr("transform", `translate(${xpos}, ${ypos})`);
 
     // Title and description ////////////////////
 
-    const text = legend.append("g");
-    text.append("text")
-        .attr("class", "legend-desc-bold")
-        .attr("x", 0).attr("y", 0)
+    const text = container.append("div")
+        .attr("class", "form-head");
+
+    text.append("span")
+        .attr("class", "form-title")
         .text("How to read");
-    text.append("text")
-        .attr("class", "legend-desc")
-        .attr("x", 0).attr("y", 15)
-        .text("A boxplot shows the");
-    text.append("text")
-        .attr("class", "legend-desc")
-        .attr("x", 0).attr("y", 27)
-        .text("distribution of data.");
+
+    text.append("span")
+        .attr("class", "form-desc")
+        .text("A boxplot shows the distribution of data.");
+
+
+    // .append("g");
+    // text.append("text")
+    //     .attr("class", "legend-desc-bold")
+    //     .attr("x", 0).attr("y", 0)
+    //     .text("How to read");
+    // text.append("text")
+    //     .attr("class", "legend-desc")
+    //     .attr("x", 0).attr("y", 15)
+    //     .text("A boxplot shows the");
+    // text.append("text")
+    //     .attr("class", "legend-desc")
+    //     .attr("x", 0).attr("y", 27)
+    //     .text("distribution of data.");
 
     // Diagram //////////////////////////////////
 
-    const diagram = legend.append("g").attr("transform", "translate(0,100)");
+    const diagram = container.append("div")
+        .attr("class", "form-body")
+        .append("svg")
+        // .attr("width", "100%")
+        // .attr("max-width", "100%")
+        // .attr("width", 154)
+        // .attr("max-height", 137)
+        .attr("viewBox", [0, 0, 154, 137])
+        .append("g").attr("transform", "translate(2,55)");
 
     // Draw 90% bin
     diagram.append("g")
