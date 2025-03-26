@@ -44,7 +44,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     const title = d3.select(".dashboard-title");
 
-    // Forms //////////////////////////////////////////////////////////////////
+    // Forms ////////////////////////////////////
 
     const formIcons = d3.select(".form-top-container")
     const formsInset = d3.select("#form-inset-container")
@@ -93,23 +93,23 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
             if (event.key == "Enter") iconClicked.call(this)
         });
 
-    // Chart //////////////////////////////////////////////////////////////////
+    // Chart ////////////////////////////////////
 
-    const viz = d3.select(".graphic");
+    const viz = d3.select(".graphic-area");
     viz.select("svg").remove();
-    
     const svg = viz.append("svg")
+        .attr("width", "100%")
+        .attr("viewBox", [0, 0, 950, 500]);
 
     // Map
 
     let projection = d3.geoEquirectangular()
-        .scale(185)
-        .center([0, 10])
-        .translate([util.dim.width / 2, util.dim.height / 2]);
+        .scale(145)
+        .center([-5, 10]);
 
     let path = d3.geoPath().projection(projection);
 
-    svg.append("rect").attr("class", "graphic-bg");
+    // svg.append("rect").attr("class", "graphic-bg");
     const countries = svg.append("g").attr("class", "borders");
     countries.call(util.drawBorders, path, map, disputedblack, disputedwhite);
     
@@ -128,7 +128,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
     // Background of inset form
     svg.append("rect").attr("id", "form-inset-bg")
 
-    // Pan and zoom ///////////////////////////////////////////////////////////
+    // Pan and zoom /////////////////////////////
 
     let currentTransform = d3.zoomIdentity;
     
@@ -154,7 +154,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     svg.call(zoom);
 
-    // Control panel //////////////////////////////////////////////////////////
+    // Control panel ////////////////////////////
 
     const panel = svg.append("g")
         .attr("transform", `translate(${ util.dim.width - 50 },15)`)
@@ -166,7 +166,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
     panel.select("#buttonreset")
         .on("click", () => svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity));
     
-    // Tooltip ////////////////////////////////////////////////////////////////
+    // Tooltip //////////////////////////////////
 
     const mouseMoved = (event, d) => {
         d3.select("#tooltip")
@@ -190,7 +190,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         d3.select(event.target).style("cursor", "default");
     }
   
-    // Update /////////////////////////////////////////////////////////////////
+    // Update ///////////////////////////////////
   
     function update() {
 
@@ -286,10 +286,9 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
     };
 
     update();
-
 }
 
-// Legends ////////////////////////////////////////////////////////////////////
+// Legends //////////////////////////////////////
 
 function addBubbleLegend (container, xpos, ypos, rScaler) {
 

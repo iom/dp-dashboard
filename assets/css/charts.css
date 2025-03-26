@@ -30,21 +30,34 @@
 
 .graphic {
     position: relative;
-    height: var(--height-chart);
+
+    /* @media (width < 778px) {
+        display: flex;
+        flex-direction: column;
+    } */
 }
 
-.graphic svg {
-    width: var(--width-chart);
-    height: var(--height-chart);
+#form-inset-container {
+
+    @media (width < 778px) {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
 }
 
-.graphic-bg {
+.graphic-area {
+    background: var(--unBlue6);
+}
+
+/* .graphic-bg {
     x: 0;
     y: 0;
     width: var(--width-chart);
     height: var(--height-chart);
     fill: var(--unBlue6);
-}
+} */
 
 .dashboard-title {
     text-align: center;
@@ -166,6 +179,10 @@
     font-family: "Open Sans", var(--sans-serif);
     font-size: 14px;
     color: var(--blue2);
+}
+
+.y-axis :first-child {
+    font-style: italic;
 }
 
 .bin-range-50 {

@@ -11,9 +11,13 @@ export function addFormSlider(container) {
         .attr("id", "form-year-slider");
 
     // Title and description
-    form.append("text")
+    const titleContainer = form.append("div")
+        .attr("class", "form-title-desc");
+    titleContainer.append("span")
         .attr("class", "form-title")
-        .text("Years")
+        .text("Years");
+    const label = titleContainer.append("span")
+        .attr("class", "form-desc slider-label");
 
     const sliderContainer = form.append("div")
         .attr("class", "slider-container")
@@ -55,8 +59,8 @@ export function addFormSlider(container) {
             fillColor();
         });
 
-    const label = sliderContainer.append("div")
-        .attr("class", "slider-label")
+    // const label = sliderContainer.append("div")
+    //     .attr("class", "slider-label")
     
     fillColor();
 
@@ -109,15 +113,18 @@ export function addFormCheckbox(container) {
         .attr("id", "checkbox-type")
 
     // Title and description
-    form.append("text")
+    const formTitle = form.append("div")
+        .attr("class", "form-title-desc")
+    formTitle.append("span")
         .attr("class", "form-title")
         .text("Cause")
-    form.append("text")
+    formTitle.append("span")
         .attr("class", "form-desc")
         .text("Displacements due to the selected cause/s appear as bubbles on the map.")
 
     // Add options
     const formCheckbox = form.append("div")
+        .attr("class", "options");
     formCheckbox.call(addOption, 0, "All causes", "type-0", "item-checkbox-all")
     for (let [code, label] of Object.entries(util.types)) {
         formCheckbox.call(addOption, code, label, "type-" + code, "item-checkbox");

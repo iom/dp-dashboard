@@ -12,6 +12,7 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://unpkg.com/topojson@3"></script>
     <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/forms-top.css">
     <link rel="stylesheet" href="./assets/css/forms.css">
     <link rel="stylesheet" href="./assets/css/charts.css">
 </head>
@@ -48,31 +49,38 @@
             </svg>
             Mar 21 2025
         </div>
-    
+
         <div class="par">
             <p>Internal displacements due to conflict and disasters are a major driver of human mobility worldwide. While the total numbers of internal displacements by cause, location, and time are well documented, global estimates of the demographic and socio-economic profiles of impacted communities have been missing. This lack of disaggregated data for variables such as age and sex, income, education, and health, land use and subsistence, has limited insights into of the diverse vulnerabilities and needs of displacement-impacted communities, which has complicated the work of decision makers who need to allocate resources efficiently.</p>
 
             <p>IOM’s <strong>Global Profiles for Internal Displacement (GPID)</strong> dataset aims at bridging this knowledge gap. Combining global geolocated displacement data compiled by the Internal Displacement Monitoring Centre (IDMC) with high-resolution global maps of demographic and socio-economic variables, the dataset provides consistent estimates of key characteristics of populations in locations of internal displacement across the world.</p>
         </div>
 
-        <div class="tabs">
-            <div class="tab active" tabindex="0" data-chart="map">Map</div>
-            <div class="tab" tabindex="0" data-chart="boxplot">Boxplots</div>
-        </div>
-    
-        
         <div class="dashboard-container breakout">
             <div class="dashboard-title"></div>
             <div class="screen-warning">Best viewed on a desktop screen.</div>
-            <div class="form-top-container">
-                <div class="form-top-title">
-                    <span class="form-title">Indicator</span>
-                    <span class="form-desc">The value of the selected ndicator determines the bubbles' color.</span>
+
+            <div class="top-container">
+
+                <div class="tabs">
+                    <div class="tab active" tabindex="0" data-chart="map">Global map</div>
+                    <div class="tab" tabindex="0" data-chart="boxplot">Results by region</div>
+                </div>
+
+                <div class="form-top-container">
+                    <div class="form-top-title">
+                        <span class="form-title">Indicator</span>
+                        <span class="form-desc">The value of the selected ndicator determines the bubbles' color.</span>
+                    </div>
+                    <div class="form-top-icons"></div>
                 </div>
             </div>
+
             <div class="graphic">
+                <div class="graphic-area"></div>
                 <div id="form-inset-container"></div>
             </div>
+
         </div>
 
         <!-- <div class="download"><a href="">Download data</a></div> -->

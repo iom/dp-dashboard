@@ -25,7 +25,7 @@ function switchTab() {
 
 // Form top
 
-const formIcons = d3.select("div.form-top-container")
+const formIcons = d3.select(".form-top-icons")
         .call(forms.addFormIcons);
 
 // Tooltip

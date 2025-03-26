@@ -23,7 +23,7 @@ function drawBoxplot(means) {
     const gutter = ({ yout: 12.5, yin: 30, xin: 7.5, xout: 12.5 });
     const params = ({ binHeight: 10 })
 
-    // Forms //////////////////////////////////////////////////////////////////
+    // Forms ////////////////////////////////////
 
     const formIcons = d3.select(".form-top-container")
     const formsInset = d3.select("#form-inset-container")
@@ -52,12 +52,15 @@ function drawBoxplot(means) {
             }
         });
 
-    // Chart //////////////////////////////////////////////////////////////////
+    // Chart ////////////////////////////////////
 
-    const viz = d3.select(".graphic");
+    const viz = d3.select(".graphic-area");
     viz.select("svg").remove();
     const svg = viz.append("svg")
-    svg.append("rect").attr("class", "graphic-bg")
+        .attr("width", "100%")
+        .attr("viewBox", [0, 0, 950, 500]);
+    
+    // svg.append("rect").attr("class", "graphic-bg")
 
     const panel = svg.append("rect")
         .attr("x", margin.left).attr("y", margin.top)
@@ -70,17 +73,17 @@ function drawBoxplot(means) {
 
     svg.call(addBoxplotLegend, 30, 120);
 
-    // Dashed line ////////////////////////////////////////////////////////////
+    // Dashed line //////////////////////////////
 
-    const marker = svg.append("g").attr("display", "none");
-    marker.append("path")
-        .attr("class", "marker-line")
-        .attr("d", d3.line()([[0, margin.top], [0, util.dim.height - margin.bottom]]));
+    // const marker = svg.append("g").attr("display", "none");
+    // marker.append("path")
+    //     .attr("class", "marker-line")
+    //     .attr("d", d3.line()([[0, margin.top], [0, util.dim.height - margin.bottom]]));
 
-    const markerNum = d3.select("body")
-        .append("div")
-        .attr("id", "marker-num")
-        .style("display", "none")
+    // const markerNum = d3.select("body")
+    //     .append("div")
+    //     .attr("id", "marker-num")
+    //     .style("display", "none")
         
     function update() {
 
@@ -141,9 +144,9 @@ function drawBoxplot(means) {
             .call(yAxis)
             .call(g => g.select(".domain").remove());
 
-        panel
-            .on("mousemove", markerMouseMoved)
-            .on("mouseleave", markerMouseLeft);
+        // panel
+        //     .on("mousemove", markerMouseMoved)
+        //     .on("mouseleave", markerMouseLeft);
 
         function markerMouseMoved(event) {
             const [xm, ym] = d3.pointer(event);
@@ -217,9 +220,9 @@ function drawBoxplot(means) {
 
         function mouseMoved(event, d) {
             const [xm, ym] = d3.pointer(event);
-            marker
-                .attr("display", null)
-                .attr("transform", `translate(${ xm + margin.left }, 0)`);
+            // marker
+            //     .attr("display", null)
+            //     .attr("transform", `translate(${ xm + margin.left }, 0)`);
             d3.select("#tooltip")
                 .style("display", "block")
                 .style("left", event.pageX + 18 + "px")
@@ -269,7 +272,7 @@ function drawBoxplot(means) {
     update();
 };
 
-// Legends ////////////////////////////////////////////////////////////////////
+// Legends //////////////////////////////////////
 
 function addBoxplotLegend(container, xpos, ypos) {
 
@@ -279,7 +282,7 @@ function addBoxplotLegend(container, xpos, ypos) {
         .attr("id", "boxplot-legend")
         .attr("transform", `translate(${xpos}, ${ypos})`);
 
-    // Title and description //////////////////////////////////////////////////
+    // Title and description ////////////////////
 
     const text = legend.append("g");
     text.append("text")
@@ -295,7 +298,7 @@ function addBoxplotLegend(container, xpos, ypos) {
         .attr("x", 0).attr("y", 27)
         .text("distribution of data.");
 
-    // Diagram ////////////////////////////////////////////////////////////////
+    // Diagram //////////////////////////////////
 
     const diagram = legend.append("g").attr("transform", "translate(0,100)");
 
@@ -326,7 +329,7 @@ function addBoxplotLegend(container, xpos, ypos) {
             V${ -params.width }
         `);
 
-    // Dotted lines ///////////////////////////////////////////////////////////
+    // Dotted lines /////////////////////////////
 
     const annotationLine = diagram.append("g")
         .attr("class", "legend-bubble-line");
@@ -353,7 +356,7 @@ function addBoxplotLegend(container, xpos, ypos) {
     annotationLine.append("path")
         .attr("d", `M${ params.length90 / 2 },${ params.width + 3 } V20`);
 
-    // Annotations ////////////////////////////////////////////////////////////
+    // Annotations //////////////////////////////
 
     const annotationText = diagram.append("g").attr("class", "legend-text");
     
@@ -370,7 +373,7 @@ function addBoxplotLegend(container, xpos, ypos) {
         .attr("x", `${ params.length90 / 2 }`)
         .attr("y", `${ params.width + 23 }`)
         .attr("text-anchor", "middle")
-        .text("Median");
+        .text("Median (average)");
     
     // 90% bin annotation
     const middle90 = annotationText.append("g")

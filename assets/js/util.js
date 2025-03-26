@@ -1,7 +1,7 @@
 
 export const dim = { 
-    width: 1150, 
-    height: 650,
+    width: 950, 
+    height: 500,
 };
 
 export const colors = { 
@@ -92,7 +92,7 @@ export const typesBar = {
     "7": "Storm",
     "8": "Weather disaster",
     "9": "Wildfire",
-    "10": "General population"
+    "10": "Total population in region"
 };
 
 export const indicatorsBar = {
