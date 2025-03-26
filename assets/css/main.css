@@ -48,8 +48,7 @@
 
 body {
     font-family: var(--font), sans-serif;
-    font-size: 0.8rem;
-    font-size: clamp(0.8rem, 0.6rem + 0.8vw, 1rem);
+    font-size: 1rem;
     /* margin: 0px;
     padding: 0px; */
 }
