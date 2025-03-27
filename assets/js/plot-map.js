@@ -42,7 +42,7 @@ export function renderMap () {
 
 function drawMap(map, disputedblack, disputedwhite, nodes) {
 
-    const title = d3.select(".dashboard-title");
+    const caption = d3.select(".dashboard-caption");
     const formIcons = d3.select(".topbar .form-icons");
     const mainview = d3.select(".mainview")
         .classed("map", true)
@@ -250,7 +250,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         panelSVG.select("#color-legend").remove();
         panelSVG.call(addColorLegend, 30, util.dim.height - 130, dataIndicator, colorScaler);
 
-        // Build title
+        // Build caption
         
         let yearText = yearMin + "\u2013" + yearMax;
         if (yearMin == yearMax) yearText = yearMax;
@@ -259,31 +259,31 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         const typesCheckedNoOthers = typesChecked.filter(i => i !== 8);
 
         if (typesChecked.includes(8) && typesChecked.length < 8) {
-            causeText = "<span class='title-emph'>various causes</span>";
+            causeText = "<span class='caption-emph'>various causes</span>";
         } else if (typesCheckedNoOthers.length == 0 && typesChecked[0] == 8) {
-            causeText = "<span class='title-emph'>various causes</span>";
+            causeText = "<span class='caption-emph'>various causes</span>";
         } else if (typesCheckedNoOthers.length > 2) {
-            causeText = "<span class='title-emph'>various causes</span>";
+            causeText = "<span class='caption-emph'>various causes</span>";
         } else if (typesCheckedNoOthers.length == 1) {
-            causeText = "<span class='title-emph'>" + util.types[typesCheckedNoOthers[0]] + "</span>";
+            causeText = "<span class='caption-emph'>" + util.types[typesCheckedNoOthers[0]] + "</span>";
         } else if (typesCheckedNoOthers.length == 2) {
-            causeText = "<span class='title-emph'>" + util.types[typesCheckedNoOthers[0]] + "</span>" + 
-                " and " + "<span class='title-emph'>" + util.types[typesCheckedNoOthers[1]] + "</span>"
+            causeText = "<span class='caption-emph'>" + util.types[typesCheckedNoOthers[0]] + "</span>" + 
+                " and " + "<span class='caption-emph'>" + util.types[typesCheckedNoOthers[1]] + "</span>"
         };
-        if (typesChecked.length == 8) causeText = "<span class='title-emph'>all causes</span>";
+        if (typesChecked.length == 8) causeText = "<span class='caption-emph'>all causes</span>";
 
         let indicatorText = util.indicatorsTitle[indicatorChecked];
        
-        let titleText = "<h3>Choose a cause of displacement to generate the graphic.</h3>";
+        let captionText = "<h3>Choose a cause of displacement to generate the graphic.</h3>";
         if (typesChecked.length > 0) {
-            titleText = "<h2>Internally displaced persons in " + 
-                "<span class='title-emph'>" + yearText + "</span>" +
+            captionText = "<p>Internally displaced persons in " + 
+                "<span class='caption-emph'>" + yearText + "</span>" +
                 " due to " + causeText + " and the " + 
-                "<span class='title-emph'>" + indicatorText + "</span>" + 
-                " where they were displaced</h2>"
+                "<span class='caption-emph'>" + indicatorText + "</span>" + 
+                " where they were displaced.</p>"
         }
 
-        title.html(titleText);
+        caption.html(captionText);
     };
 
     update();

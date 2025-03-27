@@ -58,15 +58,14 @@
         </div>
 
         <div class="dashboard-container breakout">
-            <div class="dashboard-title"></div>
-
+            
             <div class="topbar">
-
+                
                 <div class="tabs">
                     <div class="tab active" tabindex="0" data-chart="map">Global map</div>
                     <div class="tab" tabindex="0" data-chart="boxplot">Results by region</div>
                 </div>
-
+                
                 <div class="form-icons">
                     <div class="form-head">
                         <span class="form-title">Indicator</span>
@@ -75,12 +74,13 @@
                     <div class="form-body"></div>
                 </div>
             </div>
-
+            
             <div class="mainview">
                 <div class="sidebar"></div>
                 <div class="panel"></div>
             </div>
 
+            <div class="dashboard-caption"></div>
         </div>
 
         <div class="par">
@@ -130,9 +130,9 @@
                     <summary class="methodology">Methodology</summary>
 
                     <div class="details-contents">
-                        <p>GPID is based on a geolocated global dataset of internal displacement events caused by conflict, floods, storms, wildfires, earthquakes, droughts, and other disasters since 2018 (IDMC, 2024b). Each record contains the year of the event, geographical coordinates (usually at administrative level 1 (province, state, etc.) resolution), the cause of displacement, and the number of displacements. We combined these records with global gridded maps (usually at 0.083° resolution, i.e., approximately 10 km at the equator) of the following socio-economic and geographical variables: local age and sex structure (World Population Hub, n.d.), per-capita gross national income (GNI), average life expectancy, and mean years of schooling (Kummu et al., 2018), percentage of land covered by cropland, grazing land, and urban land (Klein Goldewijk et al., 2017), and percentage of land managed and/or controlled by Indigenous Peoples (Garnett et al., 2018).</p>
+                        <p>GPID is based on a geolocated global dataset of internal displacement events caused by conflict, floods, storms, wildfires, earthquakes, droughts, and other disasters since 2018<span class="ref-note"><sup>1</sup><span class="ref-note-text">IDMC, 2024b</span></span>. Each record contains the year of the event, geographical coordinates (usually at administrative level 1 (province, state, etc.) resolution), the cause of displacement, and the number of displacements. We combined these records with global gridded maps (usually at 0.083° resolution, i.e., approximately 10 km at the equator) of the following socio-economic and geographical variables: local age and sex structure<span class="ref-note"><sup>2</sup><span class="ref-note-text">World Population Hub, n.d.</span></span>, per-capita gross national income (GNI), average life expectancy, and mean years of schooling,<span class="ref-note"><sup>3</sup><span class="ref-note-text">Kummu et al., 2018</span></span> percentage of land covered by cropland, grazing land, and urban land,<span class="ref-note"><sup>4</sup><span class="ref-note-text">Klein Goldewijk et al., 2017</span></span> and percentage of land managed and/or controlled by Indigenous Peoples.<span class="ref-note"><sup>5</sup><span class="ref-note-text">Garnett et al., 2018</span></span></p>
     
-                        <p>To make these data compatible with the displacement records, we aggregated all maps to administrative level 1 level, using the population-weighted average of the grid cells within each administrative unit (World Population Hub, n.d.), and using the weighted median for per-capita GNI and the weighted mean for all other variables. After assigning values to each displacement event, we computed the distribution of each variable across events for a given area (world, region, or country) and time (individual year or all years combined), weighing the value from each displacement by the number of displacements associated with the event.</p>
+                        <p>To make these data compatible with the displacement records, we aggregated all maps to administrative level 1 level, using the population-weighted average of the grid cells within each administrative unit,<span class="ref-note"><sup>2</sup><span class="ref-note-text">World Population Hub, n.d.</span></span> and using the weighted median for per-capita GNI and the weighted mean for all other variables. After assigning values to each displacement event, we computed the distribution of each variable across events for a given area (world, region, or country) and time (individual year or all years combined), weighing the value from each displacement by the number of displacements associated with the event.</p>
     
                         <p>Crucially, by the nature of the available data, our approach is limited to assessing the profiles of the general populations in locations in which internal displacements occurred, rather than directly analysing the populations that were displaced. While ground surveys conducted during displacement events provide valuable direct insights into those who move (https://dtm.iom.int/datasets), they lack the methodological consistency and global coverage needed for a comprehensive assessment. In the absence of such data, our estimates serve as a methodologically consistent, global-scale statistical baseline of the characteristics of populations impacted by internal displacement.</p>
 
