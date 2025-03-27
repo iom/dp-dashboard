@@ -205,7 +205,7 @@
 .x-axis text, .y-axis text {
     font-family: "Open Sans", var(--sans-serif);
     font-size: 14px;
-    color: var(--blue2);
+    fill: var(--blue2);
 }
 
 .y-axis :first-child {

@@ -17,7 +17,7 @@ export function renderBoxplot () {
 
 function drawBoxplot(means) {
 
-    const title = d3.select(".dashboard-title");
+    const caption = d3.select(".dashboard-caption");
     const formIcons = d3.select(".topbar .form-icons");
     const mainview = d3.select(".mainview")
         .classed("boxplot", true)
@@ -26,6 +26,7 @@ function drawBoxplot(means) {
 
     const sidebar = mainview.append("div")
         .attr("class", "sidebar");
+    sidebar.append("div").attr("class", "form-inset-bg");
     const panel = mainview.append("div")
         .attr("class", "panel");
 
@@ -142,6 +143,15 @@ function drawBoxplot(means) {
         axes.append("g")
             .attr("transform", `translate(${ margin.left }, 0)`)
             .call(xGrid);
+        axes.append("g")
+            .attr("class", "x-axis")
+            .attr("transform", `translate(
+                ${ margin.left + (dim.width - margin.left - margin.right) / 2 }, 
+                ${ dim.height - margin.bottom + 50 }
+            )`)
+            .append("text")
+            .style("text-anchor", "middle")
+            .text(util.indicatorsAxis[indicatorChecked]);
         
         let xScalerInv = d3.scaleLinear()
             .domain([
@@ -278,16 +288,16 @@ function drawBoxplot(means) {
             d3.select(event.target).style("cursor", "default");
         };
 
-        // Build title
-        let indicatorText = "<span class='title-emph'>" + util.indicatorsTitle[indicatorChecked] + "</span>";
-        let regionText = "<span class='title-emph'>" + util.regions[region] + "</span>";
-        if (region == 0) regionText = "the <span class='title-emph'>World</span>"
+        // Build caption
+        let indicatorText = "<span class='caption-emph'>" + util.indicatorsTitle[indicatorChecked] + "</span>";
+        let regionText = "<span class='caption-emph'>" + util.regions[region] + "</span>";
+        if (region == 0) regionText = "the <span class='caption-emph'>world</span>"
 
-        let titleText = "<h3>Distribution of " + indicatorText + 
-            " weighed by magnitude of internally displaced persons<br>across " + regionText + 
-            ", by cause of displacement, 2018\u20132024</h3>"
+        let captionText = "<p>Distribution of " + indicatorText + 
+            " weighed by magnitude of internally displaced persons across " + regionText + 
+            ", by cause of displacement, 2018\u20132024.</p>"
 
-        title.html(titleText);
+        caption.html(captionText);
     };
 
     update();
