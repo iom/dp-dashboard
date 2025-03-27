@@ -131,6 +131,18 @@ export const indicatorsTitle = {
     9: "median grazing area share"
 };
 
+export const indicatorsAxis = {
+    1: "Median female share",
+    2: "Median age",
+    3: "Median share of under age 18",
+    4: "Median per capita income",
+    5: "Median average years of schooling",
+    6: "Median life expectancy",
+    7: "Median urban share",
+    8: "Median cropland area share",
+    9: "Median grazing area share"
+};
+
 export function formatNum(num) {
     let numFormat;
     if (num >= 100) {
