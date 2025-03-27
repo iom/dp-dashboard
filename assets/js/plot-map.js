@@ -27,12 +27,12 @@ export function renderMap () {
             ).features;
     
         const nodes = nodesRaw.map(d => ({
-            geo: d.geo,
             t: +d.t,
             type: +d.type,
             coords: [+d.lon, +d.lat],
             var: d.var,
             v: +d.v,
+            v_fill: +d.v_fill,
             n: +d.n
         }))
     
@@ -222,9 +222,9 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
         let colorScaler = d3.scaleLinear()
             .domain([
-                d3.min(dataIndicator, d => d.v), 
-                d3.mean(dataIndicator, d => d.v), 
-                d3.max(dataIndicator, d => d.v)
+                d3.min(dataIndicator, d => d.v_fill), 
+                d3.mean(dataIndicator, d => d.v_fill), 
+                d3.max(dataIndicator, d => d.v_fill)
             ])
             .range([util.colors.yellow, util.colors.green1, util.colors.blue1]);
 
@@ -274,7 +274,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
         let indicatorText = util.indicatorsTitle[indicatorChecked];
        
-        let captionText = "<h3>Choose a cause of displacement to generate the graphic.</h3>";
+        let captionText = "<p>Choose a cause of displacement to generate the graphic.</p>";
         if (typesChecked.length > 0) {
             captionText = "<p>Internally displaced persons in " + 
                 "<span class='caption-emph'>" + yearText + "</span>" +
@@ -354,9 +354,9 @@ function addColorLegend (container, xpos, ypos, data, colorRanger) {
     const indicator = data[0].var;
     
     const points = ({
-        min: d3.min(data, d => d.v), 
-        med: d3.mean(data, d => d.v), 
-        max: d3.max(data, d => d.v)
+        min: d3.min(data, d => d.v_fill), 
+        med: d3.mean(data, d => d.v_fill), 
+        max: d3.max(data, d => d.v_fill)
     });
 
     const breaks = [

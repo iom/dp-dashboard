@@ -25,15 +25,13 @@ export function addFormSlider(container) {
     const slider = sliderContainer.append("div")
         .attr("class", "slider")
     
-
-
     const slideOne = sliderContainer.append("input")
         .attr("id", "slider-1")
         .attr("type", "range")
         .attr("min", years.min)
         .attr("max", years.max)
         .attr("step", 1)
-        .attr("value", 2023)
+        .attr("value", years.min)
         .on("input", () => {
             let val1 = +slideOne.property("value");
             let val2 = +slideTwo.property("value");
@@ -61,10 +59,6 @@ export function addFormSlider(container) {
             fillColor();
         });
 
-    // const label = sliderContainer.append("div")
-    //     .attr("class", "slider-label")
-
-
     fillColor();
 
     function fillColor() {
@@ -78,37 +72,35 @@ export function addFormSlider(container) {
                 ${ util.colors.blue5 } ${ percent2 }%
             )`);
         
-        label.text(slideOne.property("value") + "\u2013" + slideTwo.property("value"))
-        
-        // console.log((5 + percent1 / 90) + "%")
+        label.text(slideOne.property("value") + "\u2013" + slideTwo.property("value"));
     };
 
     return container.node();
 }
 
-export function addFormNumber(container) {
+// export function addFormNumber(container) {
     
-    const years = ({ min: 2018, max: 2024 });
-    const form = container.append("form");
+//     const years = ({ min: 2018, max: 2024 });
+//     const form = container.append("form");
 
-    // Title and description
-    form.append("text")
-        .attr("class", "form-title")
-        .text("Year")
-    form.append("text")
-        .attr("class", "form-desc")
-        .text("2018–2024")
+//     // Title and description
+//     form.append("text")
+//         .attr("class", "form-title")
+//         .text("Year")
+//     form.append("text")
+//         .attr("class", "form-desc")
+//         .text("2018–2024")
 
-    form.append("input")
-        .attr("type", "number")
-        .attr("min", years.min)
-        .attr("max", years.max)
-        .attr("step", 1)
-        .attr("value", years.max)
-        .attr("id", "form-number");
+//     form.append("input")
+//         .attr("type", "number")
+//         .attr("min", years.min)
+//         .attr("max", years.max)
+//         .attr("step", 1)
+//         .attr("value", years.max)
+//         .attr("id", "form-number");
 
-    return container.node();
-}
+//     return container.node();
+// }
 
 export function addFormCheckbox(container) {
     

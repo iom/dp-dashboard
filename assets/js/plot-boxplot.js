@@ -30,9 +30,6 @@ function drawBoxplot(means) {
     const panel = mainview.append("div")
         .attr("class", "panel");
 
-
-
-
     const dim = {
         width: 750,
         height: 500
@@ -41,17 +38,8 @@ function drawBoxplot(means) {
     const gutter = ({ yout: 12.5, yin: 30, xin: 7.5, xout: 12.5 });
     const params = ({ binHeight: 10 })
 
-    // const graphic = d3.select(".graphic")
-    //     .classed("boxplot", true)
-    // graphic.selectAll("div").remove();
-
-    // const sidebar = graphic.append("div")
-    //     .attr("class", "sidebar")
-
     // Forms ////////////////////////////////////
 
-    // const formsInset = d3.select("#form-inset-container")
-    // formsInset.selectAll("div, form").remove()
     const formRegion = sidebar.call(forms.addFormDropdown);
     
     // Re-render visual when any input is changed
@@ -78,11 +66,8 @@ function drawBoxplot(means) {
         .attr("class", "legend-container")
         .call(addBoxplotLegend, 30, 120);
 
-    // const viz = d3.select(".graphic").append("div").attr("class", "graphic-area");
-    // viz.selectAll("div, svg").remove();
     const svg = panel.append("svg")
         .attr("width", "100%")
-        // .attr("height", "100%")
         .attr("preserveAspectRatio", "xMidYMin slice")
         .attr("viewBox", [0, 0, dim.width, dim.height]);
     
@@ -309,10 +294,6 @@ function addBoxplotLegend(container, xpos, ypos) {
 
     const params = ({ length90: 150, length50: 75, width: 10 });
 
-    // const legend = container.append("g")
-    //     .attr("id", "boxplot-legend")
-    //     .attr("transform", `translate(${xpos}, ${ypos})`);
-
     // Title and description ////////////////////
 
     const text = container.append("div")
@@ -326,30 +307,11 @@ function addBoxplotLegend(container, xpos, ypos) {
         .attr("class", "form-desc")
         .text("A boxplot shows the distribution of data.");
 
-
-    // .append("g");
-    // text.append("text")
-    //     .attr("class", "legend-desc-bold")
-    //     .attr("x", 0).attr("y", 0)
-    //     .text("How to read");
-    // text.append("text")
-    //     .attr("class", "legend-desc")
-    //     .attr("x", 0).attr("y", 15)
-    //     .text("A boxplot shows the");
-    // text.append("text")
-    //     .attr("class", "legend-desc")
-    //     .attr("x", 0).attr("y", 27)
-    //     .text("distribution of data.");
-
     // Diagram //////////////////////////////////
 
     const diagram = container.append("div")
         .attr("class", "form-body")
         .append("svg")
-        // .attr("width", "100%")
-        // .attr("max-width", "100%")
-        // .attr("width", 154)
-        // .attr("max-height", 137)
         .attr("viewBox", [0, 0, 154, 137])
         .append("g").attr("transform", "translate(2,55)");
 

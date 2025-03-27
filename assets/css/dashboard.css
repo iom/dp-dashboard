@@ -2,7 +2,7 @@
 .dashboard-container {
     height: auto;
     overflow-x: scroll;
-    margin: 2rem 0;
+    margin: 1.5rem 0;
 
     & .form-head {
         margin-bottom: .5rem;
