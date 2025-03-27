@@ -151,7 +151,7 @@ export function addFormIcons(form) {
 
     const iconsData = [
         { i: 1, src: "female",   lab1: "Female", lab2: "share"       },
-        { i: 2, src: "children", lab1: "Median", lab2: "age"         },
+        { i: 2, src: "age",      lab1: "Median", lab2: "age"         },
         { i: 3, src: "children", lab1: "Children", lab2: "share"     },
         { i: 4, src: "income",   lab1: "Per capita", lab2: "income"  },
         { i: 5, src: "educ",     lab1: "Years of", lab2: "schooling" },
