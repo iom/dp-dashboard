@@ -163,9 +163,9 @@ export function formatNumAxis(num) {
         numFormat = d3.format(",.0f")(num);
     } else {
         numFormat = d3.format(".0f")(100 * num) + "%";
-    };
+    }
     return numFormat;
-};
+}
 
 export function drawBorders(container, path, map, disputedblack, disputedwhite) {
 
@@ -174,7 +174,7 @@ export function drawBorders(container, path, map, disputedblack, disputedwhite) 
         .join("path")
         .attr("class", "border")
         .attr("d", path)
-        .style("fill", "white")
+        .style("fill", "white");
         
     container.selectAll("disputed-black")
         .data(disputedblack)
@@ -191,5 +191,5 @@ export function drawBorders(container, path, map, disputedblack, disputedwhite) 
         .style("stroke", "white");
     
     return container.node();
-};
+}
 

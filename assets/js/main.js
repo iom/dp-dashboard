@@ -11,7 +11,7 @@ document.querySelectorAll(".tab").forEach(button => {
     button.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
             switchTab.call(this);
-        };
+        }
     });
 });
 
@@ -26,7 +26,7 @@ function switchTab() {
 // Form top
 
 const formIcons = d3.select(".form-icons .form-body")
-        .call(forms.addFormIcons);
+    .call(forms.addFormIcons);
 
 // Tooltip
 
@@ -46,12 +46,10 @@ updateChart("map");
 // updateChart("boxplot");
 
 function updateChart(selected) {
-
-    if (selected === "map") {
-        renderMap();
-    };
-    if (selected === "boxplot") {
-        renderBoxplot();
-    };
-};
-
+    switch(selected) {
+        case "map":
+            return renderMap();
+        case "boxplot":
+            return renderBoxplot();
+    }
+}

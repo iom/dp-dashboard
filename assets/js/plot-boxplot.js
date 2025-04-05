@@ -13,7 +13,7 @@ export function renderBoxplot () {
         drawBoxplot(means);
         
     })
-};
+}
 
 function drawBoxplot(means) {
 
@@ -34,9 +34,9 @@ function drawBoxplot(means) {
         width: 750,
         height: 500
     };
-    const margin = ({ top: 20, bottom: 80, right: 20, left: 190 });
-    const gutter = ({ yout: 12.5, yin: 30, xin: 7.5, xout: 12.5 });
-    const params = ({ binHeight: 10 })
+    const margin = { top: 20, bottom: 80, right: 20, left: 190 };
+    const gutter = { yout: 12.5, yin: 30, xin: 7.5, xout: 12.5 };
+    const params = { binHeight: 10 };
 
     // Forms ////////////////////////////////////
 
@@ -50,13 +50,13 @@ function drawBoxplot(means) {
         d3.selectAll(".icon-group").classed("icon-clicked", false);
         d3.select(this).classed("icon-clicked", true);
         update();
-    };
+    }
 
     formIcons.selectAll(".icon-group")
         .on("click", iconClicked)
         .on("keydown", function(event) {
             if (event.key == "Enter") {
-                iconClicked.call(this)
+                iconClicked.call(this);
             }
         });
 
@@ -186,7 +186,7 @@ function drawBoxplot(means) {
         function markerMouseLeft() {
             marker.attr("display", "none");
             markerNum.style("display", "none");
-        };
+        }
 
         // 90% range
         boxplots.append("g")
@@ -271,7 +271,7 @@ function drawBoxplot(means) {
         function mouseLeft(event) {
             d3.select("#tooltip").style("display", "none");
             d3.select(event.target).style("cursor", "default");
-        };
+        }
 
         // Build caption
         let indicatorText = "<span class='caption-emph'>" + util.indicatorsTitle[indicatorChecked] + "</span>";
@@ -286,7 +286,7 @@ function drawBoxplot(means) {
     };
 
     update();
-};
+}
 
 // Legends //////////////////////////////////////
 
@@ -396,5 +396,5 @@ function addBoxplotLegend(container, xpos, ypos) {
     middle90.append("text").attr("y", 12).text("of data");
 
     return container.node();  
-};
+}
 

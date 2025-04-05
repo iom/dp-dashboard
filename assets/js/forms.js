@@ -5,7 +5,7 @@ import * as util from "./util.js";
 
 export function addFormSlider(container) {
 
-    const years = ({ min: 2018, max: 2024 });
+    const years = { min: 2018, max: 2024 };
 
     const form = container.append("form")
         .attr("id", "form-year-slider");
@@ -20,10 +20,10 @@ export function addFormSlider(container) {
         .attr("class", "form-desc slider-label");
 
     const sliderContainer = form.append("div")
-        .attr("class", "slider-container")
+        .attr("class", "slider-container");
 
     const slider = sliderContainer.append("div")
-        .attr("class", "slider")
+        .attr("class", "slider");
     
     const slideOne = sliderContainer.append("input")
         .attr("id", "slider-1")
@@ -73,7 +73,7 @@ export function addFormSlider(container) {
             )`);
         
         label.text(slideOne.property("value") + "\u2013" + slideTwo.property("value"));
-    };
+    }
 
     return container.node();
 }
@@ -105,22 +105,22 @@ export function addFormSlider(container) {
 export function addFormCheckbox(container) {
     
     const form = container.append("form")
-        .attr("id", "checkbox-type")
+        .attr("id", "checkbox-type");
 
     // Title and description
     const formHead = form.append("div")
-        .attr("class", "form-head")
+        .attr("class", "form-head");
     formHead.append("span")
         .attr("class", "form-title")
-        .text("Cause")
+        .text("Cause");
     formHead.append("span")
         .attr("class", "form-desc")
-        .text("Displacements due to the selected cause/s appear as bubbles on the map.")
+        .text("Displacements due to the selected cause/s appear as bubbles on the map.");
 
     // Add options
     const formBody = form.append("div")
         .attr("class", "form-body");
-    formBody.call(addOption, 0, "All causes", "type-0", "item-checkbox-all")
+    formBody.call(addOption, 0, "All causes", "type-0", "item-checkbox-all");
     for (let [code, label] of Object.entries(util.types)) {
         formBody.call(addOption, code, label, "type-" + code, "item-checkbox");
     }
@@ -130,14 +130,14 @@ export function addFormCheckbox(container) {
 
     function addOption(form, key, value, id, setClass) {
     
-        const option = form.append("label")
+        const option = form.append("label");
         option.append("input")
             .attr("type", "checkbox")
             .attr("id", id)
             .attr("class", setClass)
-            .attr("value", key)
+            .attr("value", key);
         option.append("label")
-            .text(value)
+            .text(value);
         
         return form.node();
     }
@@ -174,18 +174,18 @@ export function addFormIcons(form) {
             .append("img")
                 .attr("src", "assets/images/" + d.src + ".svg")
                 .attr("width", params.radius + 5 + "px")
-                .attr("height", params.radius + 5 + "px")
+                .attr("height", params.radius + 5 + "px");
         
         const label = group.append("div")
-            .attr("class", "icon-label")
-        label.append("div").text(d.lab1)
-        label.append("div").text(d.lab2)
+            .attr("class", "icon-label");
+        label.append("div").text(d.lab1);
+        label.append("div").text(d.lab2);
     });
     
     form.select("#icon-group-1").classed("icon-clicked", true);
 
     return form.node();
-};
+}
 
 export function addFormRadio(container) {
 
@@ -221,7 +221,7 @@ export function addFormRadio(container) {
 
     for (let [code, label] of Object.entries(util.indicators)) {
         formRadio.call(addButton, code, label);
-    };
+    }
     
     return container.node();
 }
@@ -231,7 +231,7 @@ export function addFormRadio(container) {
 export function addFormDropdown(container) {
   
     const dropdown = container.append("form")
-        .attr("id", "bar-dropdown-region")
+        .attr("id", "bar-dropdown-region");
         // .attr("class", "select")
         // .attr("margin-top", "10px");
 
@@ -245,7 +245,7 @@ export function addFormDropdown(container) {
         form.append("option")
             .text(value)
             .attr("value", key);
-    }
+    };
 
     const formBody = dropdown.append("div")
         .attr("class", "form-body")
@@ -253,7 +253,7 @@ export function addFormDropdown(container) {
 
     for (let [code, label] of Object.entries(util.regions)) {
         formBody.call(addOption, code, label);
-    };
+    }
 
     // Default value
     formBody.select("option[value='0']").attr("selected", true);
@@ -274,24 +274,23 @@ export function addFormRadioBar(container) {
 
     const addButton = (form, key, value) => {
         
-        const button = form.append("label")
+        const button = form.append("label");
         
         button.append("input")
             .attr("type", "radio")
             .attr("name", "radioVar")
-            .attr("value", key)
+            .attr("value", key);
         
-        button.append("label").text(value)
+        button.append("label").text(value);
         
-        return form.node()
-    }
+        return form.node();
+    };
 
-    const formRadio = radio.append("div")
+    const formRadio = radio.append("div");
 
     for (let [code, label] of Object.entries(util.indicatorsBar)) {
         formRadio.call(addButton, code, label);
     }
 
     return container.node();
-};
-
+}

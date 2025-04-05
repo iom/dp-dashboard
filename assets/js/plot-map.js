@@ -38,7 +38,7 @@ export function renderMap () {
     
         drawMap(map, disputedBlack, disputedWhite, nodes);  
     })
-};
+}
 
 function drawMap(map, disputedblack, disputedwhite, nodes) {
 
@@ -269,7 +269,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         } else if (typesCheckedNoOthers.length == 2) {
             causeText = "<span class='caption-emph'>" + util.types[typesCheckedNoOthers[0]] + "</span>" + 
                 " and " + "<span class='caption-emph'>" + util.types[typesCheckedNoOthers[1]] + "</span>"
-        };
+        }
         if (typesChecked.length == 8) causeText = "<span class='caption-emph'>all causes</span>";
 
         let indicatorText = util.indicatorsTitle[indicatorChecked];
@@ -284,7 +284,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         }
 
         caption.html(captionText);
-    };
+    }
 
     update();
 }
@@ -320,7 +320,7 @@ function addBubbleLegend (container, xpos, ypos, rScaler) {
         } else {
             dir = -1;
             anchor = "end";
-        };
+        }
   
         const key = keyContainer.append("g")
             .attr("transform", `translate(${ xpos }, ${ ypos })`);
@@ -346,18 +346,18 @@ function addBubbleLegend (container, xpos, ypos, rScaler) {
     legendKeys.call(addKey, params.rMin, params.nMin, 12, 18, 10);
 
     return container.node();
-};
+}
 
 function addColorLegend (container, xpos, ypos, data, colorRanger) {
 
-    const params = ({ width: 12, height: 15, keyTextNudge: 6 });
+    const params = { width: 12, height: 15, keyTextNudge: 6 };
     const indicator = data[0].var;
     
-    const points = ({
+    const points = {
         min: d3.min(data, d => d.v_fill), 
         med: d3.mean(data, d => d.v_fill), 
         max: d3.max(data, d => d.v_fill)
-    });
+    };
 
     const breaks = [
         points.max,
@@ -404,7 +404,7 @@ function addColorLegend (container, xpos, ypos, data, colorRanger) {
             .attr("width", params.width + "px")
             .attr("height", params.height + "px")
             .style("fill", d => colorRanger(breaks[i]));
-    };
+    }
 
     const ticks = legendKeys.append("g").attr("class", "legend-text");
     ticks.append("text")
@@ -425,5 +425,5 @@ function addColorLegend (container, xpos, ypos, data, colorRanger) {
 
 
     return container.node();
-};
+}
 
