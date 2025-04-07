@@ -113,7 +113,7 @@
 }
   
 .tooltip .tooltip-emph {
-    text-transform: uppercase;
+    text-transform: lowercase;
     font-size: 14px;
     color: var(--blue2);
 }
@@ -133,7 +133,14 @@
     height: var(--height-chart);
     fill: var(--unBlue6);
 }
-  
+
+.map-outline {
+    fill: none;
+    stroke: var(--gray3);
+    stroke-width: 1;
+    filter: drop-shadow(0 0 3px var(--unBlue1));
+}
+
 .border {
     stroke: var(--gray4);
     stroke-width: .5;

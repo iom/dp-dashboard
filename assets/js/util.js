@@ -132,15 +132,15 @@ export const indicatorsTitle = {
 };
 
 export const indicatorsAxis = {
-    1: "Median female share",
-    2: "Median age",
-    3: "Median share of under age 18",
-    4: "Median per capita income",
-    5: "Median average years of schooling",
-    6: "Median life expectancy",
-    7: "Median urban share",
-    8: "Median cropland area share",
-    9: "Median grazing area share"
+    1: "Females in area (per cent)",
+    2: "Average age in area (per cent)",
+    3: "Under-18-year-olds in area (per cent)",
+    4: "Average income in area (constant 2017 US$)",
+    5: "Average years of schooling in area (years)",
+    6: "Average life expectancy in area (years)",
+    7: "Urban land in area (per cent of land)",
+    8: "Cropland in area (per cent of land)",
+    9: "Grazing land in area (per cent of land)"
 };
 
 export function formatNum(num) {
@@ -159,7 +159,7 @@ export function formatNumAxis(num) {
     let numFormat;
     if (num >= 100) {
         numFormat = "$" + d3.format(",.0f")(num);
-    } else if (num < 100 && num >= 1) {
+    } else if (num < 100 && num > 1) {
         numFormat = d3.format(",.0f")(num);
     } else {
         numFormat = d3.format(".0f")(100 * num) + "%";
@@ -167,23 +167,30 @@ export function formatNumAxis(num) {
     return numFormat;
 }
 
-export function drawBorders(container, path, map, disputedblack, disputedwhite) {
+export function drawBorders(container, path, map, mapOutline, disputedblack, disputedwhite) {
 
-    container.selectAll("country")
+    container.append("g")
+        .append("path")
+        .attr("class", "map-outline")
+        .datum(mapOutline)
+        .attr("d", path)
+
+    const borders = container.append("g")
+        .selectAll("country")
         .data(map)
         .join("path")
         .attr("class", "border")
         .attr("d", path)
         .style("fill", "white");
         
-    container.selectAll("disputed-black")
+    borders.selectAll("disputed-black")
         .data(disputedblack)
         .join("path")
         .attr("class", "border-disputed-black")
         .attr("d", path)
         .style("stroke", colors.gray4);
     
-    container.selectAll("disputed-white")
+    borders.selectAll("disputed-white")
         .data(disputedwhite)
         .join("path")
         .attr("class", "border-disputed-white")

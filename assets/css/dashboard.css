@@ -269,7 +269,7 @@
         width: var(--width-form);
         height: auto;
         position: absolute;
-        top: 1rem;
+        top: .75rem;
         left: 1rem;
         text-align: left;
         padding: .8rem;
@@ -419,6 +419,24 @@
         }
     }
 
+
+    & .chart-title {
+        position: absolute;
+        top: 1.25rem;
+        left: calc(3rem + var(--width-form));
+
+        display: block;
+        color: var(--blue1);
+        fill: var(--blue1);
+        font-size: .875rem;
+        font-size: clamp(.75rem, .625rem + .5vw, .875rem);
+        font-weight: bold;
+
+        @media (width < 500px) {
+            left: 1em;
+        }
+    }
+
     & .panel {
         height: clamp(400px, 18.75rem + 25vw, 500px);
 
@@ -450,7 +468,7 @@
     & .sidebar {
         width: 190px;
         gap: 1rem;
-        /* position: relative; */
+        
 
         @media (width < 700px) {
             /* sidebar moves to the bottom */
@@ -461,9 +479,9 @@
             padding: 1.5rem;
         }
 
-
         & select {
             width: 100%;
+            font-size: .8em;
         }
 
         & .form-head {

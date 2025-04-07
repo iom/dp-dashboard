@@ -13,8 +13,9 @@ export function renderMap () {
         d3.csv("./data/nodes.csv"),
     
     ]).then(function([mapRaw, disputedBlackRaw, disputedWhiteRaw, nodesRaw]) {
-    
+
         const map = topojson.feature(mapRaw, mapRaw.objects.countries).features;
+        const mapOutline = topojson.merge(mapRaw, mapRaw.objects.countries.geometries);
     
         const disputedBlack = topojson.feature(
                 disputedBlackRaw, 
@@ -26,7 +27,7 @@ export function renderMap () {
                 disputedWhiteRaw.objects.disputed_dotted_white
             ).features;
     
-        const nodes = nodesRaw.map(d => ({
+        let nodes = nodesRaw.map(d => ({
             t: +d.t,
             type: +d.type,
             coords: [+d.lon, +d.lat],
@@ -34,15 +35,16 @@ export function renderMap () {
             v: +d.v,
             v_fill: +d.v_fill,
             n: +d.n
-        }))
+        }));
+        nodes = nodes.filter(d => d.n >= 10);
     
-        drawMap(map, disputedBlack, disputedWhite, nodes);  
+        drawMap(map, mapOutline, disputedBlack, disputedWhite, nodes);  
     })
 }
 
-function drawMap(map, disputedblack, disputedwhite, nodes) {
+function drawMap(map, mapOutline, disputedblack, disputedwhite, nodes) {
 
-    const caption = d3.select(".dashboard-caption");
+    // const caption = d3.select(".dashboard-caption");
     const formIcons = d3.select(".topbar .form-icons");
     const mainview = d3.select(".mainview")
         .classed("map", true)
@@ -95,6 +97,10 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
     // Chart ////////////////////////////////////
 
+    const title = panel.append("div")
+        .attr("class", "chart-title")
+        .text("Test")
+
     const panelSVG = panel.append("svg")
         .attr("width", "100%")
         .attr("height", "100%")
@@ -110,7 +116,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
     let path = d3.geoPath().projection(projection);
 
     const countries = panelSVG.append("g").attr("class", "borders");
-    countries.call(util.drawBorders, path, map, disputedblack, disputedwhite);
+    countries.call(util.drawBorders, path, map, mapOutline, disputedblack, disputedwhite);
     
     // Nodes
 
@@ -138,6 +144,7 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         panelSVG.selectAll(".borders path").attr("transform", event.transform);
         panelSVG.selectAll(".nodes-container").attr("transform", event.transform);
 
+        panelSVG.selectAll("path.map-outline").style("stroke-width", 1 / k);
         panelSVG.selectAll("path.border").style("stroke-width", .5 / k);
         panelSVG.selectAll("path.border-disputed-black").style("stroke-width", .5 / k);
         panelSVG.selectAll("path.border-disputed-white").style("stroke-width", 1.25 / k);
@@ -170,15 +177,44 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
     // Tooltip //////////////////////////////////
 
     const mouseMoved = (event, d) => {
+
+        const line1 = (d) => {
+            if (d.type == 8) {
+                return `<p><b>${ d3.format(",.0f")(d.n) }</b> due to other displacements in ${ d.t }.`;
+            } else {
+                return `<p><b>${ d3.format(",.0f")(d.n) }</b> <span class="tooltip-emph">${ util.types[d.type] }</span> displacements in ${ d.t }.`;
+            }
+        };
+
+        const line2 = (d) => {
+            switch (+d.var) {
+                case 1: 
+                    return `${ util.formatNum(d.v) } of people in this area are female.`;
+                case 2: 
+                    return `The average age in this area is ${ util.formatNum(d.v) } years.`;
+                case 3: 
+                    return `${ util.formatNum(d.v) } of people in this area are children.`;
+                case 4: 
+                    return `The average annual income in this area is $${ util.formatNum(d.v) }.`;
+                case 5: 
+                    return `The average years of schooling in this area is ${ util.formatNum(d.v) }.`;
+                case 6: 
+                    return `The average life expectancy in this area is ${ util.formatNum(d.v) }.`;
+                case 7: 
+                    return `Urban land makes up ${ util.formatNum(d.v) } of land in this area.`;
+                case 8: 
+                    return `Cropland makes up ${ util.formatNum(d.v) } of land in this area.`;
+                default: 
+                    return `Grazing land makes up ${ util.formatNum(d.v) } of land in this area.`;
+            }
+        };
+
+
         d3.select("#tooltip")
             .style("display", "block")
             .style("left", event.pageX + 18 + "px")
             .style("top", event.pageY + 18 + "px")
-            .html(`
-                <p><b>${ d3.format(",.0f")(d.n) }</b> displacements due to 
-                <span class="tooltip-emph">${ util.types[d.type] }s</span><br>
-                ${ util.formatNum(d.v) }${ util.indicatorsTooltip[d.var] }</p>
-            `);
+            .html(`${ line1(d) }<br>${ line2(d) }`);
         d3.select(event.target).style("cursor", "pointer");
     }
     
@@ -204,6 +240,31 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
         let indicatorChecked = formIcons.select(".icon-clicked").attr("value");
         let yearMin = formYear.select("input#slider-1").property("value");
         let yearMax = formYear.select("input#slider-2").property("value");
+
+        const titleText = (d) => {
+            switch(d) {
+                case "1":
+                    return "Females in displacement areas";
+                case "2":
+                    return "Average age in displacement areas";
+                case "3":
+                    return "Under-18-year-olds in displacement areas";
+                case "4":
+                    return "Average income in displacement areas";
+                case "5":
+                    return "Average years of schooling in displacement areas";
+                case "6":
+                    return "Average life expectancy in displacement areas";
+                case "7":
+                    return "Urban land in displacement areas";
+                case "8":
+                    return "Cropland in displacement areas";
+                default:
+                    return "Grazing land in displacement areas";
+            }
+        };
+
+        title.text(titleText(indicatorChecked));
 
         let dataIndicator = nodes.filter(d => 
             d.t >= yearMin && 
@@ -252,38 +313,38 @@ function drawMap(map, disputedblack, disputedwhite, nodes) {
 
         // Build caption
         
-        let yearText = yearMin + "\u2013" + yearMax;
-        if (yearMin == yearMax) yearText = yearMax;
+        // let yearText = yearMin + "\u2013" + yearMax;
+        // if (yearMin == yearMax) yearText = yearMax;
 
-        let causeText;
-        const typesCheckedNoOthers = typesChecked.filter(i => i !== 8);
+        // let causeText;
+        // const typesCheckedNoOthers = typesChecked.filter(i => i !== 8);
 
-        if (typesChecked.includes(8) && typesChecked.length < 8) {
-            causeText = "<span class='caption-emph'>various causes</span>";
-        } else if (typesCheckedNoOthers.length == 0 && typesChecked[0] == 8) {
-            causeText = "<span class='caption-emph'>various causes</span>";
-        } else if (typesCheckedNoOthers.length > 2) {
-            causeText = "<span class='caption-emph'>various causes</span>";
-        } else if (typesCheckedNoOthers.length == 1) {
-            causeText = "<span class='caption-emph'>" + util.types[typesCheckedNoOthers[0]] + "</span>";
-        } else if (typesCheckedNoOthers.length == 2) {
-            causeText = "<span class='caption-emph'>" + util.types[typesCheckedNoOthers[0]] + "</span>" + 
-                " and " + "<span class='caption-emph'>" + util.types[typesCheckedNoOthers[1]] + "</span>"
-        }
-        if (typesChecked.length == 8) causeText = "<span class='caption-emph'>all causes</span>";
+        // if (typesChecked.includes(8) && typesChecked.length < 8) {
+        //     causeText = "<span class='caption-emph'>various causes</span>";
+        // } else if (typesCheckedNoOthers.length == 0 && typesChecked[0] == 8) {
+        //     causeText = "<span class='caption-emph'>various causes</span>";
+        // } else if (typesCheckedNoOthers.length > 2) {
+        //     causeText = "<span class='caption-emph'>various causes</span>";
+        // } else if (typesCheckedNoOthers.length == 1) {
+        //     causeText = "<span class='caption-emph'>" + util.types[typesCheckedNoOthers[0]] + "</span>";
+        // } else if (typesCheckedNoOthers.length == 2) {
+        //     causeText = "<span class='caption-emph'>" + util.types[typesCheckedNoOthers[0]] + "</span>" + 
+        //         " and " + "<span class='caption-emph'>" + util.types[typesCheckedNoOthers[1]] + "</span>"
+        // }
+        // if (typesChecked.length == 8) causeText = "<span class='caption-emph'>all causes</span>";
 
-        let indicatorText = util.indicatorsTitle[indicatorChecked];
+        // let indicatorText = util.indicatorsTitle[indicatorChecked];
        
-        let captionText = "<p>Choose a cause of displacement to generate the graphic.</p>";
-        if (typesChecked.length > 0) {
-            captionText = "<p>Internally displaced persons in " + 
-                "<span class='caption-emph'>" + yearText + "</span>" +
-                " due to " + causeText + " and the " + 
-                "<span class='caption-emph'>" + indicatorText + "</span>" + 
-                " where they were displaced.</p>"
-        }
+        // let captionText = "<p>Choose a cause of displacement to generate the graphic.</p>";
+        // if (typesChecked.length > 0) {
+        //     captionText = "<p>Internally displaced persons in " + 
+        //         "<span class='caption-emph'>" + yearText + "</span>" +
+        //         " due to " + causeText + " and the " + 
+        //         "<span class='caption-emph'>" + indicatorText + "</span>" + 
+        //         " where they were displaced.</p>"
+        // }
 
-        caption.html(captionText);
+        // caption.html(captionText);
     }
 
     update();
@@ -306,7 +367,7 @@ function addBubbleLegend (container, xpos, ypos, rScaler) {
         .attr("class", "legend-desc")
         .append("text")
         .attr("x", 0).attr("y", 0)
-        .text("Displacements");
+        .text("Number of displacements");
     
     const legendKeys = legend.append("g")
         .attr("transform", `translate(45, ${ params.rMax + 20 })`);
@@ -368,15 +429,15 @@ function addColorLegend (container, xpos, ypos, data, colorRanger) {
     ];
 
     const labels = [
-        { var: 1, line1: "Per cent female",            line2: "of people in area" },
-        { var: 2, line1: "Median age",                 line2: "of people in area" },
-        { var: 3, line1: "Per cent under age 18",      line2: "of people in area" },
-        { var: 4, line1: "Per capita GNP in US$",      line2: "of people in area" },
-        { var: 5, line1: "Average years of schooling", line2: "of people in area" },
-        { var: 6, line1: "Life expectancy in years",   line2: "of people in area" },
-        { var: 7, line1: "Per cent urban",             line2: "of area"           },
-        { var: 8, line1: "Per cent cropland",          line2: "of area"           },
-        { var: 9, line1: "Per cent grazing land",      line2: "of area"           },
+        { var: 1, line1: "Females in area",            line2: "(per cent)"         },
+        { var: 2, line1: "Average age",                line2: "in area (per cent)" },
+        { var: 3, line1: "Under-18-year-olds",         line2: "in area (per cent)" },
+        { var: 4, line1: "Average income in area",     line2: "(const. 2017 US$)"  },
+        { var: 5, line1: "Average years of schooling", line2: "in area (years)"    },
+        { var: 6, line1: "Average life expectancy",    line2: "in area (years)"    },
+        { var: 7, line1: "Urban land in area",         line2: "(per cent of land)" },
+        { var: 8, line1: "Cropland in area",           line2: "(per cent of land)" },
+        { var: 9, line1: "Grazing land in area",       line2: "(per cent of land)" },
     ];
 
     const label = labels.find(d => d.var == indicator);

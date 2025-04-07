@@ -99,6 +99,25 @@ function drawBoxplot(means) {
         let data = means.filter(d => d.region == region && d.var == indicatorChecked);
         const Y = d3.map(data, d => d.type);
 
+        function formatNumAxis(num) {
+
+            let numFormat;
+
+            if (num >= 100) {
+                numFormat = "$" + d3.format(",.0f")(num);
+            } else if (num < 100 && num > 1) {
+                numFormat = d3.format(",.0f")(num);
+            } else {
+                numFormat = d3.format(".0f")(100 * num) + "%";
+            }
+
+            if (region == 6 && indicatorChecked == 5) {
+                numFormat = d3.format(",.1f")(num);
+            }
+            
+            return numFormat;
+        }
+
         axes.selectAll("g").remove();
         boxplots.selectAll("g").remove();
 
@@ -109,7 +128,7 @@ function drawBoxplot(means) {
         let xAxis = d3.axisBottom(xScaler)
             .ticks(5)
             .tickSize(0)
-            .tickFormat(util.formatNumAxis)
+            .tickFormat(formatNumAxis)
             .tickPadding([gutter.xout]);
         let xGrid = (g) => g
             .attr("class", "grid-lines")
@@ -239,32 +258,68 @@ function drawBoxplot(means) {
             // marker
             //     .attr("display", null)
             //     .attr("transform", `translate(${ xm + margin.left }, 0)`);
+
+            const type = (d) => {
+                switch (+d.type) {
+                    case 0: 
+                        return "<span class='tooltip-emph'>all</span> displacement areas";
+                    case 10: 
+                        return "the <span class='tooltip-emph'>total population</span>, ";
+                    default:
+                        return `<span class='tooltip-emph'>${ util.typesBar[d.type] }</span> displacement areas`;
+                }
+            };
+
+            const sample = (d) => {
+                switch (+d.type) {
+                    case 10: 
+                        return "";
+                    default: 
+                        return `<p class="tooltip-note">Based on ${ d3.format(",.0f")(d.e) } 
+                        displacement events over 2018–2024 totaling ${ d3.format(",.0f")(d.n) } displacements.</p>`;
+                }
+            };
+            
+            const line = (d) => {
+                switch (+d.var) {
+                    case 1: 
+                        return `<p><strong>${ util.formatNum(d.p500) }</strong> 
+                        of people in ${ type(d) } are female.`;
+                    case 2: 
+                        return `<p>The average age in ${ type(d) } is 
+                        <strong>${ util.formatNum(d.p500) }</strong>  years.`;
+                    case 3: 
+                        return `<p><strong>${ util.formatNum(d.p500) } of people 
+                        in ${ type(d) } are children.`;
+                    case 4: 
+                        return `<p>The average annual income in ${ type(d) } is 
+                        <strong>$${ util.formatNum(d.p500) }</strong>.`;
+                    case 5: 
+                        return `<p>The average years of schooling in ${ type(d) } is 
+                        <strong>${ util.formatNum(d.p500) }</strong>.`;
+                    case 6: 
+                        return `<p>The average life expectancy in ${ type(d) } is 
+                        <strong>${ util.formatNum(d.p500) }</strong>.`;
+                    case 7: 
+                        return `<p>Urban land makes up an average 
+                        <strong>${ util.formatNum(d.p500) }</strong> of land in ${ type(d) }.`;
+                    case 8: 
+                        return `<p>Cropland makes up an average 
+                        <strong>${ util.formatNum(d.p500) }</strong> of land in ${ type(d) }.`;
+                    default: 
+                        return `<p>Grazing land makes up an average 
+                        <strong>${ util.formatNum(d.p500) }</strong> of land in ${ type(d) }.`;
+                }
+            };
+
             d3.select("#tooltip")
                 .style("display", "block")
                 .style("left", event.pageX + 18 + "px")
                 .style("top", event.pageY + 18 + "px")
-                .html(() => {
-                    if (d.type == 10) {
-                        return `<p>Among the <span class="tooltip-emph">${ util.typesBar[d.type] }</span>,
-                            ${ util.indicatorsBarTooltip[d.var] } is <b>${ util.formatNum(d.p500) }</b>.
-                            The middle 50% of values range from ${ util.formatNum(d.p250) } to 
-                            ${ util.formatNum(d.p750) }.</p>`;
-                    } else if (d.type == 0) {
-                        return `<p>In areas where displacements occurred, ${ util.indicatorsBarTooltip[d.var] } 
-                            is <b>${ util.formatNum(d.p500) }</b>. The middle 50% of values range from 
-                            ${ util.formatNum(d.p250) } to ${ util.formatNum(d.p750) }.</p>
-                            <p class="tooltip-note">Based on ${ d3.format(",.0f")(d.e) } 
-                            displacement events over 2018–2024 totaling ${ d3.format(",.0f")(d.n) } displacements.</p>`;
-                    } else {
-                        return `<p>In areas where displacements occurred due to 
-                            <span class="tooltip-emph">${ util.typesBar[d.type] }s</span>,
-                            ${ util.indicatorsBarTooltip[d.var] } is <b>${ util.formatNum(d.p500) }</b>.
-                            The middle 50% of values range from ${ util.formatNum(d.p250) } to 
-                            ${ util.formatNum(d.p750) }.</p>
-                            <p class="tooltip-note">Based on ${ d3.format(",.0f")(d.e) } 
-                            displacement events over 2018–2024 totaling ${ d3.format(",.0f")(d.n) } displacements.</p>`;
-                    };
-                });
+                .html(`${ line(d) } The middle 50% of values range from ${ util.formatNum(d.p250) } 
+                    to ${ util.formatNum(d.p750) }.</p>${ sample(d) }`
+                );
+
             d3.select(event.target).style("cursor", "pointer");
         };
 
@@ -273,16 +328,16 @@ function drawBoxplot(means) {
             d3.select(event.target).style("cursor", "default");
         }
 
-        // Build caption
-        let indicatorText = "<span class='caption-emph'>" + util.indicatorsTitle[indicatorChecked] + "</span>";
-        let regionText = "<span class='caption-emph'>" + util.regions[region] + "</span>";
-        if (region == 0) regionText = "the <span class='caption-emph'>world</span>"
+        // // Build caption
+        // let indicatorText = "<span class='caption-emph'>" + util.indicatorsTitle[indicatorChecked] + "</span>";
+        // let regionText = "<span class='caption-emph'>" + util.regions[region] + "</span>";
+        // if (region == 0) regionText = "the <span class='caption-emph'>world</span>"
 
-        let captionText = "<p>Distribution of " + indicatorText + 
-            " weighed by magnitude of internally displaced persons across " + regionText + 
-            ", by cause of displacement, 2018\u20132024.</p>"
+        // let captionText = "<p>Distribution of " + indicatorText + 
+        //     " weighed by magnitude of internally displaced persons across " + regionText + 
+        //     ", by cause of displacement, 2018\u20132024.</p>"
 
-        caption.html(captionText);
+        // caption.html(captionText);
     };
 
     update();
@@ -301,7 +356,7 @@ function addBoxplotLegend(container, xpos, ypos) {
 
     text.append("span")
         .attr("class", "form-title")
-        .text("How to read");
+        .text("Interpretation");
 
     text.append("span")
         .attr("class", "form-desc")
@@ -379,7 +434,7 @@ function addBoxplotLegend(container, xpos, ypos) {
         .attr("text-anchor", "middle");
 
     middle50.append("text").attr("y", 0).text("Middle 50%");
-    middle50.append("text").attr("y", 12).text("of data");
+    middle50.append("text").attr("y", 12).text("of the data");
 
     // Median annotation
     annotationText.append("text")
@@ -393,7 +448,7 @@ function addBoxplotLegend(container, xpos, ypos) {
         .attr("transform", `translate(${ params.length90 / 2 },${ params.width + 40 + 15 })`)
         .attr("text-anchor", "middle");
     middle90.append("text").attr("y", 0).text("Middle 90%");
-    middle90.append("text").attr("y", 12).text("of data");
+    middle90.append("text").attr("y", 12).text("of the data");
 
     return container.node();  
 }

@@ -115,7 +115,7 @@ export function addFormCheckbox(container) {
         .text("Cause");
     formHead.append("span")
         .attr("class", "form-desc")
-        .text("Displacements due to the selected cause/s appear as bubbles on the map.");
+        .text("Displacements due to the selected cause(s) appear as bubbles on the map.");
 
     // Add options
     const formBody = form.append("div")
@@ -150,15 +150,15 @@ export function addFormIcons(form) {
     const params = { pad: 75, radius: 15 };
 
     const iconsData = [
-        { i: 1, src: "female",   lab1: "Female", lab2: "share"       },
-        { i: 2, src: "age",      lab1: "Median", lab2: "age"         },
-        { i: 3, src: "children", lab1: "Children", lab2: "share"     },
-        { i: 4, src: "income",   lab1: "Per capita", lab2: "income"  },
+        { i: 1, src: "female",   lab1: "Female", lab2: ""       },
+        { i: 2, src: "age",      lab1: "Average", lab2: "age"         },
+        { i: 3, src: "children", lab1: "Children", lab2: ""     },
+        { i: 4, src: "income",   lab1: "Income", lab2: ""  },
         { i: 5, src: "educ",     lab1: "Years of", lab2: "schooling" },
-        { i: 6, src: "life",     lab1: "Life", lab2: "expectancy"    },
-        { i: 7, src: "urban",    lab1: "Urban", lab2: "area"         },
+        { i: 6, src: "life",     lab1: "Health", lab2: ""    },
         { i: 8, src: "crop",     lab1: "Cropland", lab2: "area"      },
         { i: 9, src: "graze",    lab1: "Grazing", lab2: "area"       },
+        { i: 7, src: "urban",    lab1: "Urban", lab2: "area"         },
     ];
     
     iconsData.forEach(d => {
