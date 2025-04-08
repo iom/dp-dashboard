@@ -36,7 +36,7 @@ export function renderMap () {
             v_fill: +d.v_fill,
             n: +d.n
         }));
-        nodes = nodes.filter(d => d.n >= 10);
+        nodes = nodes.filter(d => d.n >= 1000);
     
         drawMap(map, mapOutline, disputedBlack, disputedWhite, nodes);  
     })
@@ -44,7 +44,7 @@ export function renderMap () {
 
 function drawMap(map, mapOutline, disputedblack, disputedwhite, nodes) {
 
-    // const caption = d3.select(".dashboard-caption");
+    d3.select(".dashboard-caption").style("display", "block")
     const formIcons = d3.select(".topbar .form-icons");
     const mainview = d3.select(".mainview")
         .classed("map", true)
@@ -110,8 +110,8 @@ function drawMap(map, mapOutline, disputedblack, disputedwhite, nodes) {
     // Map
 
     let projection = d3.geoEquirectangular()
-        .scale(145)
-        .center([-5, 10]);
+        .scale(140)
+        .center([-16, 10]);
 
     let path = d3.geoPath().projection(projection);
 
@@ -120,9 +120,10 @@ function drawMap(map, mapOutline, disputedblack, disputedwhite, nodes) {
     
     // Nodes
 
+    console.log("Min: " + d3.min(nodes, d => d.n))
     const group = panelSVG.append("g").attr("class", "nodes-container");
     const radius = { min: .1, max: 12 };
-    const nRange = { min: 500, max: d3.max(nodes, d => d.n) };
+    const nRange = { min: d3.min(nodes, d => d.n), max: d3.max(nodes, d => d.n) };
     const rScaler = d3.scaleLog()
         .base(2)
         .domain([nRange.min, nRange.max])
@@ -180,7 +181,7 @@ function drawMap(map, mapOutline, disputedblack, disputedwhite, nodes) {
 
         const line1 = (d) => {
             if (d.type == 8) {
-                return `<p><b>${ d3.format(",.0f")(d.n) }</b> due to other displacements in ${ d.t }.`;
+                return `<p><b>${ d3.format(",.0f")(d.n) }</b> due to other causes in ${ d.t }.`;
             } else {
                 return `<p><b>${ d3.format(",.0f")(d.n) }</b> <span class="tooltip-emph">${ util.types[d.type] }</span> displacements in ${ d.t }.`;
             }
@@ -195,11 +196,11 @@ function drawMap(map, mapOutline, disputedblack, disputedwhite, nodes) {
                 case 3: 
                     return `${ util.formatNum(d.v) } of people in this area are children.`;
                 case 4: 
-                    return `The average annual income in this area is $${ util.formatNum(d.v) }.`;
+                    return `The average annual income in this area is ${ util.formatNum(d.v) }.`;
                 case 5: 
                     return `The average years of schooling in this area is ${ util.formatNum(d.v) }.`;
                 case 6: 
-                    return `The average life expectancy in this area is ${ util.formatNum(d.v) }.`;
+                    return `The average life expectancy in this area is ${ util.formatNum(d.v) } years.`;
                 case 7: 
                     return `Urban land makes up ${ util.formatNum(d.v) } of land in this area.`;
                 case 8: 
@@ -248,7 +249,7 @@ function drawMap(map, mapOutline, disputedblack, disputedwhite, nodes) {
                 case "2":
                     return "Average age in displacement areas";
                 case "3":
-                    return "Under-18-year-olds in displacement areas";
+                    return "Children in displacement areas";
                 case "4":
                     return "Average income in displacement areas";
                 case "5":

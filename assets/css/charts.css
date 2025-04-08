@@ -52,7 +52,7 @@
     }
 }
 
-#form-inset-container {
+/* #form-inset-container {
 
     @media (width < 778px) {
         position: relative;
@@ -60,7 +60,7 @@
         flex-direction: column;
         width: 100%;
     }
-}
+} */
 
 
 
@@ -99,7 +99,7 @@
   
 /*** Tooltip ***********************************/
   
-.tooltip {
+/* .tooltip {
     background-color: rgba(255, 255, 255, 0.9);
     padding: .2em .5em .3em .5em;
 }
@@ -122,11 +122,11 @@
     font-size: 11px;
     margin-top: 5px;
     color: var(--gray2);
-}
+} */
 
 /*** Map ***************************************/
 
-.ocean {
+/* .ocean {
     x: 0;
     y: 0;
     width: var(--width-chart);
@@ -170,7 +170,7 @@
     stroke: var(--unBlue2);
     stroke-opacity: .4;
     pointer-events: none;
-}
+} */
 
 /*** Boxplot ***********************************/
 
@@ -209,7 +209,7 @@
 
 /* } */
 
-.x-axis text, .y-axis text {
+/* .x-axis text, .y-axis text {
     font-family: "Open Sans", var(--sans-serif);
     font-size: 14px;
     fill: var(--blue2);
@@ -264,7 +264,7 @@
     z-index: 999;
     width: auto;
     height: auto;
-}
+} */
 
 
 

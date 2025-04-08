@@ -150,15 +150,15 @@ export function addFormIcons(form) {
     const params = { pad: 75, radius: 15 };
 
     const iconsData = [
-        { i: 1, src: "female",   lab1: "Female", lab2: ""       },
-        { i: 2, src: "age",      lab1: "Average", lab2: "age"         },
-        { i: 3, src: "children", lab1: "Children", lab2: ""     },
-        { i: 4, src: "income",   lab1: "Income", lab2: ""  },
+        { i: 1, src: "female",   lab1: "Female",   lab2: ""          },
+        { i: 2, src: "age",      lab1: "Average",  lab2: "age"       },
+        { i: 3, src: "children", lab1: "Children", lab2: ""          },
+        { i: 4, src: "income",   lab1: "Income",   lab2: ""          },
         { i: 5, src: "educ",     lab1: "Years of", lab2: "schooling" },
-        { i: 6, src: "life",     lab1: "Health", lab2: ""    },
+        { i: 6, src: "life",     lab1: "Health",   lab2: ""          },
         { i: 8, src: "crop",     lab1: "Cropland", lab2: "area"      },
-        { i: 9, src: "graze",    lab1: "Grazing", lab2: "area"       },
-        { i: 7, src: "urban",    lab1: "Urban", lab2: "area"         },
+        { i: 9, src: "graze",    lab1: "Grazing",  lab2: "area"      },
+        { i: 7, src: "urban",    lab1: "Urban",    lab2: "area"      },
     ];
     
     iconsData.forEach(d => {
@@ -187,44 +187,44 @@ export function addFormIcons(form) {
     return form.node();
 }
 
-export function addFormRadio(container) {
+// export function addFormRadio(container) {
 
-    const radio = container.append("form")
-        .attr("id", "radio-var")
-        .attr("class", "radio")
-        .attr("margin-top", "10px");
+//     const radio = container.append("form")
+//         .attr("id", "radio-var")
+//         .attr("class", "radio")
+//         .attr("margin-top", "10px");
 
-    radio.append("text")
-        .attr("class", "form-title")
-        .text("Indicator");
+//     radio.append("text")
+//         .attr("class", "form-title")
+//         .text("Indicator");
     
-    radio.append("text")
-        .attr("class", "form-desc")
-        .text("The value of the selected indicator determines the bubbles' color.");
+//     radio.append("text")
+//         .attr("class", "form-desc")
+//         .text("The value of the selected indicator determines the bubbles' color.");
 
-    const addButton = (form, key, value) => {
+//     const addButton = (form, key, value) => {
     
-        const button = form.append("label");
+//         const button = form.append("label");
     
-        button.append("input")
-            .attr("type", "radio")
-            .attr("name", "radioVar")
-            .attr("value", key);
+//         button.append("input")
+//             .attr("type", "radio")
+//             .attr("name", "radioVar")
+//             .attr("value", key);
         
-        button.append("label")
-            .text(value);
+//         button.append("label")
+//             .text(value);
         
-        return form.node();
-    };
+//         return form.node();
+//     };
 
-    const formRadio = radio.append("div");
+//     const formRadio = radio.append("div");
 
-    for (let [code, label] of Object.entries(util.indicators)) {
-        formRadio.call(addButton, code, label);
-    }
+//     for (let [code, label] of Object.entries(util.indicators)) {
+//         formRadio.call(addButton, code, label);
+//     }
     
-    return container.node();
-}
+//     return container.node();
+// }
 
 // Boxplot chart forms //////////////////////////
 
@@ -261,36 +261,36 @@ export function addFormDropdown(container) {
     return container.node();
 }
 
-export function addFormRadioBar(container) {
+// export function addFormRadioBar(container) {
 
-    const radio = container.append("form")
-        .attr("id", "bar-radio-var")
-        .attr("class", "radio")
-        .attr("margin-top", "10px");
+//     const radio = container.append("form")
+//         .attr("id", "bar-radio-var")
+//         .attr("class", "radio")
+//         .attr("margin-top", "10px");
 
-    radio.append("text")
-        .attr("class", "form-title")
-        .text("Indicator");
+//     radio.append("text")
+//         .attr("class", "form-title")
+//         .text("Indicator");
 
-    const addButton = (form, key, value) => {
+//     const addButton = (form, key, value) => {
         
-        const button = form.append("label");
+//         const button = form.append("label");
         
-        button.append("input")
-            .attr("type", "radio")
-            .attr("name", "radioVar")
-            .attr("value", key);
+//         button.append("input")
+//             .attr("type", "radio")
+//             .attr("name", "radioVar")
+//             .attr("value", key);
         
-        button.append("label").text(value);
+//         button.append("label").text(value);
         
-        return form.node();
-    };
+//         return form.node();
+//     };
 
-    const formRadio = radio.append("div");
+//     const formRadio = radio.append("div");
 
-    for (let [code, label] of Object.entries(util.indicatorsBar)) {
-        formRadio.call(addButton, code, label);
-    }
+//     for (let [code, label] of Object.entries(util.indicatorsBar)) {
+//         formRadio.call(addButton, code, label);
+//     }
 
-    return container.node();
-}
+//     return container.node();
+// }

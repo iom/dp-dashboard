@@ -30,9 +30,9 @@
         
         <div class="title-block full-width">
 
-            <div class="title-block-contents">
+            <div class="title-block-contents breakout">
 
-                <h1>Global Profiles for Internal Displacements (GDPI)</h1>
+                <h1>Global Profiles for Internal Displacements (GPID)</h1>
                 <p class="subtitle">Harmonised demographic, socio-economic, and land use contexts for 349 million internal displacements worldwide</p>
 
             </div>
@@ -51,7 +51,7 @@
         <div class="par">
             <p>Internal displacements due to conflict and disasters are a major driver of human mobility worldwide. While the total numbers of displacement events – by cause, location, and time – are well documented, global estimates of the demographic and socio-economic profiles of impacted communities have been largely missing. This lack of disaggregated data on variables such as age, sex, income, education, health, and land use, has limited our understanding of the diverse vulnerabilities and needs of displacement-affected populations – complicating the work of decision makers tasked with allocating resources effectively.</p>
 
-            <p>The <strong>Global Profiles for Internal Displacement (GPID)</strong> dataset aims to bridge this gap. By combining geolocated displacement data from the Internal Displacement Monitoring Centre (IDMC) with high-resolution global maps of demographic and socio-economic indicators, the dataset provides consistent estimates of key characteristics of populations in locations impacted by internal displacement – annually since 2018 at global, regional, and national level.</p>
+            <p>IOM's <strong>Global Profiles for Internal Displacement (GPID)</strong> dataset aims to bridge this gap. By combining geolocated displacement data from the Internal Displacement Monitoring Centre (IDMC) with high-resolution global maps of demographic and socio-economic indicators, the dataset provides consistent estimates of key characteristics of populations in locations impacted by internal displacement – annually since 2018 at global, regional, and national level.</p>
         </div>
 
         <div class="dashboard-container breakout">
@@ -60,7 +60,7 @@
                 
                 <div class="tabs">
                     <div class="tab active" tabindex="0" data-chart="map">Global map</div>
-                    <div class="tab" tabindex="0" data-chart="boxplot">Results by region</div>
+                    <div class="tab" tabindex="0" data-chart="boxplot">Data by region</div>
                 </div>
                 
                 <div class="form-icons">
@@ -77,35 +77,38 @@
                 <div class="panel"></div>
             </div>
 
-            <!-- <div class="dashboard-caption"></div> -->
+            <div class="dashboard-caption">Map is for illustration purposes only. The boundaries and names shown and the designations used do not imply oﬃcial endorsement or acceptance by IOM.</div>
         </div>
 
         <div class="par">
 
-            <h2>What do these data tell us?</h2>
+            <details open>
+                <summary class="h2-summary">What do these data tell us?</summary>
+    
+                <p>Here are some key global-level takeaways:</p>
+    
+                <ul class="ul-level-1">
+                    <li><strong>Strong demographic disparities:</strong> Populations in areas of <emph>drought</emph> displacement tend to be young (average age: 18.0 years), more male (50.5% men), and include many children (44.2%). At the opposite end of the spectrum, populations in <emph>wildfire</emph> displacement areas are older (average age: 35.8 years), more female (50.5% women), and include fewer children (19.5%).</li>
+    
+                    <li><strong>Deep socio-economic divides:</strong> Populations in areas of <emph>drought</emph> displacement face overall much lower levels of annual income (average $1,900), education (2.6 years of schooling), and life expectancy (62.9 years) compared to those in <emph>wildfire</emph>-affected areas ($66,500, 13.3 years, 81.0 years).</li>
+    
+                    <li><div class="li-head"><strong>Different risks for different livelihoods:</strong></div>
+                        <ul class="ul-level-2">
+                            <li><emph>Storm</emph> and <emph>flood</emph> displacements most heavily impact farming populations, with 42% of land in relevant displacement areas being used for crops.</li>
+                            <li><emph>Drought</emph> displacements disproportionally affect pastoral communities, with 41% of lands used for grazing.</li>
+                            <li><emph>Conflict</emph> and <emph>wildfire</emph> displacement most strongly impact urban populations, with built-up land making up 69% and 44% of lands.</li>
+                        </ul>
+                    </li>
+    
+                    <li><strong>Patterns are shifting over time:</strong> Populations impacted by displacement are more vulnerable today than in the past. The share of children in populations across displacement areas has steadily increased from 28% in 2018 to 39% in 2024. In parallel, average income, education, and life expectancy of affected populations have all been decreasing.</li>
+                </ul>
 
-            <p>Here are some key global-level takeaways:</p>
+            </details>
 
-            <ul class="ul-level-1">
-                <li><strong>Strong demographic disparities:</strong> Populations in areas of drought displacement tend to be young (average age: 18.0 years), more male (50.5% men), and include many children (44.2%). At the opposite end of the spectrum, populations in wildfire displacement areas are older (average age: 35.8 years), more female (50.5% women), and include fewer children (19.5%).</li>
-
-                <li><strong>Deep socio-economic divides:</strong> Populations in areas of drought displacement face overall much lower levels of annual income (average $1.9k), education (2.6 years of schooling), and life expectancy (62.9 years) compared to those in wildfire-affected areas ($66.5k, 13.3 years, 81.0 years).</li>
-
-                <li><strong>Different risks for different livelihoods:</strong>
-                    <ul class="ul-level-2">
-                        <li>Storm and flood displacements most heavily impact farming populations, with 42% of land in relevant displacement areas being used for crops.</li>
-                        <li>Drought displacements disproportionally affect pastoral communities, with 41% of lands used for grazing.</li>
-                        <li>Conflict and wildfire displacement most strongly impact urban populations, with built-up land making up 69% and 44% of lands.</li>
-                    </ul>
-                </li>
-
-                <li><strong>Patterns are shifting over time:</strong> Populations impacted by displacement are more vulnerable today than in the past. The share of children in populations across displacement areas has steadily increased from 28% in 2018 to 39% in 2024. In parallel, average income, education, and life expectancy of affected populations have all been decreasing.</li>
-            </ul>
-
-            <details>
+            <details open>
                 <summary class="h2-summary">List of variables</summary>
 
-                <p>The variables provided in the dataset include:</p>
+                <p>The dataset includes the following variables for populations in displacement areas – available annually, for all displacement causes (conflict and 12 disaster types), and at global, regional, and national level:</p>
     
                 <div class="contents-table">
                     <div class="table-col">
@@ -138,6 +141,7 @@
                                 <li>Percentage of cropland</li>
                                 <li>Percentage of grazing area</li>
                                 <li>Percentage of urban area</li>
+                                <li>Percent of Indigenous People’s land</li>
                             </ul>
                         </div>
                     </div>
@@ -145,20 +149,21 @@
                 </p>
             </details>
             
-            <details>
+            <details open>
                 <summary class="h2-summary">Download data</summary>
                 <p>The complete dataset, including metadata and conditions of use, is available <a href="assets/GPID Data.zip" download>here</a>.</p>
             </details>
 
-            <details>
+            <details open>
                 <summary class="h2-summary">Methodology</summary>
 
                 <div class="details-contents">
-                    <p>GPID is based on a geolocated global dataset of internal displacement events caused by conflict, floods, storms, wildfires, earthquakes, droughts, and other disasters since 2018<span class="ref-note"><sup> 1</sup><span class="ref-note-text">IDMC, 2024b</span></span>. Each record contains the year of the event, geographical coordinates (usually at administrative level 1 (province, state, etc.) resolution), the cause of displacement, and the number of displacements. We combined these records with global gridded maps (usually at 0.083° resolution, i.e., approximately 10 km at the equator) of the following socio-economic and geographical variables: local age and sex structure<span class="ref-note"><sup> 2</sup><span class="ref-note-text">World Population Hub, n.d.</span></span>, per-capita gross national income (GNI), average life expectancy, and mean years of schooling<span class="ref-note"><sup> 3</sup><span class="ref-note-text">Kummu et al., 2018</span></span>, percentage of land covered by cropland, grazing land, and urban land<span class="ref-note"><sup> 4</sup><span class="ref-note-text">Klein Goldewijk et al., 2017</span></span>, and percentage of land managed and/or controlled by Indigenous Peoples<span class="ref-note"><sup> 5</sup><span class="ref-note-text">Garnett et al., 2018</span></span>.</p>
 
-                    <p>To make these data compatible with the displacement records, we aggregated all maps to administrative level 1 level, using the population-weighted average of the grid cells within each administrative unit<span class="ref-note"><sup> 2</sup><span class="ref-note-text">World Population Hub, n.d.</span></span>, and using the weighted median for per-capita GNI and the weighted mean for all other variables. After assigning values to each displacement event, we computed the distribution of each variable across events for a given area (world, region, or country) and time (individual year or all years combined), weighing the value from each displacement by the number of displacements associated with the event.</p>
+                    <p>GPID uses geolocated records of internal displacement events worldwide since 2018 compiled by the Internal Displacement Monitoring Centre (IDMC)<span class="ref-note"><sup> 1</sup><span class="ref-note-text">Internal Displacement Monitoring Centre (IDMC) (2025): Geolocated internal displacement data (unpublished). <a href="https://www.internal-displacement.org/">https://www.internal-displacement.org/</a>.</span></span>. Each record contains the year of the event, geographical coordinates (usually at administrative level 1 (province, state, etc.) resolution), the cause of displacement, and the number of displacements. We combined these records with gridded global maps providing the following demographic, socio-economic, and land use variables at pixel level (typically 0.083° spatial resolution, i.e., ~10 km at the equator): age and sex structure<span class="ref-note"><sup> 2</sup><span class="ref-note-text">World Population Hub (n.d.): Global High Resolution Population Denominators Project. <a href="https://hub.worldpop.org/project/categories?id=8">https://hub.worldpop.org/project/categories?id=8</a>.</span></span>, per-capita gross national income (GNI), average life expectancy, and mean years of schooling<span class="ref-note"><sup> 3</sup><span class="ref-note-text">Kummu M, Taka M, Guillaume JH (2018): Gridded global datasets for gross domestic product and Human Development Index over 1990–2015. <emph>Sci. Data</emph> 5, 1–15, <a href="https://doi.org/10.1038/sdata.2018.4"></a>.</span></span>, the percentage of land covered by cropland, grazing land, and urban land<span class="ref-note"><sup> 4</sup><span class="ref-note-text">Klein Goldewijk CGM (2023): History Database of the Global Environment 3.3. <a href="https://doi.org/10.24416/UU01-67UHB4">https://doi.org/10.24416/UU01-67UHB4</a>.</span></span>, and the percentage of land managed and/or controlled by Indigenous Peoples<span class="ref-note"><sup> 5</sup><span class="ref-note-text">Garnett S.T., Burgess N.D., Fa J.E., Fernández-Llamazares Á., Molnár Z., Robinson C.J., Watson J.E., Zander K.K., Austin B., Brondizio E.S. (2018): A spatial overview of the global importance of Indigenous lands for conservation. <emph>Nat. Sustain.</emph> 1, 369–374, <a href="https://doi.org/10.1038/s41893-018-0100-6">https://doi.org/10.1038/s41893-018-0100-6</a>.</span></span>.</p>
 
-                    <p>Crucially, by the nature of the available data, our approach is limited to assessing the profiles of the general populations in locations in which internal displacements occurred, rather than directly analysing the populations that were displaced. While ground surveys conducted during displacement events provide valuable direct insights into those who move<span class="ref-note"><sup> 6</sup><span class="ref-note-text">https://dtm.iom.int/datasets</span></span>, they lack the methodological consistency and global coverage needed for a comprehensive assessment. In the absence of such data, our estimates serve as a methodologically consistent, global-scale statistical baseline of the characteristics of populations impacted by internal displacement.</p>
+                    <p>To make these data compatible with the displacement records, we aggregated all maps to administrative level 1 as the population-weighted average of the grid cells within each administrative unit<span class="ref-note"><sup> 2</sup><span class="ref-note-text">World Population Hub (n.d.): Global High Resolution Population Denominators Project. <a href="https://hub.worldpop.org/project/categories?id=8">https://hub.worldpop.org/project/categories?id=8</a>.</span></span>, using the weighted median for per-capita GNI and the weighted mean for all other variables. After assigning local values for all variables to each displacement event, we computed – for each displacement cause, each geographical area (world, regions, and countries), and each time frame (individual year and all years combined) – the weighted median of each variable across the relevant displacement events, with weights given by the number of displacements associated with each event.</p>
+
+                    <p>Crucially, by the nature of the available data, our approach is limited to assessing the profiles of populations in locations in which internal displacements occurred, rather than directly analysing the populations that were displaced. While ground surveys conducted during displacement events provide valuable direct insights into those who move<span class="ref-note"><sup> 6</sup><span class="ref-note-text">IOM Displacement Tracking Matrix (n.d.): Datasets. <a href="https://dtm.iom.int/datasets">https://dtm.iom.int/datasets</a>.</span></span>, they lack the methodological consistency and global coverage needed for a comprehensive assessment. In the absence of such data, our estimates serve as a methodologically consistent, global-scale statistical baseline of the characteristics of populations affected by internal displacement.</p>
                 </div>
 
             </details>

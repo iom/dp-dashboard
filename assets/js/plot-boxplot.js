@@ -8,16 +8,28 @@ export function renderBoxplot () {
 
         d3.csv("./data/means.csv"),
     
-    ]).then(function([means]) {
+    ]).then(function([meansRaw]) {
+
+        let means = meansRaw.map(d => ({
+            region: +d.region,
+            type: +d.type,
+            e: +d.e,
+            n: +d.n,
+            var: +d.var,
+            p50: +d.p50,
+            p250: +d.p250,
+            p500: +d.p500,
+            p750: +d.p750,
+            p950: +d.p950
+        }));
     
         drawBoxplot(means);
-        
     })
 }
 
 function drawBoxplot(means) {
 
-    const caption = d3.select(".dashboard-caption");
+    d3.select(".dashboard-caption").style("display", "none");
     const formIcons = d3.select(".topbar .form-icons");
     const mainview = d3.select(".mainview")
         .classed("boxplot", true)
@@ -30,10 +42,7 @@ function drawBoxplot(means) {
     const panel = mainview.append("div")
         .attr("class", "panel");
 
-    const dim = {
-        width: 750,
-        height: 500
-    };
+    const dim = { width: 750, height: 500 };
     const margin = { top: 20, bottom: 80, right: 20, left: 190 };
     const gutter = { yout: 12.5, yin: 30, xin: 7.5, xout: 12.5 };
     const params = { binHeight: 10 };
@@ -97,7 +106,7 @@ function drawBoxplot(means) {
         let region = formRegion.select("#bar-dropdown-region select").property("value");
         let indicatorChecked = formIcons.select(".icon-clicked").attr("value");
         let data = means.filter(d => d.region == region && d.var == indicatorChecked);
-        const Y = d3.map(data, d => d.type);
+        const Y = d3.map(data, d => +d.type);
 
         function formatNumAxis(num) {
 
@@ -157,16 +166,16 @@ function drawBoxplot(means) {
             .style("text-anchor", "middle")
             .text(util.indicatorsAxis[indicatorChecked]);
         
-        let xScalerInv = d3.scaleLinear()
-            .domain([
-                margin.left + gutter.yin, 
-                dim.width - margin.right - gutter.yin
-            ])
-            .range([d3.min(data, d => +d.p50), d3.max(data, d => +d.p950)]);
+        // let xScalerInv = d3.scaleLinear()
+        //     .domain([
+        //         margin.left + gutter.yin, 
+        //         dim.width - margin.right - gutter.yin
+        //     ])
+        //     .range([d3.min(data, d => +d.p50), d3.max(data, d => +d.p950)]);
 
         // y-axis
         let yScaler = d3.scaleBand()
-            .domain(Object.keys(util.typesBar).reverse())
+            .domain(Object.keys(util.typesBar).reverse().map(Number))
             .range([dim.height - margin.bottom - gutter.xin, margin.top + gutter.xin])
             .padding(.15);
         let yAxis = d3.axisLeft(yScaler)
@@ -183,29 +192,29 @@ function drawBoxplot(means) {
         //     .on("mousemove", markerMouseMoved)
         //     .on("mouseleave", markerMouseLeft);
 
-        function markerMouseMoved(event) {
-            const [xm, ym] = d3.pointer(event);
-            marker
-                .attr("display", null)
-                .attr("transform", `translate(${ xm }, 0)`);
-            markerNum.style("display", "block")
-                .style("left", event.pageX + 5 + "px")
-                .style("top", event.pageY - 15 + "px")
-                .html(function() {
-                    if (xScalerInv(xm) < 0) {
-                        return "";
-                    } else if (indicatorChecked == 4) {
-                        return "$" + d3.format(",.0f")(xScalerInv(xm));
-                    } else {
-                        return util.formatNum(xScalerInv(xm));
-                    }
-                });
-        };
+        // function markerMouseMoved(event) {
+        //     const [xm, ym] = d3.pointer(event);
+        //     marker
+        //         .attr("display", null)
+        //         .attr("transform", `translate(${ xm }, 0)`);
+        //     markerNum.style("display", "block")
+        //         .style("left", event.pageX + 5 + "px")
+        //         .style("top", event.pageY - 15 + "px")
+        //         .html(function() {
+        //             if (xScalerInv(xm) < 0) {
+        //                 return "";
+        //             } else if (indicatorChecked == 4) {
+        //                 return "$" + d3.format(",.0f")(xScalerInv(xm));
+        //             } else {
+        //                 return util.formatNum(xScalerInv(xm));
+        //             }
+        //         });
+        // };
 
-        function markerMouseLeft() {
-            marker.attr("display", "none");
-            markerNum.style("display", "none");
-        }
+        // function markerMouseLeft() {
+        //     marker.attr("display", "none");
+        //     markerNum.style("display", "none");
+        // }
 
         // 90% range
         boxplots.append("g")
@@ -263,10 +272,12 @@ function drawBoxplot(means) {
                 switch (+d.type) {
                     case 0: 
                         return "<span class='tooltip-emph'>all</span> displacement areas";
+                    case 2: 
+                        return "<span class='tooltip-emph'>disaster</span> displacement areas";
                     case 10: 
-                        return "the <span class='tooltip-emph'>total population</span>, ";
+                        return "the <span class='tooltip-emph'>total population</span> in areas with and without displacement";
                     default:
-                        return `<span class='tooltip-emph'>${ util.typesBar[d.type] }</span> displacement areas`;
+                        return `<span class='tooltip-emph'>${ util.typesBar[+d.type] }</span> displacement areas`;
                 }
             };
 
@@ -276,7 +287,8 @@ function drawBoxplot(means) {
                         return "";
                     default: 
                         return `<p class="tooltip-note">Based on ${ d3.format(",.0f")(d.e) } 
-                        displacement events over 2018–2024 totaling ${ d3.format(",.0f")(d.n) } displacements.</p>`;
+                        displacement events over 2018–2024 totaling ${ d3.format(",.0f")(d.n) } 
+                        displacements.</p>`;
                 }
             };
             
@@ -289,17 +301,17 @@ function drawBoxplot(means) {
                         return `<p>The average age in ${ type(d) } is 
                         <strong>${ util.formatNum(d.p500) }</strong>  years.`;
                     case 3: 
-                        return `<p><strong>${ util.formatNum(d.p500) } of people 
+                        return `<p><strong>${ util.formatNum(d.p500) }</strong> of people 
                         in ${ type(d) } are children.`;
                     case 4: 
                         return `<p>The average annual income in ${ type(d) } is 
-                        <strong>$${ util.formatNum(d.p500) }</strong>.`;
+                        <strong>${ util.formatNum(d.p500) }</strong>.`;
                     case 5: 
                         return `<p>The average years of schooling in ${ type(d) } is 
                         <strong>${ util.formatNum(d.p500) }</strong>.`;
                     case 6: 
                         return `<p>The average life expectancy in ${ type(d) } is 
-                        <strong>${ util.formatNum(d.p500) }</strong>.`;
+                        <strong>${ util.formatNum(d.p500) }</strong> years.`;
                     case 7: 
                         return `<p>Urban land makes up an average 
                         <strong>${ util.formatNum(d.p500) }</strong> of land in ${ type(d) }.`;
