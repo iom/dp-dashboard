@@ -1,7 +1,4 @@
-
 import * as util from "./util.js";
-
-// Map chart forms //////////////////////////////
 
 export function addFormSlider(container) {
 
@@ -66,41 +63,17 @@ export function addFormSlider(container) {
         let percent1 = ((slideOne.property("value") - years.min) / steps) * 100;
         let percent2 = ((slideTwo.property("value") - years.min) / steps) * 100;
         slider.style("background", `linear-gradient(to right,
-                ${ util.colors.blue5 } ${ percent1 }%,
-                ${ util.colors.blue3 } ${ percent1 }%,
-                ${ util.colors.blue3 } ${ percent2 }%,
-                ${ util.colors.blue5 } ${ percent2 }%
-            )`);
+            ${ util.colors.blue5 } ${ percent1 }%,
+            ${ util.colors.blue3 } ${ percent1 }%,
+            ${ util.colors.blue3 } ${ percent2 }%,
+            ${ util.colors.blue5 } ${ percent2 }%
+        )`);
         
         label.text(slideOne.property("value") + "\u2013" + slideTwo.property("value"));
     }
 
     return container.node();
 }
-
-// export function addFormNumber(container) {
-    
-//     const years = ({ min: 2018, max: 2024 });
-//     const form = container.append("form");
-
-//     // Title and description
-//     form.append("text")
-//         .attr("class", "form-title")
-//         .text("Year")
-//     form.append("text")
-//         .attr("class", "form-desc")
-//         .text("2018–2024")
-
-//     form.append("input")
-//         .attr("type", "number")
-//         .attr("min", years.min)
-//         .attr("max", years.max)
-//         .attr("step", 1)
-//         .attr("value", years.max)
-//         .attr("id", "form-number");
-
-//     return container.node();
-// }
 
 export function addFormCheckbox(container) {
     
@@ -176,64 +149,22 @@ export function addFormIcons(form) {
                 .attr("width", params.radius + 5 + "px")
                 .attr("height", params.radius + 5 + "px");
         
-        const label = group.append("div")
-            .attr("class", "icon-label");
+        const label = group.append("div").attr("class", "icon-label");
+
         label.append("div").text(d.lab1);
         label.append("div").text(d.lab2);
     });
     
+    // Default value
     form.select("#icon-group-1").classed("icon-clicked", true);
 
     return form.node();
 }
 
-// export function addFormRadio(container) {
-
-//     const radio = container.append("form")
-//         .attr("id", "radio-var")
-//         .attr("class", "radio")
-//         .attr("margin-top", "10px");
-
-//     radio.append("text")
-//         .attr("class", "form-title")
-//         .text("Indicator");
-    
-//     radio.append("text")
-//         .attr("class", "form-desc")
-//         .text("The value of the selected indicator determines the bubbles' color.");
-
-//     const addButton = (form, key, value) => {
-    
-//         const button = form.append("label");
-    
-//         button.append("input")
-//             .attr("type", "radio")
-//             .attr("name", "radioVar")
-//             .attr("value", key);
-        
-//         button.append("label")
-//             .text(value);
-        
-//         return form.node();
-//     };
-
-//     const formRadio = radio.append("div");
-
-//     for (let [code, label] of Object.entries(util.indicators)) {
-//         formRadio.call(addButton, code, label);
-//     }
-    
-//     return container.node();
-// }
-
-// Boxplot chart forms //////////////////////////
-
 export function addFormDropdown(container) {
   
     const dropdown = container.append("form")
         .attr("id", "bar-dropdown-region");
-        // .attr("class", "select")
-        // .attr("margin-top", "10px");
 
     dropdown.append("div")
         .attr("class", "form-head")
@@ -260,37 +191,3 @@ export function addFormDropdown(container) {
 
     return container.node();
 }
-
-// export function addFormRadioBar(container) {
-
-//     const radio = container.append("form")
-//         .attr("id", "bar-radio-var")
-//         .attr("class", "radio")
-//         .attr("margin-top", "10px");
-
-//     radio.append("text")
-//         .attr("class", "form-title")
-//         .text("Indicator");
-
-//     const addButton = (form, key, value) => {
-        
-//         const button = form.append("label");
-        
-//         button.append("input")
-//             .attr("type", "radio")
-//             .attr("name", "radioVar")
-//             .attr("value", key);
-        
-//         button.append("label").text(value);
-        
-//         return form.node();
-//     };
-
-//     const formRadio = radio.append("div");
-
-//     for (let [code, label] of Object.entries(util.indicatorsBar)) {
-//         formRadio.call(addButton, code, label);
-//     }
-
-//     return container.node();
-// }
