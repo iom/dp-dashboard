@@ -35,7 +35,7 @@
     & .dashboard-caption {
         color: var(--gray2);
         text-wrap: pretty;
-        font-size: .8rem;
+        font-size: .7em;
         margin: .5rem 2rem;
         
         & .caption-emph {

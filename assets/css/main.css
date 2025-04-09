@@ -196,7 +196,6 @@ footer {
 
 .title-block-contents {
     text-align: center;
-    /* max-width: 50rem; */
     padding: 2em 1em;
 
     .product-name {
@@ -209,7 +208,7 @@ footer {
 
     .subtitle {
         font-size: 1.1rem;
-        text-wrap: pretty;
+        text-wrap: balance;
     }
 }
 
@@ -306,7 +305,7 @@ details {
         max-width: 50ch;
         background-color: var(--gray5);
         padding: .2rem;
-        border: .5px solid var(--gray3);
+        border: .5px solid var(--gray4);
         border-radius: 3px;
         font-weight: normal;
         color: black;
