@@ -61,7 +61,6 @@ h1 {
 
 h2, .h2-summary {
     font-size: 1.5em;
-    /* font-size: clamp(1rem, .8rem + .8vw, 2rem); */
     font-weight: 600;
 }
 
@@ -237,10 +236,8 @@ footer {
     overflow-x: scroll;
     display: grid;
     grid-template-columns: repeat(3, minmax(15em, 1fr));
-    gap: .5rem;
-    /* gap: clamp(0.25rem, 1vw, 0.5rem); */
-    font-size: 0.9rem;
-    /* font-size: clamp(0.5rem, 0.1rem + 1.6vw, 0.9rem); */
+    gap: .5em;
+    font-size: 0.9em;
 
     & ul {
         padding: 0 .5rem 0 1rem;
@@ -286,9 +283,7 @@ details {
     }
 
     & p {
-        /* font-size: .9rem; */
         color: var(--gray1);
-        /* line-height: 1.2; */
     }
 }
 
@@ -298,6 +293,7 @@ details {
     font-weight: 600;
     color: var(--blue2);
     cursor: pointer;
+    overflow: hidden;
 
     & .ref-note-text {
         visibility: hidden;
@@ -312,17 +308,16 @@ details {
 
         position: absolute;
         z-index: 1;
-        bottom: 125%;
-        left: 50%;
-        margin-left: -60px;
-
+        bottom: 0;
+        left: -15ch;
         opacity: 0;
-        transition: opacity .2s;
+        transition: opacity .2s, bottom .5s;
     }
 
     &:hover .ref-note-text {
         visibility: visible;
         opacity: 1;
+        bottom: 150%;
     }
 }
 
