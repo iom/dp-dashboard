@@ -109,6 +109,7 @@
             width: auto;
             height: auto;
             display: flex;
+            margin: 0 auto;
             
             @media (width < 928px) { 
                 /* tabs move to the top */
@@ -146,9 +147,14 @@
         
             & .form-body {
                 display: flex;
-                overflow-x: scroll;
+                overflow-x: hidden;
                 padding: 0 1.5rem;
         
+                @media (width < 778px) {
+                    /* turn on scroll overflow-x */
+                    overflow-x: scroll;
+                }
+
                 & .icon-group {
                     flex: 0 0 auto;
                     display: flex;
@@ -160,8 +166,8 @@
                     padding: .7rem 0;
         
                     @media (width < 778px) {
-                        /* icons shrink to minimum width */
-                        gap: .2rem;
+                        /* turn on scroll overflow-x */
+                        width: 3.5rem;
                         padding: .4rem 0;
                     }
         
@@ -559,7 +565,7 @@
     }
 
     & .sidebar {
-        width: 190px;
+        width: var(--width-sidebar);
         gap: 1rem;
         
 
@@ -569,6 +575,7 @@
             order: 2;
             flex-direction: row;
             justify-content: space-around;
+            gap: 3rem;
             padding: 1.5rem;
         }
 

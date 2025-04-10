@@ -1,4 +1,3 @@
-
 import * as forms from "./forms.js";
 import * as util from "./util.js";
  
@@ -42,8 +41,8 @@ function drawBoxplot(means) {
     const panel = mainview.append("div")
         .attr("class", "panel");
 
-    const dim = { width: 750, height: 500 };
-    const margin = { top: 20, bottom: 80, right: 20, left: 190 };
+    let margin = { top: 20, bottom: 80, left: 190, right: 20 };
+
     const gutter = { yout: 12.5, yin: 30, xin: 7.5, xout: 12.5 };
     const params = { binHeight: 10 };
 
@@ -71,20 +70,31 @@ function drawBoxplot(means) {
 
     // Chart ////////////////////////////////////
 
-    const legend = sidebar.append("div")
+    sidebar.append("div")
         .attr("class", "legend-container")
         .call(addBoxplotLegend, 30, 120);
 
-    const svg = panel.append("svg")
+    let panelWidth = getPanelWidth(window.innerWidth);
+
+    let svg = panel.append("svg")
         .attr("width", "100%")
         .attr("preserveAspectRatio", "xMidYMin slice")
-        .attr("viewBox", [0, 0, dim.width, dim.height]);
+        .attr("viewBox", [0, 0, panelWidth, util.dim.height]);
     
-    svg.append("rect")
+    let panelBG = svg.append("rect")
         .attr("x", margin.left).attr("y", margin.top)
-        .attr("width", dim.width - margin.left - margin.right)
-        .attr("height", dim.height - margin.top - margin.bottom)
+        .attr("width", panelWidth - margin.left - margin.right)
+        .attr("height", util.dim.height - margin.top - margin.bottom)
         .style("fill", "white");
+
+    window.addEventListener("resize", () => {
+
+        panelWidth = getPanelWidth(window.innerWidth);
+        svg.attr("viewBox", [0, 0, panelWidth, util.dim.height]);
+        panelBG.attr("width", panelWidth - margin.left - margin.right);
+
+        update();
+    })
 
     const axes = svg.append("g");
     const boxplots = svg.append("g");
@@ -100,7 +110,20 @@ function drawBoxplot(means) {
     //     .append("div")
     //     .attr("id", "marker-num")
     //     .style("display", "none")
-        
+    
+
+    function getPanelWidth(screenWidth) {
+        if (screenWidth < 500) {
+            return 500;
+        } else if (screenWidth < 700) {
+            return screenWidth;
+        } else if (screenWidth < 1200) {
+            return screenWidth - util.dim.sidebarWidth;
+        } else {
+            return util.dim.panelWidth;
+        }
+    }
+
     function update() {
 
         let region = formRegion.select("#bar-dropdown-region select").property("value");
@@ -133,7 +156,7 @@ function drawBoxplot(means) {
         // x-axis
         let xScaler = d3.scaleLinear()
             .domain([d3.min(data, d => +d.p50), d3.max(data, d => +d.p950)])
-            .range([gutter.yin, dim.width - margin.left - margin.right - gutter.yin]);
+            .range([gutter.yin, panelWidth - margin.left - margin.right - gutter.yin]);
         let xAxis = d3.axisBottom(xScaler)
             .ticks(5)
             .tickSize(0)
@@ -147,9 +170,9 @@ function drawBoxplot(means) {
                 .attr("x1", d => xScaler(d))
                 .attr("x2", d => xScaler(d))
                 .attr("y1", margin.top + gutter.xin)
-                .attr("y2", dim.height - margin.bottom - gutter.xin);
+                .attr("y2", util.dim.height - margin.bottom - gutter.xin);
         axes.append("g")
-            .attr("transform", `translate(${ margin.left }, ${ dim.height - margin.bottom })`)
+            .attr("transform", `translate(${ margin.left }, ${ util.dim.height - margin.bottom })`)
             .attr("class", "x-axis")
             .call(xAxis)
             .call(g => g.select(".domain").remove());
@@ -159,8 +182,8 @@ function drawBoxplot(means) {
         axes.append("g")
             .attr("class", "x-axis")
             .attr("transform", `translate(
-                ${ margin.left + (dim.width - margin.left - margin.right) / 2 }, 
-                ${ dim.height - margin.bottom + 50 }
+                ${ margin.left + (panelWidth - margin.left - margin.right) / 2 }, 
+                ${ util.dim.height - margin.bottom + 50 }
             )`)
             .append("text")
             .style("text-anchor", "middle")
@@ -176,7 +199,7 @@ function drawBoxplot(means) {
         // y-axis
         let yScaler = d3.scaleBand()
             .domain(Object.keys(util.typesBar).reverse().map(Number))
-            .range([dim.height - margin.bottom - gutter.xin, margin.top + gutter.xin])
+            .range([util.dim.height - margin.bottom - gutter.xin, margin.top + gutter.xin])
             .padding(.15);
         let yAxis = d3.axisLeft(yScaler)
             .tickSize(0)
@@ -464,4 +487,3 @@ function addBoxplotLegend(container, xpos, ypos) {
 
     return container.node();  
 }
-

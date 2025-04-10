@@ -1,5 +1,6 @@
 
-export const dim = { width: 950, height: 500 };
+export const dim = { width: 1200, sidebarWidth: 190, height: 500 };
+dim.panelWidth = dim.width - dim.sidebarWidth;
 
 export const colors = { 
     blue1:   "#0033A0", 

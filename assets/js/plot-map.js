@@ -1,4 +1,3 @@
-
 import * as forms from "./forms.js";
 import * as util from "./util.js";
 import { zoompanel } from "./zoompanel.js";
@@ -105,13 +104,16 @@ function drawMap(map, mapOutline, disputedblack, disputedwhite, nodes) {
         .attr("width", "100%")
         .attr("height", "100%")
         .attr("preserveAspectRatio", "xMinYMax slice")
-        .attr("viewBox", [0, 0, 950, 500]);
+        .attr("viewBox", [0, 0, util.dim.width, util.dim.height]);
 
     // Map
 
+    let xpos = window.innerWidth < 500 ? 100 : -70;
+
     let projection = d3.geoEquirectangular()
         .scale(140)
-        .center([-16, 10]);
+        // .center([-16, 10]);
+        .center([xpos, 10]);
 
     let path = d3.geoPath().projection(projection);
 
@@ -120,7 +122,6 @@ function drawMap(map, mapOutline, disputedblack, disputedwhite, nodes) {
     
     // Nodes
 
-    console.log("Min: " + d3.min(nodes, d => d.n))
     const group = panelSVG.append("g").attr("class", "nodes-container");
     const radius = { min: .1, max: 12 };
     const nRange = { min: d3.min(nodes, d => d.n), max: d3.max(nodes, d => d.n) };
@@ -165,9 +166,9 @@ function drawMap(map, mapOutline, disputedblack, disputedwhite, nodes) {
     const controlPanelSVG = panel.append("div")
         .attr("class", "control-panel")
         .append("svg")
-        .attr("width", 25)
-        .attr("height", 70)
-        .call(zoompanel);
+            .attr("width", 25)
+            .attr("height", 70)
+            .call(zoompanel);
     controlPanelSVG.select("#buttonplus")
         .on("click", () => panelSVG.transition().duration(300).call(zoom.scaleBy, 1.5));
     controlPanelSVG.select("#buttonminus")
@@ -485,7 +486,5 @@ function addColorLegend (container, xpos, ypos, data, colorRanger) {
             : util.formatNum(breaks[breaks.length - 1])
         );
 
-
     return container.node();
 }
-
