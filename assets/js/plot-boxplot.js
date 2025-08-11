@@ -94,7 +94,7 @@ function drawBoxplot(means) {
         panelBG.attr("width", panelWidth - margin.left - margin.right);
 
         update();
-    })
+    });
 
     const axes = svg.append("g");
     const boxplots = svg.append("g");

@@ -151,7 +151,7 @@
                 padding: 0 1.5rem;
         
                 @media (width < 778px) {
-                    /* turn on scroll overflow-x */
+                    /* turn on horizontal scroll */
                     overflow-x: scroll;
                 }
 
@@ -166,7 +166,7 @@
                     padding: .7rem 0;
         
                     @media (width < 778px) {
-                        /* turn on scroll overflow-x */
+                        /* turn on horizontal scroll */
                         width: 3.5rem;
                         padding: .4rem 0;
                     }
