@@ -71,7 +71,7 @@ export const indicators = {
 
 export const indicatorsAxis = {
     1: "Females in area (per cent)",
-    2: "Average age in area (per cent)",
+    2: "Average age in area (years)",
     3: "Under-18-year-olds in area (per cent)",
     4: "Average income in area (constant 2017 US$)",
     5: "Average years of schooling in area (years)",

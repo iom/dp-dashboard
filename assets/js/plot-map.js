@@ -432,7 +432,7 @@ function addColorLegend (container, xpos, ypos, data, colorRanger) {
 
     const labels = [
         { var: 1, line1: "Females in area",            line2: "(per cent)"         },
-        { var: 2, line1: "Average age",                line2: "in area (per cent)" },
+        { var: 2, line1: "Average age",                line2: "in area (years)"    },
         { var: 3, line1: "Under-18-year-olds",         line2: "in area (per cent)" },
         { var: 4, line1: "Average income in area",     line2: "(const. 2017 US$)"  },
         { var: 5, line1: "Average years of schooling", line2: "in area (years)"    },
