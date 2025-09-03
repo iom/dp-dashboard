@@ -202,7 +202,7 @@ footer {
     padding-right: 1em;
 
     .gdi-logo img {
-        width: min(60vw, 225px);
+        width: min(60vw, 275px);
         height: auto;
     }
     .product-name {
